@@ -54,6 +54,18 @@ public class OverheadExpensesController {
 		return "listoverhead";
 	}
 	
+	@RequestMapping("cancelexpense")
+	public String cancelExpense(@ModelAttribute("reference") Long reference) throws IOException {
+
+		OverheadExpenses expenses = expensesService.retrieve(reference);
+		
+		if (expenses.getTerms().length() > 0) {
+			transactionService.cancelOverhead(expenses);
+		}
+		
+		return "redirect:/accounting/listoverhead";
+	}
+	
 	@RequestMapping("newexpense")
 	public String newExpenses(Model model) {
 		
@@ -71,10 +83,25 @@ public class OverheadExpensesController {
 		
 		return "editexpense";
 	}
-	
+
 	@RequestMapping("updateexpense")
 	public String updateExpense(@Valid @ModelAttribute("expense") OverheadExpenses expenses, BindingResult result) {
-		
+		if (result.hasErrors()) {
+			
+			return "editexpense";
+		}
+		if (expenses.isContract() == true && (expenses.getContract_term() == null || expenses.getTerms().length() == 0)) {
+			
+			if (expenses.getContract_term() == null) {
+				result.rejectValue("contract_term", "NoTermDate.OverheadExpenses.contract_term");
+			}
+			
+			if (expenses.getTerms().length() == 0) {
+				result.rejectValue("terms", "NoTerms.OverheadExpenses.terms");
+			}
+			
+			return "editexpense";
+		}
 		expensesService.merge(expenses);
 		
 		return "redirect:/accounting/listoverhead";
@@ -88,6 +115,22 @@ public class OverheadExpensesController {
 	}
 	@RequestMapping("addexpense")
 	public String addExpense(@Valid @ModelAttribute("expense") OverheadExpenses expenses, BindingResult result) throws IOException {
+		if (result.hasErrors()) {
+			
+			return "editexpense";
+		}
+		if (expenses.isContract() == true && (expenses.getContract_term() == null || expenses.getTerms().length() == 0)) {
+			
+			if (expenses.getContract_term() == null) {
+				result.rejectValue("contract_term", "NoTermDate.OverheadExpenses.contract_term");
+			}
+			
+			if (expenses.getTerms().length() == 0) {
+				result.rejectValue("terms", "NoTerms.OverheadExpenses.terms");
+			}
+			
+			return "newexpense";
+		}
 		
 		expensesService.create(expenses);
 		transactionService.newOverheadExpense(expenses);

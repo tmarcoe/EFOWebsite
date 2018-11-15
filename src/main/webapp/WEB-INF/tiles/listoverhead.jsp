@@ -13,6 +13,8 @@
 			<th>Vendor</th>
 			<th>Reason</th>
 			<th>Payment Schedule</th>
+			<th>On Contract</th>
+			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 		</tr>
@@ -24,13 +26,15 @@
 			<td>${item.vendor}</td>
 			<td>${item.reason}</td>
 			<td>${item.schedule}</td>
+			<td>${item.contract}</td>
 			<td><button type="button" onclick="window.location.href='/accounting/editexpense?reference=${item.reference}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/cancelexpense?reference=${item.reference}'">Cancel Expense</button></td>
 			<td><button type="button" onclick="window.location.href='/accounting/listpayments?reference=${item.reference}'">Payments</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="6"><button type="button" onclick="window.location.href='/accounting/newexpense'">New
+			<td colspan="8"><button type="button" onclick="window.location.href='/accounting/newexpense'">New
 					Overhead Expense</button></td>
 			<td><button type="button" onclick="window.location.href='/#tabs-4'">back</button></td>
 		</tr>

@@ -55,6 +55,23 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
+	public void cancelOverhead(OverheadExpenses expense) throws IOException {
+		try {
+			initTransaction(filePath);
+			publish("expense", VariableType.DAO, expense);
+			loadRule(expense.getTerms());
+		}
+		finally {
+			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
+		}
+	}
+	
 	public void addLoans(Loans loan) throws IOException  {
 		try {
 			initTransaction(filePath);
@@ -74,7 +91,6 @@ public class FetalTransactionService extends FetalTransaction {
 				session.disconnect();
 			}
 		}
-	
 	}
 	
 	public void addEquity(Equity equity) throws IOException {

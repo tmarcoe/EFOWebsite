@@ -25,6 +25,9 @@ public class OverheadExpenses implements Serializable {
 	private String account;
 	private String schedule;
 	private Date begin_date;
+	private boolean contract;
+	private String terms;
+	private Date contract_term;
 
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "overheadExpenses", cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE })
@@ -93,6 +96,30 @@ public class OverheadExpenses implements Serializable {
 		this.paymentHistory = paymentHistory;
 	}
 	
+	public boolean isContract() {
+		return contract;
+	}
+
+	public void setContract(boolean contract) {
+		this.contract = contract;
+	}
+
+	public String getTerms() {
+		return terms;
+	}
+
+	public void setTerms(String terms) {
+		this.terms = terms;
+	}
+
+	public Date getContract_term() {
+		return contract_term;
+	}
+
+	public void setContract_term(Date contract_term) {
+		this.contract_term = contract_term;
+	}
+
 	public void addPaymentHistory(PaymentHistory payment) {
 		paymentHistory.add(payment);
 	}
