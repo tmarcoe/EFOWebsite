@@ -38,7 +38,7 @@ public class UserDao implements IUser {
 	}
 
 	@Override
-	public User retrieve(int user_id) {
+	public User retrieve(Long user_id) {
 		Session session = session();
 		User user = (User) session.createCriteria(User.class).add(Restrictions.idEq(user_id)).uniqueResult();
 		session.disconnect();
@@ -74,7 +74,7 @@ public class UserDao implements IUser {
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		User user = (User) session.createCriteria(User.class).add(Restrictions.idEq(user_id)).uniqueResult();
@@ -110,7 +110,7 @@ public class UserDao implements IUser {
 		
 		session.createQuery(hqlUpdate)
 				.setString("password", user.getPassword())
-				.setInteger("user_id", user.getUser_id()).executeUpdate();
+				.setLong("user_id", user.getUser_id()).executeUpdate();
 		tx.commit();
 		session.disconnect();
 

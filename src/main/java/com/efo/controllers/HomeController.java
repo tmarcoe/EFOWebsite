@@ -44,11 +44,11 @@ public class HomeController {
 			user = userService.retrieve(principal.getName());
 			if (user == null) {
 				user = new User();
-				user.setUser_id(0);
+				user.setUser_id((long) 0);
 			}
 		} else {
 			user = new User();
-			user.setUser_id(0);
+			user.setUser_id((long) 0);
 		}
 		model.addAttribute("calMonth", today.getMonthOfYear());
 		model.addAttribute("calYear", today.getYear());

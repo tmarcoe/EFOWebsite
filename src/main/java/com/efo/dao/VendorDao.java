@@ -38,7 +38,7 @@ public class VendorDao implements IVendor {
 	}
 
 	@Override
-	public Vendor retrieve(int user_id) {
+	public Vendor retrieve(Long user_id) {
 		Session session = session();
 		Vendor vendor = (Vendor) session.createCriteria(Vendor.class).add(Restrictions.idEq(user_id)).uniqueResult();
 		session.disconnect();
@@ -56,7 +56,7 @@ public class VendorDao implements IVendor {
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		Vendor vendor = retrieve(user_id);
 		Session session = session();
 		Transaction tx = session.beginTransaction();

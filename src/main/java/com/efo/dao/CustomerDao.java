@@ -36,7 +36,7 @@ public class CustomerDao implements ICustomer {
 	}
 
 	@Override
-	public Customer retrieve(int user_id) {
+	public Customer retrieve(Long user_id) {
 		Session session = session();
 		Customer customer = (Customer) session.createCriteria(Customer.class).add(Restrictions.idEq(user_id)).uniqueResult();
 		session.disconnect();
@@ -54,7 +54,7 @@ public class CustomerDao implements ICustomer {
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		Customer customer = retrieve(user_id);
 		Session session = session();
 		Transaction tx = session.beginTransaction();

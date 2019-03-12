@@ -1,67 +1,19 @@
 package com.efo.reports;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.joda.time.LocalDate;
-import org.joda.time.Months;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.efo.service.PaymentHistoryService;
-import com.efo.service.PaymentsBilledService;
-import com.efo.service.PaymentsReceivedService;
-import com.efo.service.RetailSalesService;
-
 @Component
 public class ProfitAndLossReport {
 	@Autowired
 	private ReportUtilities reportUtil;
 	
-	@Autowired
-	private RetailSalesService salesService;
-	
-	@Autowired
-	private PaymentsBilledService paymentService;
-	
-	@Autowired
-	private PaymentsReceivedService receivedService;
-	
-	@Autowired
-	private PaymentHistoryService overheadPaymentService;
-	
-	public String ProfitAndLoss(Date begin, Date end) throws JSONException {
-		LocalDate jBegin = new LocalDate(begin);
-		LocalDate jEnd = new LocalDate(end);
-		int diff = Months.monthsBetween(jBegin, jEnd).getMonths() + 1;
-		List<Double> retailSales = reportUtil.translateToDoubleArray(salesService.getTotalSaleByPeriod(begin, end), begin, end);
-		List<Double> pmntReceived =  reportUtil.translateToDoubleArray(receivedService.totalPayentsByPeriod(begin, end), begin, end);
-		List<Double> overhead = reportUtil.translateToDoubleArray(overheadPaymentService.totalPayentsByPeriod(begin, end), begin, end);
-		List<Double> accountsPayable = reportUtil.translateToDoubleArray(paymentService.totalPayentsByPeriod(begin, end), begin, end);
-		
-		
-		List<Double> expense = new ArrayList<Double>();
-		Iterator<Double> iRetailSales = retailSales.iterator();
-		Iterator<Double> iPmntReceived = pmntReceived.iterator();
-		Iterator<Double> iOverhead = overhead.iterator();
-		Iterator<Double> iAccountsPayable = accountsPayable.iterator();
-		
-		while (iRetailSales.hasNext()) {
-			Double retail = iRetailSales.next();
-			Double ar = iPmntReceived.next();
-			Double ovr = iOverhead.next();
-			Double ap = iAccountsPayable.next();
-			
-			expense.add((retail + ar) - (ovr + ap));
-		}
-		
-		return convertToJSON(expense, diff, jBegin, String.format("Profit and Loss From %tD To %tD", begin, end)).toString();
-	}
 	
 	private JSONObject convertToJSON(List<Double> expense, int length, LocalDate start, String reportTitle) throws JSONException {	
 		final String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};

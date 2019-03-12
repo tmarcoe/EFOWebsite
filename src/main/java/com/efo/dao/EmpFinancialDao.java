@@ -38,7 +38,7 @@ public class EmpFinancialDao implements IEmpFinancial {
 	}
 
 	@Override
-	public EmpFinancial retrieve(int user_id) {
+	public EmpFinancial retrieve(Long user_id) {
 		Session session = session();
 		EmpFinancial emp = (EmpFinancial) session.createCriteria(EmpFinancial.class).add(Restrictions.idEq(user_id)).uniqueResult();
 		session.disconnect();

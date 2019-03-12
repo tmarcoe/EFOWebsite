@@ -82,7 +82,7 @@ public class VendorController {
 	}
 	
 	@RequestMapping("editvendor")
-	public String editVendor(@ModelAttribute("user_id") int user_id, Model model) {
+	public String editVendor(@ModelAttribute("user_id") Long user_id, Model model) {
 		User user = userService.retrieve(user_id);
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 

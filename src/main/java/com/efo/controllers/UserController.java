@@ -47,14 +47,14 @@ public class UserController {
 	}
 	
 	@RequestMapping("deleteuser")
-	public String deleteUser(@ModelAttribute("user_id") int user_id) {
+	public String deleteUser(@ModelAttribute("user_id") Long user_id) {
 		userService.delete(user_id);
 
 		return "redirect:/";
 	}
 	
 	@RequestMapping("assignpassword")
-	public String assignPassword(@ModelAttribute("user_id") int user_id, Model model) {
+	public String assignPassword(@ModelAttribute("user_id") Long user_id, Model model) {
 		
 		User user = userService.retrieve(user_id);
 		user.setPassword("");

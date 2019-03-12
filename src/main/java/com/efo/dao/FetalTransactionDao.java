@@ -3,8 +3,6 @@ package com.efo.dao;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -16,11 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.efo.entity.ChartOfAccounts;
-import com.efo.entity.EachInventory;
 import com.efo.entity.GeneralLedger;
-import com.efo.entity.InventoryLedger;
-import com.efo.entity.Product;
-import com.efo.entity.SalesItem;
 
 
 
@@ -108,25 +102,6 @@ public class FetalTransactionDao {
 		}
 	}
 
-	public void inventoryLedger(char type, Double qty, Double amount, String description, Session session) {
-		
-		if (amount != 0 ) {
-			String hql = "FROM InventoryLedger ORDER BY id DESC";
-			InventoryLedger l = (InventoryLedger) session.createQuery(hql).setMaxResults(1).uniqueResult();
-			double balance = 0.0;
-			if (l != null) {
-				balance = l.getBalance();
-			}
-			InventoryLedger ledger = null;
-			if (type == 'C') {
-				ledger = new InventoryLedger(new Date(), qty, 0.0, amount, balance - amount, description);
-				session.save(ledger);
-			}else if (type == 'D') {
-				ledger = new InventoryLedger(new Date(), qty, amount, 0.0, balance + amount, description);				
-				session.save(ledger);
-			}
-		}
-	}
 	
 	public double getBalance(String account, Session session) {
 		String hql = "FROM ChartOfAccounts WHERE account_num = :account";
@@ -192,69 +167,4 @@ public class FetalTransactionDao {
 		session.merge(record);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void commitStock(Set<?> items, Session session) {
-		for (SalesItem item : (Set<SalesItem>) items) {
-			Product product = item.getProduct();
-			if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
-				commitEach(item, session);
-			}else{
-				commitFluid(item, session);
-			}
-		}
-	}
-	
-	private void commitFluid(SalesItem item, Session session) {
-		String hql = "UPDATE FluidInventory SET amt_in_stock = (amt_in_stock - :qty), amt_committed = (amt_committed + :qty) WHERE sku = :sku";
-		session.createQuery(hql).setDouble("qty", item.getQty()).setString("sku", item.getSku()).executeUpdate();
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void commitEach(SalesItem item, Session session) {
-		String hql = "FROM EachInventory WHERE sku = :sku AND received IS NOT null AND sold IS null ORDER BY received ";
-		String upd = "UPDATE EachInventory SET sold = current_date(), sold_for = :sold_for WHERE id = :id";
-		if ("LIFO".compareToIgnoreCase(inventoryType) == 0) {
-			hql = hql + "DESC";
-		}else{
-			hql = hql + "ASC";
-		}
-		int qty = new Double(item.getQty()).intValue();
-		List<EachInventory> updateList = session.createQuery(hql).setString("sku", item.getSku()).setMaxResults(qty).list();
-		for (EachInventory each : updateList) {
-			session.createQuery(upd).setDouble("sold_for", item.getSold_for()).setLong("id", each.getId()).executeUpdate();
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void depleteStock(Set<?> items, Session session) {
-		for (SalesItem item : (Set<SalesItem>) items) {
-			Product product = item.getProduct();
-			if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
-				depleteEach(item, session);
-			}else{
-				depleteFluid(item, session);
-			}
-		}
-	}
-	
-	@SuppressWarnings({"unchecked", "unused"})
-	private void depleteEach(SalesItem item, Session session) {
-		String hql = "FROM EachInventory WHERE sku = :sku AND sold IS NOT null AND shipped IS null";
-		String upd = "UPDATE EachInventory SET shipped = current_date() WHERE id = :id";
-		String del = "DELETE FROM EachInventory WHERE id = :id";
-
-		int qty = new Double(item.getQty()).intValue();
-		List<EachInventory> updateList = session.createQuery(hql).setString("sku", item.getSku()).setMaxResults(qty).list();
-		for (EachInventory each : updateList) {
-			// session.createQuery(upd).setLong("id", each.getId()).executeUpdate();
-			session.createQuery(del).setLong("id", each.getId()).executeUpdate();
-	
-		}
-	}
-
-	private void depleteFluid(SalesItem item, Session session) {
-		String hql = "UPDATE FluidInventory SET amt_committed = (amt_committed - :qty) WHERE sku = :sku";
-		session.createQuery(hql).setDouble("qty", item.getQty()).setString("sku", item.getSku()).executeUpdate();
-
-	}
 }
