@@ -1,0 +1,100 @@
+package com.efo.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+@Entity
+public class RevenueTerms implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "revenues"))
+	@Id
+	@GeneratedValue(generator = "generator")
+	private Long reference;
+	private Long down;
+	private Double interest;
+	private Long num_payments;
+	private Long remaining;
+	private Double each_payment;
+	private Double balance;
+	private Date start;
+	@Column(length = 16)
+	private String schedule;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	private Revenues revenues;
+	
+	public Long getReference() {
+		return reference;
+	}
+	public void setReference(Long reference) {
+		this.reference = reference;
+	}
+	public Long getDown() {
+		return down;
+	}
+	public void setDown(Long down) {
+		this.down = down;
+	}
+	public Double getInterest() {
+		return interest;
+	}
+	public void setInterest(Double interest) {
+		this.interest = interest;
+	}
+	public Long getNum_payments() {
+		return num_payments;
+	}
+	public void setNum_payments(Long num_payments) {
+		this.num_payments = num_payments;
+	}
+	public Long getRemaining() {
+		return remaining;
+	}
+	public void setRemaining(Long remaining) {
+		this.remaining = remaining;
+	}
+	public Double getEach_payment() {
+		return each_payment;
+	}
+	public void setEach_payment(Double each_payment) {
+		this.each_payment = each_payment;
+	}
+	public Double getBalance() {
+		return balance;
+	}
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+	public Date getStart() {
+		return start;
+	}
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	public String getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
+	}
+	public Revenues getRevenues() {
+		return revenues;
+	}
+	public void setRevenues(Revenues revenues) {
+		this.revenues = revenues;
+	}
+	
+}

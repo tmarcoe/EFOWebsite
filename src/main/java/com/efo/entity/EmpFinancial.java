@@ -20,171 +20,153 @@ public class EmpFinancial implements Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	private Long user_id;
-	private String tax_id;
-	private int	st_exempt;
-	private int fd_exempt;
-	private double hourlyRate;
-	private double fTaxPrcnt;
-	private double sTaxPrcnt;
-	private double fUnPrcnt;
-	private double sUnPrcnt;
-	private double medPrcnt;
-	private double ssiPrcnt;
-	private double retirePrcnt;
-	private double garnishment;
-	private double other;
-	private String otherExpl;
-	private String payMethod;
-	private String accountNum;
-	private String routingNum;
+	@Column(length = 20)
+	private String ssn;
+	@Column(length = 2)
+	private String status;
+	@Column(length = 1)
+	private String pay_method;
+	@Column(length = 24)
+	private String account_num;
+	@Column(length = 24)
+	private String routing_num;
+	@Column(length = 20)
+	private String ein;
 	
+	private Double rate;
+	private Double ytd_salary;
+	private Double ytd_fed;
+	private Double ytd_unemp;
+	private Double ytd_med;
+	private Double ytd_ret;
+	private Double ytd_garnish;
+	@Column(length = 1)
+	private String employee_type;
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Employee employee;
 	
-	@Column(name="USER_ID")
 	public Long getUser_id() {
 		return user_id;
 	}
+
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
-	
-	@Column(name="TAX_ID")
-	public String getTax_id() {
-		return tax_id;
+
+	public String getSsn() {
+		return ssn;
 	}
-	public void setTax_id(String taxId) {
-		this.tax_id = taxId;
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
 	}
-	
-	@Column(name="ST_EXEMPT")
-	public int getSt_exempt() {
-		return st_exempt;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setSt_exempt(int st_exempt) {
-		this.st_exempt = st_exempt;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
-	@Column(name="FD_EXEMPT")
-	public int getFd_exempt() {
-		return fd_exempt;
+
+	public String getPay_method() {
+		return pay_method;
 	}
-	public void setFd_exempt(int fd_exempt) {
-		this.fd_exempt = fd_exempt;
+
+	public void setPay_method(String pay_method) {
+		this.pay_method = pay_method;
 	}
-	@Column(name="HOURLY_RATE")
-	public double getHourlyRate() {
-		return hourlyRate;
+
+	public String getAccount_num() {
+		return account_num;
 	}
-	public void setHourlyRate(double hourlyRate) {
-		this.hourlyRate = hourlyRate;
+
+	public void setAccount_num(String account_num) {
+		this.account_num = account_num;
 	}
-	
-	@Column(name="F_TAX_PRCNT")
-	public double getfTaxPrcnt() {
-		return fTaxPrcnt;
+
+	public String getRouting_num() {
+		return routing_num;
 	}
-	public void setfTaxPrcnt(double fTaxPrcnt) {
-		this.fTaxPrcnt = fTaxPrcnt;
+
+	public void setRouting_num(String routing_num) {
+		this.routing_num = routing_num;
 	}
-	
-	@Column(name="S_TAX_PRCNT")
-	public double getsTaxPrcnt() {
-		return sTaxPrcnt;
+
+	public String getEin() {
+		return ein;
 	}
-	public void setsTaxPrcnt(double sTaxPrcnt) {
-		this.sTaxPrcnt = sTaxPrcnt;
+
+	public void setEin(String ein) {
+		this.ein = ein;
 	}
-	
-	@Column(name="F_UN_PRCNT")
-	public double getfUnPrcnt() {
-		return fUnPrcnt;
+
+	public Double getRate() {
+		return rate;
 	}
-	public void setfUnPrcnt(double fUnPrcnt) {
-		this.fUnPrcnt = fUnPrcnt;
+
+	public void setRate(Double rate) {
+		this.rate = rate;
 	}
-	
-	@Column(name="S_UN_PRCNT")
-	public double getsUnPrcnt() {
-		return sUnPrcnt;
+
+	public Double getYtd_salary() {
+		return ytd_salary;
 	}
-	public void setsUnPrcnt(double sUnPrcnt) {
-		this.sUnPrcnt = sUnPrcnt;
+
+	public void setYtd_salary(Double ytd_salary) {
+		this.ytd_salary = ytd_salary;
 	}
-	
-	@Column(name="MED_PRCNT")
-	public double getMedPrcnt() {
-		return medPrcnt;
+
+	public Double getYtd_fed() {
+		return ytd_fed;
 	}
-	public void setMedPrcnt(double medPrcnt) {
-		this.medPrcnt = medPrcnt;
+
+	public void setYtd_fed(Double ytd_fed) {
+		this.ytd_fed = ytd_fed;
 	}
-	
-	@Column(name="SSI_PRCNT")
-	public double getSsiPrcnt() {
-		return ssiPrcnt;
+
+	public Double getYtd_unemp() {
+		return ytd_unemp;
 	}
-	public void setSsiPrcnt(double ssiPrcnt) {
-		this.ssiPrcnt = ssiPrcnt;
+
+	public void setYtd_unemp(Double ytd_unemp) {
+		this.ytd_unemp = ytd_unemp;
 	}
-	
-	@Column(name="RETIRE_PRCNT")
-	public double getRetirePrcnt() {
-		return retirePrcnt;
+
+	public Double getYtd_med() {
+		return ytd_med;
 	}
-	public void setRetirePrcnt(double retirePrcnt) {
-		this.retirePrcnt = retirePrcnt;
+
+	public void setYtd_med(Double ytd_med) {
+		this.ytd_med = ytd_med;
 	}
-	
-	@Column(name="GARNISHMENT")
-	public double getGarnishment() {
-		return garnishment;
+
+	public Double getYtd_ret() {
+		return ytd_ret;
 	}
-	public void setGarnishment(double garnishment) {
-		this.garnishment = garnishment;
+
+	public void setYtd_ret(Double ytd_ret) {
+		this.ytd_ret = ytd_ret;
 	}
-	
-	@Column(name="OTHER")
-	public double getOther() {
-		return other;
+
+	public Double getYtd_garnish() {
+		return ytd_garnish;
 	}
-	public void setOther(double other) {
-		this.other = other;
+
+	public void setYtd_garnish(Double ytd_garnish) {
+		this.ytd_garnish = ytd_garnish;
 	}
-	
-	@Column(name="OTHER_EXPL")
-	public String getOtherExpl() {
-		return otherExpl;
+
+	public String getEmployee_type() {
+		return employee_type;
 	}
-	public void setOtherExpl(String otherExpl) {
-		this.otherExpl = otherExpl;
+
+	public void setEmployee_type(String employee_type) {
+		this.employee_type = employee_type;
 	}
-	
-	@Column(name="PAY_METHOD")
-	public String getPayMethod() {
-		return payMethod;
-	}
-	public void setPayMethod(String payMethod) {
-		this.payMethod = payMethod;
-	}
-	
-	@Column(name="ACCOUNT_NUM")
-	public String getAccountNum() {
-		return accountNum;
-	}
-	public void setAccountNum(String accountNum) {
-		this.accountNum = accountNum;
-	}
-	
-	@Column(name="ROUTING_NUM")
-	public String getRoutingNum() {
-		return routingNum;
-	}
-	public void setRoutingNum(String routingNum) {
-		this.routingNum = routingNum;
-	}
-	
+
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -192,7 +174,5 @@ public class EmpFinancial implements Serializable {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-		
-	
-		
+				
 }

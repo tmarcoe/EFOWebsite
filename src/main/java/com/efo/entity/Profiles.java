@@ -2,13 +2,18 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class TransactionProfiles implements Serializable {
+public class Profiles implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -22,6 +27,9 @@ public class TransactionProfiles implements Serializable {
 	private String variables;
 	private Date created;
 	private boolean active;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "profiles", cascade = CascadeType.ALL)
+	private Set<Transactions> transactions = new HashSet<Transactions>(0);
 	
 	public String getName() {
 		return name;
@@ -65,5 +73,12 @@ public class TransactionProfiles implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
+	public Set<Transactions> getTransactions() {
+		return transactions;
+	}
+	public void setTransactions(Set<Transactions> transactions) {
+		this.transactions = transactions;
+	}
+	
+	
 }

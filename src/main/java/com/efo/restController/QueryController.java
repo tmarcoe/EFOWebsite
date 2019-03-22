@@ -91,7 +91,7 @@ public class QueryController {
 		for (Employee item : e) {
 			JSONObject suggestion = new JSONObject();
 			suggestion.put("value", item.getFirstname() + " " + item.getLastname());
-			suggestion.put("data", item.getEmp_financial().getHourlyRate());
+			suggestion.put("data", item.getEmp_financial().getRate());
 			jsonArray.put(suggestion);
 		}
 		

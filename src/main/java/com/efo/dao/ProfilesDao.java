@@ -11,12 +11,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.TransactionProfiles;
-import com.efo.interfaces.ITransactionProfiles;
+import com.efo.entity.Profiles;
+import com.efo.interfaces.IProfiles;
 
 @Transactional
 @Repository
-public class TransactionProfilesDao implements ITransactionProfiles {
+public class ProfilesDao implements IProfiles {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -26,7 +26,7 @@ public class TransactionProfilesDao implements ITransactionProfiles {
 	}
 	
 	@Override
-	public void create(TransactionProfiles profiles) {
+	public void create(Profiles profiles) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(profiles);
@@ -35,10 +35,9 @@ public class TransactionProfilesDao implements ITransactionProfiles {
 	}
 
 	@Override
-	public TransactionProfiles retrieve(String name) {
+	public Profiles retrieve(String name) {
 		Session session = session();
-		TransactionProfiles profiles = (TransactionProfiles) session.createCriteria(TransactionProfiles.class)
-																	.add(Restrictions.idEq(name)).uniqueResult();
+		Profiles profiles = (Profiles) session.createCriteria(Profiles.class).add(Restrictions.idEq(name)).uniqueResult();
 		session.disconnect();
 		
 		return profiles;
@@ -46,27 +45,28 @@ public class TransactionProfilesDao implements ITransactionProfiles {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TransactionProfiles> retrieveRawList() {
+	public List<Profiles> retrieveRawList() {
 		Session session = session();
-		List<TransactionProfiles> transList = session.createCriteria(TransactionProfiles.class).list();
+		List<Profiles> profList = session.createCriteria(Profiles.class).list();
+		session.disconnect();
 		
-		return transList;
+		return profList;
 	}
 
 	@Override
-	public void update(TransactionProfiles profiles) {
+	public void merge(Profiles profiles) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.update(profiles);
+		session.merge(profiles);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public void delete(TransactionProfiles profiles) {
+	public void delete(Profiles profiles) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(profiles);
+		session.delete(profiles);
 		tx.commit();
 		session.disconnect();
 	}
