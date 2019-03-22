@@ -33,7 +33,7 @@ import com.efo.service.UserService;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personel/")
 public class CustomerController {
 	
 	@Value("${spring.mail.username}")
@@ -60,7 +60,7 @@ public class CustomerController {
 	@Autowired
 	BCryptPasswordEncoder encoder;
 
-	private final String pageLink = "/admin/customerpaging";
+	private final String pageLink = "/personel/customerpaging";
 
 	private PagedListHolder<User> customerList;
 

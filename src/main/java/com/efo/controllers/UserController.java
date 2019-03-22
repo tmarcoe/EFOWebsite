@@ -19,7 +19,7 @@ import com.efo.service.UserService;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personel/")
 public class UserController {
 	
 	@Value("${spring.mail.username}")

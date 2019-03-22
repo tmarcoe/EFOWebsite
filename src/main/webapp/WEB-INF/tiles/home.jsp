@@ -16,10 +16,10 @@
 		<ul>
 			<li><a href="#tabs-1">Login and Security</a></li>
 			<li><a href="#tabs-2">Personel</a></li>
-			<li><a href="#tabs-3">Reports</a></li>
+			<li><a href="#tabs-3">Basic Application</a></li>
 			<li><a href="#tabs-4">Accounting</a></li>
-			<li><a href="#tabs-5">Operations</a></li>
-			<li><a href="#tabs-6">Event Calendar</a></li>
+			<li><a href="#tabs-5">Event Calendar</a></li>
+			<li><a href="#tabs-6">Reports</a></li>
 
 		</ul>
 		<div id="tabs-1">
@@ -41,75 +41,31 @@
 		<div id="tabs-2">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="/admin/customerlist"><img class="tile" alt="Customer"
+					<td><a href="/personel/customerlist"><img class="tile" alt="Customer"
 							src="<c:url value='/images/customer.png'/>"></a></td>
-					<td><a href="/admin/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
-					<td><a href="/admin/employeelist"><img class="tile" alt="Employees"
+					<td><a href="/personel/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
+					<td><a href="/personel/employeelist"><img class="tile" alt="Employees"
 							src="<c:url value='/images/employees.png'/>"></a></td>
+					<td><a href="/personel/employeelist"><img class="tile" alt="Investor"
+							src="<c:url value='/images/investor.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
 		<div id="tabs-3">
 			<table class="menuTable menuTableSpace">
-				<tr>
-
-					<td><a href="#" onclick="inputDate('/accounting/cogsreport')"><img class="tile" alt="Cogs"
-							src="<c:url value='/images/cogs.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/revenuereport')"><img class="tile" alt="Income Vs Expense"
-							src="<c:url value='/images/income-expense.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/plreport')"><img class="tile" alt="Profit and Loss"
-							src="<c:url value='/images/profit-loss.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/unitssold')"><img class="tile" alt="Profit and Loss"
-							src="<c:url value='/images/units-sold.png'/>"></a></td>
-					<td><a href="#"><img class="tile" alt="System Audit" src="<c:url value='/images/audit.png'/>"></a></td>
-				</tr>
 			</table>
 		</div>
 		<div id="tabs-4">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="/accounting/ar"><img class="tile" alt="Accounts Receivable"
-							src="<c:url value='/images/receivable.png'/>"></a></td>
-					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable"
-							src="<c:url value='/images/payable.png'/>"></a></td>
-					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses"
-							src="<c:url value='/images/regular-expenses.png'/>"></a></td>
-				</tr>
-				<tr>
 					<td><a href="#" onclick="inputDate('/accounting/ledgerlist')"><img class="tile" alt="General Ledger"
 							src="<c:url value='/images/general.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/inventoryledgerlist')"><img class="tile" alt="Inventory Ledger"
-							src="<c:url value='/images/inventorygeneral.png'/>"></a></td>
 					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts"
 							src="<c:url value='/images/accounts.png'/>"></a></td>
-				</tr>
-				<tr>
-					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets"
-							src="<c:url value='/images/capitalassets.png'/>"></a></td>
-					<td><a href="/accounting/equitylist"><img class="tile" alt="Equity"
-							src="<c:url value='/images/stock.png'/>"></a></td>
-					<td><a href="/accounting/listloans"><img class="tile" alt="Obtain a Loan"
-							src="<c:url value='/images/loan.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
 		<div id="tabs-5">
-			<table class="menuTable menuTableSpace">
-				<tr>
-					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash"
-							src="<c:url value='/images/petty-cash.png'/>"></a></td>
-					<td><a href="/accounting/listbudget"><img class="tile" alt="Budget"
-							src="<c:url value='/images/budget.png'/>"></a></td>
-					<td><a href="/accounting/listapprove"><img class="tile" alt="Budget Approval"
-							src="<c:url value='/images/approval.png'/>"></a></td>
-					<td><a href="/admin/listproduct"><img class="tile" alt="Products"
-							src="<c:url value='/images/products.png'/>"></a></td>
-					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
-				</tr>
-				<tr>
-			</table>
-		</div>
-		<div id="tabs-6">
 			<table class="calendarTitle">
 				<tr>
 					<td><button class="fancy-button" type="button" onclick="reverse()" style="font-size: 14px;"><b>&lt;&lt;</b></button></td>
@@ -138,6 +94,10 @@
 						<tr></tr>
 					</c:if>
 				</c:forEach>
+			</table>
+		</div>
+		<div id="tabs-6">
+			<table class="menuTable menuTableSpace">
 			</table>
 		</div>
 	</div>

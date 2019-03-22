@@ -33,11 +33,20 @@ public class EmpFinancial implements Serializable {
 	@Column(length = 20)
 	private String ein;
 	
+	private Long exemptions;
+	
 	private Double rate;
+	private Double fed;
+	private Double state;
+	private Double medical;
+	private Double unemployment;
+	private Double retirement;
+	private Double garnishment;
 	private Double ytd_salary;
 	private Double ytd_fed;
-	private Double ytd_unemp;
+	private Double ytd_state;
 	private Double ytd_med;
+	private Double ytd_unemp;
 	private Double ytd_ret;
 	private Double ytd_garnish;
 	@Column(length = 1)
@@ -46,7 +55,7 @@ public class EmpFinancial implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Employee employee;
-	
+
 	public Long getUser_id() {
 		return user_id;
 	}
@@ -111,6 +120,62 @@ public class EmpFinancial implements Serializable {
 		this.rate = rate;
 	}
 
+	public Long getExemptions() {
+		return exemptions;
+	}
+
+	public void setExemptions(Long exemptions) {
+		this.exemptions = exemptions;
+	}
+
+	public Double getFed() {
+		return fed;
+	}
+
+	public void setFed(Double fed) {
+		this.fed = fed;
+	}
+
+	public Double getState() {
+		return state;
+	}
+
+	public void setState(Double state) {
+		this.state = state;
+	}
+
+	public Double getMedical() {
+		return medical;
+	}
+
+	public void setMedical(Double medical) {
+		this.medical = medical;
+	}
+
+	public Double getUnemployment() {
+		return unemployment;
+	}
+
+	public void setUnemployment(Double unemployment) {
+		this.unemployment = unemployment;
+	}
+
+	public Double getRetirement() {
+		return retirement;
+	}
+
+	public void setRetirement(Double retirement) {
+		this.retirement = retirement;
+	}
+
+	public Double getGarnishment() {
+		return garnishment;
+	}
+
+	public void setGarnishment(Double garnishment) {
+		this.garnishment = garnishment;
+	}
+
 	public Double getYtd_salary() {
 		return ytd_salary;
 	}
@@ -127,12 +192,12 @@ public class EmpFinancial implements Serializable {
 		this.ytd_fed = ytd_fed;
 	}
 
-	public Double getYtd_unemp() {
-		return ytd_unemp;
+	public Double getYtd_state() {
+		return ytd_state;
 	}
 
-	public void setYtd_unemp(Double ytd_unemp) {
-		this.ytd_unemp = ytd_unemp;
+	public void setYtd_state(Double ytd_state) {
+		this.ytd_state = ytd_state;
 	}
 
 	public Double getYtd_med() {
@@ -141,6 +206,14 @@ public class EmpFinancial implements Serializable {
 
 	public void setYtd_med(Double ytd_med) {
 		this.ytd_med = ytd_med;
+	}
+
+	public Double getYtd_unemp() {
+		return ytd_unemp;
+	}
+
+	public void setYtd_unemp(Double ytd_unemp) {
+		this.ytd_unemp = ytd_unemp;
 	}
 
 	public Double getYtd_ret() {
@@ -170,9 +243,9 @@ public class EmpFinancial implements Serializable {
 	public Employee getEmployee() {
 		return employee;
 	}
-	
+
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-				
+					
 }

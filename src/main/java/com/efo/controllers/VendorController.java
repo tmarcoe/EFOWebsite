@@ -31,7 +31,7 @@ import com.efo.service.UserService;
 import com.efo.service.VendorService;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personel/")
 public class VendorController {
 	
 	@Value("${spring.mail.username}")
@@ -56,7 +56,7 @@ public class VendorController {
 	RoleService roleService;
 	
 
-	private final String pageLink = "/admin/vendorpaging";
+	private final String pageLink = "/personel/vendorpaging";
 
 	private PagedListHolder<User> vendorList;
 

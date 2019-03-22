@@ -22,13 +22,13 @@
 	<definition name="access-denied" extends="accounting.base">
 		<put-attribute name="title" value="Access Denied"></put-attribute>
 		<put-attribute name="heading_title" value="Access Denied"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/access-denied.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/static/access-denied.jsp"></put-attribute>
 	</definition>
 
 	<definition name="error" extends="accounting.base">
 		<put-attribute name="title" value="Error"></put-attribute>
 		<put-attribute name="heading_title" value="Error"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/error.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/static/error.jsp"></put-attribute>
 	</definition>
 	
 	<!-- Home controller -->

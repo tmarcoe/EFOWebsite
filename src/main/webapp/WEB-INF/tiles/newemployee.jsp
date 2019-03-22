@@ -135,48 +135,42 @@
 		<div class="modal-content medium-large-modal fancy">
 			<table>
 				<tr>
-					<th>Tax ID</th>
-					<th>State Exemptions</th>
-					<th>Federal Exemptioins</th>
+					<th>SSN</th>
+					<th>Marital Status</th>
+					<th>Exemptions</th>
+					<th>Employee Number</th>
 				</tr>
 				<tr>
-					<td><sf:input class="fancy" type="text" path="employee.emp_financial.tax_id" /></td>
-					<td><sf:input class="fancy" type="number" step="1" path="employee.emp_financial.st_exempt" /></td>
-					<td><sf:input class="fancy" type="number" step="1" path="employee.emp_financial.fd_exempt"/></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.ssn" /></td>
+					<td><sf:select  class="fancy" path="employee.emp_financial.status">
+						<sf:option value="S">Single</sf:option>
+						<sf:option value="M">Married</sf:option>
+						<sf:option value="MH">Married Higher Rate</sf:option>
+					</sf:select></td>
+					<td><sf:input class="fancy" type="number" step="1" path="employee.emp_financial.exemptions" /></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.ein"/></td>
 				</tr>
 				<tr>
 					<td>Hourly Rate</td>
 					<td>% Federal Tax</td>
 					<td>% State Tax</td>
-					<td>% Fed Unemployment</td>
+					<td>% Unemployment</td>
 				</tr>
 				<tr>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.hourlyRate" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.fTaxPrcnt" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.sTaxPrcnt" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.fUnPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.rate" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.fed" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.state" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.unemployment" /></td>
 				</tr>
 				<tr>
-					<td>% St Unemployment</td>
 					<td>% Medical</td>
-					<td>% SSI</td>
-					<td>% Ret</td>
+					<td>% Retirement</td>
+					<td>% Garnishment</td>
 				</tr>
 				<tr>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.sUnPrcnt" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.medPrcnt" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.ssiPrcnt" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.retirePrcnt" /></td>
-				</tr>
-				<tr>
-					<td>Garnishment</td>
-					<td>Other</td>
-					<td>Reason</td>
-				</tr>
-				<tr>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.medical" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.retirement" /></td>
 					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.garnishment" /></td>
-					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.other" /></td>
-					<td><sf:input class="fancy" type="text" path="employee.emp_financial.otherExpl" /></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -188,17 +182,17 @@
 				</tr>
 
 				<tr>
-					<td>Payment Type</td>
+					<td>Payment Method</td>
 					<td>Account Number</td>
 					<td>Routing Number</td>
 				</tr>
 				<tr>
-					<td><sf:select class="fancy" type="text" path="employee.emp_financial.payMethod">
-						<sf:option value="Check">Check</sf:option>
-						<sf:option value="Automatic Deposit">Automatic Deposit</sf:option>
+					<td><sf:select class="fancy" type="text" path="employee.emp_financial.pay_method">
+						<sf:option value="C">Check</sf:option>
+						<sf:option value="D">Direct Deposit</sf:option>
 					</sf:select></td>
-					<td><sf:input class="fancy" type="text" path="employee.emp_financial.accountNum" /></td>
-					<td><sf:input class="fancy" type="text" path="employee.emp_financial.routingNum" /></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.account_num" /></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.routing_num" /></td>
 				</tr>
 				<tr>
 					<td><button class="fancy-button" type="button" onclick="closePopup();">Save</button></td>
