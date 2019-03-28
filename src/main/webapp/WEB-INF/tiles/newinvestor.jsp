@@ -6,37 +6,50 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="vendor" method="post" action="/personel/addvendor" modelAttribute="user">
+<sf:form id="vendor" method="post" action="/personel/addinvestor" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
 		<thead>
 			<tr>
 				<td><sf:hidden path="user_id" /></td>
 				<td><sf:hidden path="common.user_id" /></td>
-				<td><sf:hidden path="vendor.user_id" /></td>
+				<td><sf:hidden path="investor.user_id" /></td>
 			</tr>
 		</thead>
 		<tr>
-			<td colspan="6"><b>Company Name: </b><sf:input class="fancy" path="vendor.company_name" size="50"/></td>
+			<td><b>First Name</b><br>
+				<sf:input class="fancy" path="investor.firstname" />
+			</td>
+			<td><b>Last Name</b><br>
+				<sf:input class="fancy" path="investor.lastname" />
+			</td>
+			<td><b>Male/Female</b><br>
+				<sf:select class="fancy" path="investor.male_female">
+					<sf:option value="">--- Select ---</sf:option>
+					<sf:option value="M">Male</sf:option>
+					<sf:option value="F">Female</sf:option>
+				</sf:select>
+			</td>
 		</tr>
 		<tr>
-			<td><sf:errors path="vendor.company_name" class="error" /></td>
+			<td><sf:errors path="investor.firstname" class="error" /></td>
+			<td><sf:errors path="investor.lastname" class="error" /></td>
+			<td><sf:errors path="investor.male_female" class="error" /></td>	
 		</tr>
 		<tr>
-			<td colspan="3"><b>Contanct: </b>
-			<sf:select class="fancy" path="vendor.salutation">
-					<sf:option value="Mr.">Mr.</sf:option>
-					<sf:option value="Mrs.">Mrs.</sf:option>
-					<sf:option value="Ms.">Ms.</sf:option>
-					<sf:option value="Miss.">Miss.</sf:option>
-					<sf:option value="Dr.">Dr.</sf:option>
-				</sf:select> <sf:input class="fancy" path="vendor.firstname" placeholder="First Name" /> <sf:input class="fancy"
-					path="vendor.lastname" placeholder="Last Name" /></td>
+			<td><b>Number of Shares</b><br>
+				<sf:input class="fancy" type="number" step=".01" path="investor.shares"/>
+			</td>
+			<td><b>Started On</b><br>
+				<sf:input class="fancy" type="date" path="investor.since" />
+			</td>
+			<td><b>Preferred Stock? </b>
+				<sf:checkbox path="investor.preferred"/>
+			</td>
 		</tr>
 		<tr>
-			<td><sf:errors path="vendor.salutation" class="error" /></td>
-			<td><sf:errors path="vendor.firstname" class="error" /></td>
-			<td><sf:errors path="vendor.lastname" class="error" /></td>
+			<td><sf:errors path="investor.shares" class="error" /></td>
+			<td><sf:errors path="investor.since" class="error" /></td>
 		</tr>
 		<tr>
 			<td><b>Address 1</b><br>
@@ -63,27 +76,6 @@
 			<td><sf:errors path="common.region" class="error" /></td>
 			<td><sf:errors path="common.postalCode" class="error" /></td>
 			<td><sf:errors path="common.country" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Vendor Type</b><br><sf:select class="fancy" path="vendor.type">
-					<sf:option value="C">Capital</sf:option>
-					<sf:option value="R">Revenue</sf:option>
-					<sf:option value="O">Overhead</sf:option>
-					<sf:option value="L">Lending Institution</sf:option>
-				</sf:select></td>
-			<td><b>Type of Product</b><br>
-				<sf:input class="fancy" path="vendor.category" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="vendor.type" class="error" /></td>
-			<td><sf:errors path="vendor.category" class="error" /></td>
-		</tr>
-		<tr>
-			<td colspan="3"><b>Keywords: (Separated by commas)</b><br>
-				<sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="58" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="vendor.keywords" /></td>
 		</tr>
 		<tr>
 			<td><b>Email</b><br

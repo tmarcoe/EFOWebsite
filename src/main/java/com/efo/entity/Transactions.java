@@ -21,6 +21,7 @@ public class Transactions implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
 	private Date timestamp;
+	private Double amount;
 	@Column(length = 16)
 	private String name;
 	private Double down;
@@ -48,6 +49,14 @@ public class Transactions implements Serializable {
 
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	public String getName() {

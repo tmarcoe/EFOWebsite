@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.efo.dao.InvestorDao;
 import com.efo.entity.Investor;
+import com.efo.entity.User;
 import com.efo.interfaces.IInvestor;
 
 @Service
@@ -34,6 +35,10 @@ public class InvestorService implements IInvestor {
 	public PagedListHolder<Investor> retrieveList() {
 		
 		return new PagedListHolder<Investor>(investorDao.retrieveRawList());
+	}
+	
+	public PagedListHolder<User> retrieveEditList() {
+		return new PagedListHolder<User>(investorDao.retrieveEditList());
 	}
 
 	@Override

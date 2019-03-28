@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.TransactionsDao;
@@ -29,6 +30,10 @@ public class TransactionsService implements ITransactions {
 	@Override
 	public List<Transactions> retrieveRawList(Date begin, Date end) {
 		return transactionsDao.retrieveRawList(begin, end);
+	}
+	
+	public PagedListHolder<Transactions> retrieveList(Date begin, Date end) {
+		return new PagedListHolder<Transactions>(transactionsDao.retrieveRawList(begin, end));
 	}
 
 	@Override

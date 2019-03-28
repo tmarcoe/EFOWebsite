@@ -48,7 +48,7 @@ public class TransactionsDao implements ITransactions {
 	@Override
 	public List<Transactions> retrieveRawList(Date begin, Date end) {
 		Session session = session();
-		List<Transactions> transList = session.createCriteria(Transactions.class).add(Restrictions.between("DATE(timestamp)", begin, end)).list();
+		List<Transactions> transList = session.createCriteria(Transactions.class).add(Restrictions.between("timestamp", begin, end)).list();
 		session.disconnect();
 		
 		return transList;

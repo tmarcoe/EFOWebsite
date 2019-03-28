@@ -16,10 +16,10 @@
 		<thead>
 			<tr>
 				<th>user ID</th>
-				<th>Compnay Name</th>
-				<th>Vendor Type</th>
 				<th>First Name</th>
 				<th>Last Name</th>
+				<th>Shares Purchased</th>
+				<th>Preferred?</th>
 				<th>Email</th>
 				<th colspan="3">&nbsp;</th>
 			</tr>
@@ -27,12 +27,12 @@
 		<c:forEach var="user" items="${objectList.pageList}" >
 			<tr>
 				<td><fmt:formatNumber type="number" pattern="00000000" value="${user.user_id}" />  </td>
-				<td>${user.vendor.company_name}</td>
-				<td>${user.vendor.type}</td>
-				<td>${user.vendor.firstname}</td>
-				<td>${user.vendor.lastname}</td>
+				<td>${user.investor.firstname}</td>
+				<td>${user.investor.lastname}</td>
+				<td><fmt:formatNumber type="number" maxFractionDigits = "3" value = "${user.investor.shares}" /></td>
+				<td>${user.investor.preferred}</td>
 				<td>${user.username}</td>
-				<td><button type="button" onclick="window.location.href='/personel/editvendor?user_id=${user.user_id}'">Edit</button></td>
+				<td><button type="button" onclick="window.location.href='/personel/editinvestor?user_id=${user.user_id}'">Edit</button></td>
 				<td><button type="button" onclick="deleteUser('${user.user_id}')">Delete</button></td>
 				<c:choose>
 					<c:when test="${user.enabled == true}">
@@ -46,10 +46,7 @@
 		</c:forEach>
 		<tfoot class="tablefooter" >
 			<tr>
-				<td colspan="9">Vendor types: C = Capital Equipment, R = Retail, O = Overhead expense, L = Lending institution</td>
-			</tr>
-			<tr>
-				<td colspan="8"><button type="button" onclick="window.location.href = '/personel/newvendor'" >New Vendor</button></td>
+				<td colspan="8"><button type="button" onclick="window.location.href = '/personel/newinvestor'" >New Investor</button></td>
 				<td colspan="1"><button type="button" onclick="window.location.href = '/#tabs-2'">Back</button></td>
 			</tr>
 		</tfoot>

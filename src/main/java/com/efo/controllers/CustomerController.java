@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,23 +42,20 @@ public class CustomerController {
 			+ "Please change it as soon as possible to avoid any sercurity breaches.";
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 	
 	@Autowired
 	private SendEmail sendEmail;
 	
 	@Autowired 
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	RoleUtilities roleUtils;
+	private RoleUtilities roleUtils;
 	
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
-	@Autowired
-	BCryptPasswordEncoder encoder;
-
 	private final String pageLink = "/personel/customerpaging";
 
 	private PagedListHolder<User> customerList;
@@ -110,7 +106,7 @@ public class CustomerController {
 		
 		userService.merge(user);
 		
-		return "redirect:/admin/customerlist";
+		return "redirect:/personel/customerlist";
 	}
 	
 	@RequestMapping("newcustomer")
@@ -159,7 +155,7 @@ public class CustomerController {
 		}
 		userService.create(user);
 		
-		return "redirect:/admin/customerlist";
+		return "redirect:/personel/customerlist";
 	}
 	
 	@RequestMapping("choosecustomer")

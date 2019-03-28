@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 
-<sf:form id="details" method="post" action="/admin/updatecustomer" modelAttribute="user">
+<sf:form id="details" method="post" action="/personel/updatecustomer" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
 		<tr>

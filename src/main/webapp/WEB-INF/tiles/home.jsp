@@ -33,7 +33,7 @@
 					<sec:isNotAuthenticated>
 						<td><a href="/login"><img class="tile" alt="Login" src="<c:url value='/images/login.png'/>"></a></td>
 					</sec:isNotAuthenticated>
-					<td><a href="/admin/listroles"><img class="tile" alt="Roles"
+					<td><a href="/personel/listroles"><img class="tile" alt="Roles"
 							src="<c:url value='/images/security-roles.png'/>"></a></td>
 				</tr>
 			</table>
@@ -46,13 +46,20 @@
 					<td><a href="/personel/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
 					<td><a href="/personel/employeelist"><img class="tile" alt="Employees"
 							src="<c:url value='/images/employees.png'/>"></a></td>
-					<td><a href="/personel/employeelist"><img class="tile" alt="Investor"
+					<td><a href="/personel/investorlist"><img class="tile" alt="Investor"
 							src="<c:url value='/images/investor.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
 		<div id="tabs-3">
 			<table class="menuTable menuTableSpace">
+				<tr>
+					<td><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
+							src="<c:url value='/images/transactions.png'/>"></a></td>
+				
+					<td><a href="/basic/profileslist"><img class="tile" alt="Profiles"
+							src="<c:url value='/images/profile.png'/>"></a></td>
+				</tr>
 			</table>
 		</div>
 		<div id="tabs-4">

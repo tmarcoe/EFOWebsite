@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.efo.entity.Investor;
+import com.efo.entity.User;
 import com.efo.interfaces.IInvestor;
 
 @Transactional
@@ -53,6 +54,18 @@ public class InvestorDao implements IInvestor {
 		return investList;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<User> retrieveEditList() {
+		String sql = "FROM User AS u WHERE EXISTS (FROM Investor AS i WHERE i.user_id = u.user_id)";
+	
+		Session session = session();
+		List<User> chooseList = session.createQuery(sql).list();
+		session.disconnect();
+	
+	return chooseList;
+
+	}
+	
 	@Override
 	public void update(Investor investor) {
  		Session session = session();

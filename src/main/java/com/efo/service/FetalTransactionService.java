@@ -1,7 +1,6 @@
 package com.efo.service;
 
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.FetalTransactionDao;
+import com.efo.entity.Profiles;
+import com.efo.entity.Transactions;
 import com.ftl.helper.FetalTransaction;
 import com.ftl.helper.VariableType;
 
@@ -61,13 +62,24 @@ public class FetalTransactionService extends FetalTransaction {
 		return result;
 	}
 	
-	
-	public void replenishPettyCash( double pettyCashCeiling) throws IOException {
+	public void execTransaction(Profiles profile, Transactions transactions, Object... values) throws Exception {
+		
 		try {
 			initTransaction(filePath);
-			publish("pettyCashCeiling", VariableType.DECIMAL, pettyCashCeiling);
-			loadRule("petty_cash/replenishpc.trans");
+			if ("".compareTo(profile.getVariables()) !=0 ) {
+				String[] parms = profile.getVariables().split(";");
+				if (values != null) {
+					if (parms.length != values.length) {
+						throw new Exception("Mismatch between parameters and values");
+					}
+					for (int i=0; i < parms.length; i++) {
+						String[] parmComponents = parms[i].split(",");
+						publish(parmComponents[0], StringToEnum(parmComponents[1]), values[i]);
+					}
+				}
 			}
+			loadRule(profile.getScript());
+		}
 		finally {
 			closeFetal();
 			Transaction tx = transDao.getTrans();
@@ -77,9 +89,8 @@ public class FetalTransactionService extends FetalTransaction {
 				session.disconnect();
 			}
 		}
+		
 	}
-
-	
 
 	/******************************************************
 	 * Overridden methods
@@ -186,6 +197,45 @@ public class FetalTransactionService extends FetalTransaction {
 	@Override
 	public void inventoryLedger(char type, Double qty, Double amount, String description) {
 	
+	}
+	
+	private VariableType StringToEnum(String param) {
+		VariableType result = VariableType.NUMBER;
+		
+		switch (param.toLowerCase()) {
+			case "number":
+				result = VariableType.NUMBER;
+				break;
+				
+			case "deciamal":
+				result = VariableType.DECIMAL;
+				break;
+				
+			case "string":
+				result = VariableType.STRING;
+				break;
+				
+			case "date":
+				result = VariableType.DATE;
+				break;
+				
+			case "dao":
+				result = VariableType.DAO;
+				break;
+				
+			case "object":
+				result = VariableType.OBJECT;
+				break;
+				
+			case "boolean":
+				result = VariableType.BOOLEAN;
+				break;
+
+			default:
+				break;	
+		}
+		
+		return result;
 	}
 
 }

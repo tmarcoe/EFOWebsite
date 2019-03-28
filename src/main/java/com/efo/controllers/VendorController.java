@@ -105,7 +105,7 @@ public class VendorController {
 		user.getVendor().setUser(user);
 		userService.merge(user);
 		
-		return "redirect:/admin/vendorlist";
+		return "redirect:/personel/vendorlist";
 	}
 	
 	@RequestMapping("newvendor")
@@ -152,7 +152,7 @@ public class VendorController {
 		}
 		userService.create(user);
 		
-		return "redirect:/admin/vendorlist";
+		return "redirect:/personel/vendorlist";
 	}
 	
 	@RequestMapping(value = "vendorpaging", method = RequestMethod.GET)

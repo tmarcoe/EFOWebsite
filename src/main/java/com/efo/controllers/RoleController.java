@@ -12,13 +12,13 @@ import com.efo.entity.Role;
 import com.efo.service.RoleService;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personel/")
 public class RoleController {
 	
 	@Autowired
 	RoleService roleService;
 	
-	private final String pageLink = "/admin/rolepaging";
+	private final String pageLink = "/personel/rolepaging";
 	PagedListHolder<Role> listRoles;
 	
 	@RequestMapping("listroles")
@@ -38,7 +38,7 @@ public class RoleController {
 		
 		roleService.create(r);
 		
-		return "redirect:/admin/listroles";
+		return "redirect:/personel/listroles";
 	}
 	
 	@RequestMapping(value = "rolepaging", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class RoleController {
 		model.addAttribute("objectList", listRoles);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listcustomers";
+		return "listroles";
 	}
 
 	/**************************************************************************************************************************************

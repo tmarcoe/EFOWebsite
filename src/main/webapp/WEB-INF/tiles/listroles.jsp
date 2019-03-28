@@ -42,6 +42,6 @@
 	}
 	function addRole() {
 		var r = document.getElementById('newrole');
-		window.location.href = '/admin/addrole?role=' + r.value;
+		window.location.href = '/personel/addrole?role=' + r.value;
 	}
 </script>
