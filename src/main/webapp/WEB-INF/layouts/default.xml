@@ -214,8 +214,8 @@
 	</definition>
 	
 	<definition name="viewtranaction" extends="accounting.base">
-		<put-attribute name="title" value="Edit Transaction"></put-attribute>
-		<put-attribute name="heading_title" value="Edit Transaction"></put-attribute>
+		<put-attribute name="title" value="View Transaction"></put-attribute>
+		<put-attribute name="heading_title" value="View Transaction"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/viewtransaction.jsp"></put-attribute>
 	</definition>
 	
@@ -225,6 +225,18 @@
 		<put-attribute name="heading_title" value="Profiles"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/profileslist.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newprofile" extends="accounting.base">
+		<put-attribute name="title" value="New Profile"></put-attribute>
+		<put-attribute name="heading_title" value="New Profile"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newprofile.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editprofile" extends="accounting.base">
+		<put-attribute name="title" value="Edit Profile"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Profile"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editprofile.jsp"></put-attribute>
 	</definition>
 	
 </tiles-definitions>

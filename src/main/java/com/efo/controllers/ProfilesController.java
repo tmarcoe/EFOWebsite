@@ -53,11 +53,18 @@ public class ProfilesController {
 	@RequestMapping("newprofile")
 	public String newProfile(Model model) {
 		
+		Profiles profile = new Profiles();
+		profile.setCreated(new Date());
+		
+		model.addAttribute("profile", profile);
+		
 		return "newprofile";
 	}
 	
 	@RequestMapping("addprofile")
 	public String addProfile(@Valid @ModelAttribute("profile") Profiles profile, BindingResult result) {
+		
+		profilesService.create(profile);
 		
 		return "redirect:/basic/profileslist";
 	}
@@ -65,11 +72,17 @@ public class ProfilesController {
 	@RequestMapping("editprofile")
 	public String editProfile(@ModelAttribute("name") String name, Model model) {
 		
+		Profiles profile = profilesService.retrieve(name);
+		
+		model.addAttribute("profile", profile);
+		
 		return "editprofile";
 	}
 	
 	@RequestMapping("updateprofile")
 	public String updateProfile(@Valid @ModelAttribute("profile") Profiles profile, BindingResult result) {
+		
+		profilesService.merge(profile);
 		
 		return "redirect:/basic/profileslist";
 	}

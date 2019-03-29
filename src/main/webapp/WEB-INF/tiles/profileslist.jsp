@@ -9,7 +9,6 @@
 			<th>Name</th>
 			<th>Script File</th>
 			<th>Payment Terms?</th>
-			<th>Capital Asset?</th>
 			<th>Created On</th>
 			<th>Active</th>
 			<th>&nbsp;</th>
@@ -20,15 +19,14 @@
 			<td>${item.name}</td>
 			<td>${item.script}</td>
 			<td>${item.terms}</td>
-			<td>${item.depreciation}</td>
-			<td><fmt:formatDate value="${item.entryDate}" /></td>
+			<td><fmt:formatDate value="${item.created}" /></td>
 			<td>${item.active}</td>
-			<td><button type="button" onclick="window.location.href='/basic/editprofile'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href='/basic/editprofile?name=${item.name}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="6"><button type="button" onclick="window.location.href='/basic/newprofile'">New Profile</button></td>
+			<td colspan="5"><button type="button" onclick="window.location.href='/basic/newprofile'">New Profile</button></td>
 			<td><button type="button" onclick="window.location.href='/#tabs-3'">Back</button></td>
 		</tr>
 	</tfoot>
