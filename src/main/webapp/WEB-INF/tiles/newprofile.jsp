@@ -17,10 +17,17 @@
 				<sf:checkbox class="fancy" path="terms"/></td>
 		</tr>
 		<tr>
+			<sf:errors path="name" class="error" />
+			<sf:errors path="script" class="error" />
+		</tr>
+		<tr>
 			<td><b>Created On: </b><br>
 				<sf:input class="fancy" type="date" path="created" /></td>
 			<td><b>Active: </b>
 				<sf:checkbox class="fancy" path="active" checked="true" /></td>
+		</tr>
+		<tr>
+			<sf:errors path="created" class="error" />
 		</tr>
 		<tr>
 			<td colspan="2"><b>Extra Variables: </b><br>

@@ -18,13 +18,13 @@
 			<td><fmt:formatNumber type="number" pattern="00000000" value="${item.reference}" /></td>
 			<td>${item.name}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.amount}" /></td>
-			<td><fmt:formatDate value="${item.entryDate}" /></td>
-			<td><button type="button" onclick="window.location.href='/basic/viewtranaction'">View Details</button></td>
+			<td><fmt:formatDate value="${item.timestamp}" /></td>
+			<td><button type="button" onclick="window.location.href='/basic/viewtransaction?reference=${item.reference}'">View Details</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="4"><button type="button" onclick="window.location.href='/basic/newtranaction'">New Transaction</button></td>
+			<td colspan="4"><button type="button" onclick="window.location.href='/basic/newtransaction'">New Transaction</button></td>
 			<td><button type="button" onclick="window.location.href='/#tabs-3'">Back</button></td>
 		</tr>
 	</tfoot>

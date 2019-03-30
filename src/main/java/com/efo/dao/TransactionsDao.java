@@ -47,8 +47,9 @@ public class TransactionsDao implements ITransactions {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Transactions> retrieveRawList(Date begin, Date end) {
+		String hql = "From Transactions WHERE DATE(timestamp) BETWEEN DATE(:begin) AND DATE(:end)";
 		Session session = session();
-		List<Transactions> transList = session.createCriteria(Transactions.class).add(Restrictions.between("timestamp", begin, end)).list();
+		List<Transactions> transList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
 		session.disconnect();
 		
 		return transList;

@@ -207,13 +207,13 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="newtranaction" extends="accounting.base">
+	<definition name="newtransaction" extends="accounting.base">
 		<put-attribute name="title" value="New Transaction"></put-attribute>
 		<put-attribute name="heading_title" value="New Transaction"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/newtransaction.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="viewtranaction" extends="accounting.base">
+	<definition name="viewtransaction" extends="accounting.base">
 		<put-attribute name="title" value="View Transaction"></put-attribute>
 		<put-attribute name="heading_title" value="View Transaction"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/viewtransaction.jsp"></put-attribute>
