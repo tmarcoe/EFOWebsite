@@ -185,16 +185,6 @@ public class FetalTransactionService extends FetalTransaction {
 	}
 
 	@Override
-	public void commitStock(Set<?> items) {
-	
-	}
-
-	@Override
-	public void depleteStock(Set<?> items) {
-		
-	}
-
-	@Override
 	public void inventoryLedger(char type, Double qty, Double amount, String description) {
 	
 	}
