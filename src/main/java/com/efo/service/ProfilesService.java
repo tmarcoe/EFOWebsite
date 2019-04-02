@@ -37,9 +37,6 @@ public class ProfilesService implements IProfiles {
 		return new PagedListHolder<Profiles>(profilesDao.retrieveRawList());
 	}
 
-	public List<String> retrieveNames() {
-		return profilesDao.retrieveNames();
-	}
 	@Override
 	public void merge(Profiles profiles) {
 		profilesDao.merge(profiles);
