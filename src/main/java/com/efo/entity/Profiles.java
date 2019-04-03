@@ -17,7 +17,7 @@ public class Profiles implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(length = 16)
+	@Column(length = 128)
 	private String name;
 	@Column(length = 64)
 	private String script;

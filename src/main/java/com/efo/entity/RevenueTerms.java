@@ -22,7 +22,7 @@ public class RevenueTerms implements Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	private Long reference;
-	private Long down;
+	private Double down;
 	private Double interest;
 	private Long num_payments;
 	private Long remaining;
@@ -31,6 +31,7 @@ public class RevenueTerms implements Serializable {
 	private Date start;
 	@Column(length = 16)
 	private String schedule;
+	private boolean compound;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
@@ -42,10 +43,10 @@ public class RevenueTerms implements Serializable {
 	public void setReference(Long reference) {
 		this.reference = reference;
 	}
-	public Long getDown() {
+	public Double getDown() {
 		return down;
 	}
-	public void setDown(Long down) {
+	public void setDown(Double down) {
 		this.down = down;
 	}
 	public Double getInterest() {
@@ -89,6 +90,12 @@ public class RevenueTerms implements Serializable {
 	}
 	public void setSchedule(String schedule) {
 		this.schedule = schedule;
+	}
+	public boolean isCompound() {
+		return compound;
+	}
+	public void setCompound(boolean compound) {
+		this.compound = compound;
 	}
 	public Revenues getRevenues() {
 		return revenues;

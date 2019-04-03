@@ -52,6 +52,15 @@ public class ProfilesDao implements IProfiles {
 		
 		return profList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> retrieveNames() {
+		String hql = "SELECT name FROM Profiles";
+		Session session = session();
+		List<String> names = session.createQuery(hql).list();
+		
+		return names;
+	}
 
 	@Override
 	public void merge(Profiles profiles) {

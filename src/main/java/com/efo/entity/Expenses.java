@@ -25,7 +25,7 @@ public class Expenses implements Serializable {
 	private Double amount;
 	private boolean payments;
 	@Column(length = 1024)
-	private String description;
+	private String descr;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "expenses", cascade = CascadeType.ALL)
 	private ExpenseTerms expenseTerms;
@@ -60,11 +60,11 @@ public class Expenses implements Serializable {
 	public void setPayments(boolean payments) {
 		this.payments = payments;
 	}
-	public String getDescription() {
-		return description;
+	public String getDescr() {
+		return descr;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescr(String descr) {
+		this.descr = descr;
 	}
 	public ExpenseTerms getExpenseTerms() {
 		return expenseTerms;

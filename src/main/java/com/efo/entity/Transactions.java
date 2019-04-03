@@ -22,14 +22,16 @@ public class Transactions implements Serializable {
 	private Long reference;
 	private Date timestamp;
 	private Double amount;
-	@Column(length = 16)
+	@Column(length = 128)
 	private String name;
 	private Double down;
 	private Double interest;
 	private Long num_payments;
 	private Double each_payment;
+	private Date start;
+	private String schedule;
 	@Column(length = 1024)
-	private String description;
+	private String descr;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="NAME", referencedColumnName ="NAME", nullable = false, insertable=false, updatable=false )
@@ -99,12 +101,28 @@ public class Transactions implements Serializable {
 		this.each_payment = each_payment;
 	}
 
-	public String getDescription() {
-		return description;
+	public Date getStart() {
+		return start;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public String getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
+	}
+
+	public String getDescr() {
+		return descr;
+	}
+
+	public void setDescr(String descr) {
+		this.descr = descr;
 	}
 
 	public Profiles getProfiles() {

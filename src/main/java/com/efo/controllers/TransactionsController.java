@@ -1,5 +1,6 @@
 package com.efo.controllers;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -66,7 +67,10 @@ public class TransactionsController {
 	@RequestMapping("newtranaction")
 	public String newTransaction(Model model) {
 		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(transaction.getTimestamp());
 		
+		model.addAttribute("namesList", profilesService.retrieveNames());
 		model.addAttribute("transaction", transaction);
 		
 		return "newtransaction";
@@ -74,7 +78,7 @@ public class TransactionsController {
 	
 	@RequestMapping("addTransaction")
 	public String addTransaction(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result) throws NumberFormatException, Exception {
-		
+		Object[] variables = null;
 		if (result.hasErrors()) {
 			
 			return "newtransaction";
@@ -82,14 +86,12 @@ public class TransactionsController {
 
 		String profileName = transaction.getName();
 		Profiles profile = profilesService.retrieve(profileName);
-		if (profileName.contains("Retail Sales")) {
-			if ("".compareTo(profile.getVariables()) == 0 ) {
-				profile.setVariables("taxRate,decimal");
-			}
-			fetalTransactionService.execTransaction(profile, transaction, Double.valueOf(taxRate));	
-		}else{
-			fetalTransactionService.execTransaction(profile, transaction);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
 		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
 		
 		transactionsService.create(transaction);
 		
@@ -145,5 +147,49 @@ public class TransactionsController {
 		return retInt;
 	}
 
+	private Object[] getObject(String varString) throws ParseException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		final String daoPath = "com.efo.entity.";
+		String[] vars = varString.split(";");
+		Object[] result = new Object[vars.length];
+		
+		if (varString.toLowerCase().contains("%tax%")) {
+			varString.replace("%tax%", taxRate);
+		}
+		
+		for (int i=0; i < vars.length; i++) {
+			String[] parms = vars[i].split(",");
+			switch(parms[1].toLowerCase()) {
+				case "decimal":
+					result[i] = (Double) Double.valueOf(parms[2]);
+					break;
+				case "number":
+					result[i] = (Long) Long.valueOf(parms[2]);
+					break;
+				case "string":
+					result[i] = (String) parms[2];
+					break;
+				case "date":
+					result[i] = (Date) dateFormat.parse(parms[2]);
+					break;
+				case "boolean":
+					if ("true".compareTo(parms[2]) == 0) {
+						result[i] = (Boolean) true;
+					}else{
+						result[i] = (Boolean) false;
+					}
+					break;
+				case "object":
+					result[i] = Class.forName(parms[2]).newInstance();
+					break;
+				case "dao":
+					result[i] = Class.forName(daoPath + parms[2]).newInstance(); 
+					break;
+				default:
+					result[i] = null;
+					break;
+			}
+		}
+		return null;
+	}
 }
 

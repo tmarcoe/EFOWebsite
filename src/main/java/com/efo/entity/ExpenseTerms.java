@@ -22,7 +22,7 @@ public class ExpenseTerms implements Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	private Long reference;
-	private Long down;
+	private Double down;
 	private Double interest;
 	private Long num_payments;
 	private Long remaining;
@@ -42,10 +42,10 @@ public class ExpenseTerms implements Serializable {
 	public void setReference(Long reference) {
 		this.reference = reference;
 	}
-	public Long getDown() {
+	public Double getDown() {
 		return down;
 	}
-	public void setDown(Long down) {
+	public void setDown(Double down) {
 		this.down = down;
 	}
 	public Double getInterest() {
