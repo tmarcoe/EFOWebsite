@@ -50,6 +50,26 @@
 	</definition>
 
 		
+	<!-- Chart Of Accounts Controller -->
+	<definition name="accountslist" extends="accounting.base">
+		<put-attribute name="title" value="Chart Of Accounts"></put-attribute>
+		<put-attribute name="heading_title" value="Chart Of Accounts"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/accountslist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newaccount" extends="accounting.base">
+		<put-attribute name="title" value="New Account"></put-attribute>
+		<put-attribute name="heading_title" value="New Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newaccount.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editaccount" extends="accounting.base">
+		<put-attribute name="title" value="Edit Account"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editaccount.jsp"></put-attribute>
+	</definition>
+		
 	<!-- General Ledger Controller -->
 	<definition name="ledgerlist" extends="accounting.base">
 		<put-attribute name="title" value="General Ledger"></put-attribute>
@@ -171,34 +191,6 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 
-	<!-- Budget Item Controller -->
-	<definition name="listbudgetitems" extends="accounting.base">
-		<put-attribute name="title" value="Budget Categories"></put-attribute>
-		<put-attribute name="heading_title" value="Budget Categories"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/listbudgetitems.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
-	</definition>
-	
-	<definition name="editbudgetitem" extends="accounting.base">
-		<put-attribute name="title" value="Edit Budget Item"></put-attribute>
-		<put-attribute name="heading_title" value="Edit Budget Item"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/editbudgetitem.jsp"></put-attribute>
-	</definition>
-	
-	<definition name="newbudgetitem" extends="accounting.base">
-		<put-attribute name="title" value="New Budget Item"></put-attribute>
-		<put-attribute name="heading_title" value="New Budget Item"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/newbudgetitem.jsp"></put-attribute>
-	</definition>
-	
-	<!-- Budget Approval Controller -->
-	<definition name="listapprove" extends="accounting.base">
-		<put-attribute name="title" value="Budgets Ready For Approval"></put-attribute>
-		<put-attribute name="heading_title" value="Budgets Ready For Approval"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/listapprove.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
-	</definition>
-	
 	<!-- Transactions Controller -->
 	<definition name="transactionslist" extends="accounting.base">
 		<put-attribute name="title" value="Transactions"></put-attribute>
@@ -207,13 +199,13 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="newtranaction" extends="accounting.base">
+	<definition name="newtransaction" extends="accounting.base">
 		<put-attribute name="title" value="New Transaction"></put-attribute>
 		<put-attribute name="heading_title" value="New Transaction"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/newtransaction.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="viewtranaction" extends="accounting.base">
+	<definition name="viewtransaction" extends="accounting.base">
 		<put-attribute name="title" value="View Transaction"></put-attribute>
 		<put-attribute name="heading_title" value="View Transaction"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/viewtransaction.jsp"></put-attribute>

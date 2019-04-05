@@ -54,6 +54,9 @@
 		<div id="tabs-3">
 			<table class="menuTable menuTableSpace">
 				<tr>
+					<td><a href="/basic/newtransaction" ><img class="tile" alt="New Transactions"
+							src="<c:url value='/images/newtransaction.png'/>"></a></td>
+							
 					<td><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
 							src="<c:url value='/images/transactions.png'/>"></a></td>
 				

@@ -66,6 +66,7 @@ public class FetalTransactionService extends FetalTransaction {
 		
 		try {
 			initTransaction(filePath);
+			publish("transactions", VariableType.DAO, transactions);
 			if ("".compareTo(profile.getVariables()) !=0 ) {
 				String[] parms = profile.getVariables().split(";");
 				if (values != null) {
@@ -197,7 +198,7 @@ public class FetalTransactionService extends FetalTransaction {
 				result = VariableType.NUMBER;
 				break;
 				
-			case "deciamal":
+			case "decimal":
 				result = VariableType.DECIMAL;
 				break;
 				

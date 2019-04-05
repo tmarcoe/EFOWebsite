@@ -64,7 +64,7 @@ public class TransactionsController {
 		return "transactionslist";
 	}
 	
-	@RequestMapping("newtranaction")
+	@RequestMapping("newtransaction")
 	public String newTransaction(Model model) {
 		Transactions transaction = new Transactions();
 		transaction.setTimestamp(new Date());
@@ -76,11 +76,11 @@ public class TransactionsController {
 		return "newtransaction";
 	}
 	
-	@RequestMapping("addTransaction")
-	public String addTransaction(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result) throws NumberFormatException, Exception {
+	@RequestMapping("addtransaction")
+	public String addTransaction(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
 		Object[] variables = null;
 		if (result.hasErrors()) {
-			
+			model.addAttribute("namesList", profilesService.retrieveNames());
 			return "newtransaction";
 		}
 
@@ -148,13 +148,19 @@ public class TransactionsController {
 	}
 
 	private Object[] getObject(String varString) throws ParseException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String variables = "";
 		final String daoPath = "com.efo.entity.";
-		String[] vars = varString.split(";");
-		Object[] result = new Object[vars.length];
+		
+		if ("".compareTo(varString) == 0) return null;
 		
 		if (varString.toLowerCase().contains("%tax%")) {
-			varString.replace("%tax%", taxRate);
+			variables = varString.replace("%tax%", taxRate);
+		}else{
+			variables = varString;
 		}
+		
+		String[] vars = variables.split(";");
+		Object[] result = new Object[vars.length];
 		
 		for (int i=0; i < vars.length; i++) {
 			String[] parms = vars[i].split(",");
@@ -189,7 +195,7 @@ public class TransactionsController {
 					break;
 			}
 		}
-		return null;
+		return result;
 	}
 }
 

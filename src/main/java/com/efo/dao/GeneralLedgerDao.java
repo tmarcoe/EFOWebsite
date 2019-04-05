@@ -62,9 +62,10 @@ public class GeneralLedgerDao implements IGeneralLedger {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<GeneralLedger> getList(Date Begin, Date End) {
+	public List<GeneralLedger> getList(Date begin, Date end) {
+		String hql = "FROM GeneralLedger WHERE DATE(entryDate) BETWEEN DATE(:begin) AND DATE(:end)";
 		Session session = session();
-		List<GeneralLedger> glList = session.createCriteria(GeneralLedger.class).add(Restrictions.between("entryDate", Begin, End)).list();
+		List<GeneralLedger> glList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
 		session.disconnect();
 		
 		return glList;

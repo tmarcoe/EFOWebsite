@@ -12,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Transactions implements Serializable {
@@ -21,7 +24,9 @@ public class Transactions implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
 	private Date timestamp;
+	@DecimalMin(".01")
 	private Double amount;
+	@NotBlank
 	@Column(length = 128)
 	private String name;
 	private Double down;
@@ -30,6 +35,7 @@ public class Transactions implements Serializable {
 	private Double each_payment;
 	private Date start;
 	private String schedule;
+	@NotBlank
 	@Column(length = 1024)
 	private String descr;
 	

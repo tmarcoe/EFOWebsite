@@ -62,6 +62,16 @@
 			<td><sf:errors path="schedule" class="error" /></td>
 		</tr>
 		<tr>
+			<td colspan="2"><b>Transaction Description:</b><br>
+				<sf:textarea class="fancy-textarea" path="descr" rows="5" cols="70"/>
+			</td>
+		</tr>
+		<tr>
+			<td><sf:errors path="descr" class="error" /></td>
+		</tr>
+		<tr>
+			<td><sf:button class="fancy-button" type="submit" ><b>Save</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Back</b></sf:button>
 		</tr>
 		<tr>
 			<td><sf:hidden path="reference" /></td>

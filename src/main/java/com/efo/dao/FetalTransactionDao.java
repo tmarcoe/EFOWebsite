@@ -1,6 +1,5 @@
 package com.efo.dao;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -85,18 +84,13 @@ public class FetalTransactionDao {
 	}
 
 	public void ledger(char type, Double amount, String account, String description, Session session) {
+		Date timeStamp = new Date();
 		if (amount != 0) {
 			GeneralLedger gl = null;
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date());
-			cal.set(Calendar.HOUR_OF_DAY, 0);
-			cal.set(Calendar.MINUTE, 0);
-			cal.set(Calendar.SECOND, 0);
-			cal.set(Calendar.MILLISECOND, 0);
 			if (type == 'C') {
-				gl = new GeneralLedger(account, 0, cal.getTime(), description, 0, amount);
+				gl = new GeneralLedger(account, 0, timeStamp, description, 0, amount);
 			} else if (type == 'D') {
-				gl = new GeneralLedger(account, 0, cal.getTime(), description, amount, 0);
+				gl = new GeneralLedger(account, 0, timeStamp, description, amount, 0);
 			}
 			session.save(gl);
 		}
