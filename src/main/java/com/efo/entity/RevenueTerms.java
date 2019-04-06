@@ -2,12 +2,16 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -36,6 +40,10 @@ public class RevenueTerms implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Revenues revenues;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "revenueTerms", cascade = CascadeType.ALL)
+	private Set<RevenuePayments> revenuePayments = new HashSet<RevenuePayments>(0);
+	
 	
 	public Long getReference() {
 		return reference;
@@ -102,6 +110,15 @@ public class RevenueTerms implements Serializable {
 	}
 	public void setRevenues(Revenues revenues) {
 		this.revenues = revenues;
+	}
+	public Set<RevenuePayments> getRevenuePayments() {
+		return revenuePayments;
+	}
+	public void setRevenuePayments(Set<RevenuePayments> revenuePayments) {
+		this.revenuePayments = revenuePayments;
+	}
+	public void add(RevenuePayments revenuePayment) {
+		revenuePayments.add(revenuePayment);
 	}
 	
 }

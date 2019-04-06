@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td colspan="2"><b>Extra Variables: </b><br>
-				Use the form &lt;variable name&gt; ',' &lt;variable type&gt;.<br>
+				Use the form &lt;variable name&gt; ',' &lt;variable type&gt; ',' &lt;value&gt;.<br>
 				Variables are separated by a semicolon ';'.<br>
 				<sf:textarea class="fancy-textarea" path="variables" rows="5" cols="60"/>
 		</tr>

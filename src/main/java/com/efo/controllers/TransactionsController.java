@@ -108,6 +108,18 @@ public class TransactionsController {
 		return "viewtransaction";
 	}
 	
+	@RequestMapping("receivepayment")
+	public String receivePayment(@ModelAttribute("id") Long id) {
+		
+		return "receivepayment";
+	}
+	
+	@RequestMapping("updatereceive")
+	public String updateReceive(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result) {
+		
+		return "redirect:/#tabs-3";
+	}
+	
 	@RequestMapping(value = "transactionspaging", method = RequestMethod.GET)
 	public String handleBudgeItemtRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;

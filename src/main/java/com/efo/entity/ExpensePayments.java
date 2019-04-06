@@ -3,10 +3,14 @@ package com.efo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ExpensePayments implements Serializable {
@@ -22,6 +26,10 @@ public class ExpensePayments implements Serializable {
 	private Double payment_made;
 	private Double penalties;
 	private Long event;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
+	private ExpenseTerms expenseTerms;
 	
 	public Long getId() {
 		return id;
@@ -71,5 +79,12 @@ public class ExpensePayments implements Serializable {
 	public void setEvent(Long event) {
 		this.event = event;
 	}
+	public ExpenseTerms getExpenseTerms() {
+		return expenseTerms;
+	}
+	public void setExpenseTerms(ExpenseTerms expenseTerms) {
+		this.expenseTerms = expenseTerms;
+	}
+	
 	
 }

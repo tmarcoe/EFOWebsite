@@ -9,6 +9,12 @@
 <sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
+			<td colspan="2"><b>Receive From:</b><br><sf:input class="fancy" path="recieve_from" size="55" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="recieve_from" class="error"/>
+		</tr>
+		<tr>
 			<td><b>Amount of Transaction:</b><br>
 			<sf:input class="fancy" id="total_due" path="amount" type="number" step=".01" value="0" onchange="eachPayment()" /></td>
 			<td><b>Profile Name:</b><br>
@@ -63,7 +69,7 @@
 		</tr>
 		<tr>
 			<td colspan="2"><b>Transaction Description:</b><br>
-				<sf:textarea class="fancy-textarea" path="descr" rows="5" cols="70"/>
+				<sf:textarea class="fancy-textarea" path="descr" rows="5" cols="50"/>
 			</td>
 		</tr>
 		<tr>
@@ -76,6 +82,7 @@
 		<tr>
 			<td><sf:hidden path="reference" /></td>
 			<td><sf:hidden path="timestamp" /></td>
+			<td><sf:hidden path="payment_ref"/></td>
 			<td><input type="hidden" id="total_tax" value="0" /></td>
 		</tr>
 	</table>

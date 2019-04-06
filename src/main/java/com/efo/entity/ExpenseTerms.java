@@ -2,12 +2,16 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -35,6 +39,9 @@ public class ExpenseTerms implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Expenses expenses;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "expenseTerms", cascade = CascadeType.ALL)
+	private Set<ExpensePayments> expensePayments = new HashSet<ExpensePayments>(0);
 	
 	public Long getReference() {
 		return reference;
@@ -96,5 +103,13 @@ public class ExpenseTerms implements Serializable {
 	public void setExpenses(Expenses expenses) {
 		this.expenses = expenses;
 	}
-	
+	public Set<ExpensePayments> getExpensePayments() {
+		return expensePayments;
+	}
+	public void setExpensePayments(Set<ExpensePayments> expensePayments) {
+		this.expensePayments = expensePayments;
+	}
+	public void add(ExpensePayments expensePayment) {
+		expensePayments.add(expensePayment);
+	}
 }

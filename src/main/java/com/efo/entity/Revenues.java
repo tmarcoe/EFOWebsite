@@ -2,7 +2,6 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -101,5 +100,4 @@ public class Revenues implements Serializable {
 	public void setRevenueTerms(RevenueTerms revenueTerms) {
 		this.revenueTerms = revenueTerms;
 	}
-	
 }

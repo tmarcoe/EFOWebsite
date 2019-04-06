@@ -23,9 +23,12 @@ public class Transactions implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
+	private Long payment_ref;
 	private Date timestamp;
 	@DecimalMin(".01")
 	private Double amount;
+	@Column(length = 64)
+	private String recieve_from;
 	@NotBlank
 	@Column(length = 128)
 	private String name;
@@ -51,6 +54,14 @@ public class Transactions implements Serializable {
 		this.reference = reference;
 	}
 
+	public Long getPayment_ref() {
+		return payment_ref;
+	}
+
+	public void setPayment_ref(Long revenue_ref) {
+		this.payment_ref = revenue_ref;
+	}
+
 	public Date getTimestamp() {
 		return timestamp;
 	}
@@ -65,6 +76,14 @@ public class Transactions implements Serializable {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public String getRecieve_from() {
+		return recieve_from;
+	}
+
+	public void setRecieve_from(String recieve_from) {
+		this.recieve_from = recieve_from;
 	}
 
 	public String getName() {
