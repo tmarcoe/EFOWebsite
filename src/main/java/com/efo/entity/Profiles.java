@@ -27,6 +27,8 @@ public class Profiles implements Serializable {
 	private String variables;
 	private Date created;
 	private boolean active;
+	@Column(length = 1024)
+	private String descr;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "profiles", cascade = CascadeType.ALL)
 	private Set<Transactions> transactions = new HashSet<Transactions>(0);
@@ -72,6 +74,12 @@ public class Profiles implements Serializable {
 	}
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	public String getDescr() {
+		return descr;
+	}
+	public void setDescr(String descr) {
+		this.descr = descr;
 	}
 	public Set<Transactions> getTransactions() {
 		return transactions;

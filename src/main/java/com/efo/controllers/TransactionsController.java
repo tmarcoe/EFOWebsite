@@ -108,16 +108,20 @@ public class TransactionsController {
 		return "viewtransaction";
 	}
 	
-	@RequestMapping("receivepayment")
-	public String receivePayment(@ModelAttribute("id") Long id) {
+	@RequestMapping("receive")
+	public String receivePayment(@ModelAttribute("id") Long id, @ModelAttribute("recieve_from") String receiveFrom, Model model) {
+		final String profileName = "Receive Payment";
+		Transactions transaction = new Transactions();
+		transaction.setPayment_ref(id);
+		transaction.setTimestamp(new Date());
+		transaction.setName(profileName);
+		transaction.setRecieve_from(receiveFrom);
+		transaction.setStart(transaction.getTimestamp());
 		
-		return "receivepayment";
-	}
-	
-	@RequestMapping("updatereceive")
-	public String updateReceive(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result) {
+		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("transaction", transaction);
 		
-		return "redirect:/#tabs-3";
+		return "payment";
 	}
 	
 	@RequestMapping(value = "transactionspaging", method = RequestMethod.GET)

@@ -211,6 +211,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/viewtransaction.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="payment" extends="accounting.base">
+		<put-attribute name="title" value="Payment"></put-attribute>
+		<put-attribute name="heading_title" value="Payment"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/payment.jsp"></put-attribute>
+	</definition>
+	
 	<!-- Profiles Controller -->
 	<definition name="profileslist" extends="accounting.base">
 		<put-attribute name="title" value="Profiles"></put-attribute>

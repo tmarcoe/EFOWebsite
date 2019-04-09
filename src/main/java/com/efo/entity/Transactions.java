@@ -27,8 +27,11 @@ public class Transactions implements Serializable {
 	private Date timestamp;
 	@DecimalMin(".01")
 	private Double amount;
+	private Double tax;
+	@NotBlank
 	@Column(length = 64)
 	private String recieve_from;
+	private Long user_id;
 	@NotBlank
 	@Column(length = 128)
 	private String name;
@@ -78,12 +81,28 @@ public class Transactions implements Serializable {
 		this.amount = amount;
 	}
 
+	public Double getTax() {
+		return tax;
+	}
+
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+
 	public String getRecieve_from() {
 		return recieve_from;
 	}
 
 	public void setRecieve_from(String recieve_from) {
 		this.recieve_from = recieve_from;
+	}
+
+	public Long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getName() {

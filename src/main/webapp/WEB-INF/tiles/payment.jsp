@@ -6,22 +6,18 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="vendor" method="post" action="/basic/updatereceive" modelAttribute="transaction">
+<sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><b>Received From:</b><br><sf:input class="fancy" path="recieve_from" size="55" /></td>
+			<td colspan="2"><b>Received From:</b><br><sf:input class="fancy" path="recieve_from" size="55" readonly="true" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="recieve_from" class="error"/>
 		</tr>
 		<tr>
 			<td><b>Amount Received:</b><br>
-			<sf:input class="fancy" id="total_due" path="amount" type="number" step=".01" value="0" onchange="eachPayment()" /></td>
-			<td><b>Profile Name:</b><br>
-			<sf:select class="fancy" path="name">
-					<sf:option value="">---Select---</sf:option>
-					<sf:options items="${namesList}" />
-				</sf:select></td>
+			<sf:input class="fancy" id="total_due" path="amount" type="number" step=".01" value="0" /></td>
+			<td><b>Profile Name:</b><br><sf:input class="fancy" path="name" readonly="true" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="amount" class="error" /></td>
