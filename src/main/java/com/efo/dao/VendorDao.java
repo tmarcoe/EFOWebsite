@@ -100,11 +100,10 @@ public class VendorDao implements IVendor {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Vendor> queryVendor(String name, String type) {
+	public List<Vendor> queryVendor(String name) {
 		Session session = session();
 		List<Vendor> vendorList = session.createCriteria(Vendor.class)
-										 .add(Restrictions.like("company_name", name, MatchMode.ANYWHERE))
-										 .add(Restrictions.eq("type", type)).list();
+										 .add(Restrictions.like("company_name", name, MatchMode.ANYWHERE)).list();
 		
 		session.disconnect();
 		

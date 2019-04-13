@@ -38,8 +38,8 @@ public class QueryController {
 	}
 	
 	@RequestMapping("lookupvendor")
-	public String lookupVendor(@RequestParam(value = "name") String name, @RequestParam(value= "type") String type) throws JSONException  {
-		List<Vendor> vendorList = vendorService.queryVendow(name, type);
+	public String lookupVendor(@RequestParam(value = "name") String name) throws JSONException  {
+		List<Vendor> vendorList = vendorService.queryVendow(name);
 		
 		return vendorToJson(vendorList);
 	}

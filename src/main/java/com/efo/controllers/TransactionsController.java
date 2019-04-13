@@ -64,8 +64,8 @@ public class TransactionsController {
 		return "transactionslist";
 	}
 	
-	@RequestMapping("newtransaction")
-	public String newTransaction(Model model) {
+	@RequestMapping("newreceivetransaction")
+	public String newReceiveTransaction(Model model) {
 		Transactions transaction = new Transactions();
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
@@ -73,7 +73,19 @@ public class TransactionsController {
 		model.addAttribute("namesList", profilesService.retrieveNames());
 		model.addAttribute("transaction", transaction);
 		
-		return "newtransaction";
+		return "newreceivetransaction";
+	}
+	
+	@RequestMapping("newdisbursetransaction")
+	public String newDisburseTransaction(Model model) {
+		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(transaction.getTimestamp());
+		
+		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("transaction", transaction);
+		
+		return "newdisbursetransaction";
 	}
 	
 	@RequestMapping("addtransaction")
@@ -81,7 +93,7 @@ public class TransactionsController {
 		Object[] variables = null;
 		if (result.hasErrors()) {
 			model.addAttribute("namesList", profilesService.retrieveNames());
-			return "newtransaction";
+			return "newreceivetransaction";
 		}
 
 		String profileName = transaction.getName();
@@ -108,9 +120,11 @@ public class TransactionsController {
 		return "viewtransaction";
 	}
 	
-	@RequestMapping("receive")
-	public String receivePayment(@ModelAttribute("id") Long id, @ModelAttribute("recieve_from") String receiveFrom, Model model) {
-		final String profileName = "Receive Payment";
+	@RequestMapping("payment")
+	public String receivePayment(@ModelAttribute("id") Long id, 
+								 @ModelAttribute("recieve_from") String receiveFrom, 
+								 @ModelAttribute("profilename") String profileName, Model model) {
+		
 		Transactions transaction = new Transactions();
 		transaction.setPayment_ref(id);
 		transaction.setTimestamp(new Date());
@@ -118,7 +132,6 @@ public class TransactionsController {
 		transaction.setRecieve_from(receiveFrom);
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
 		model.addAttribute("transaction", transaction);
 		
 		return "payment";

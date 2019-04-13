@@ -55,7 +55,7 @@ public class ProfilesDao implements IProfiles {
 	
 	@SuppressWarnings("unchecked")
 	public List<String> retrieveNames() {
-		String hql = "SELECT name FROM Profiles";
+		String hql = "SELECT name FROM Profiles WHERE exclude = false";
 		Session session = session();
 		List<String> names = session.createQuery(hql).list();
 		

@@ -49,7 +49,7 @@ public class VendorService implements IVendor {
 		return vendorDao.retrieveList();
 	}
 	
-	public List<Vendor> queryVendow(String name, String type) {
-		return vendorDao.queryVendor(name, type);
+	public List<Vendor> queryVendow(String name) {
+		return vendorDao.queryVendor(name);
 	}
 }

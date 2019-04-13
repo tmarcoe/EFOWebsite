@@ -21,6 +21,7 @@ public class Profiles implements Serializable {
 	private String name;
 	@Column(length = 64)
 	private String script;
+	private boolean exclude;
 	private boolean terms;
 	private boolean depreciation;
 	@Column(length = 1024)
@@ -44,6 +45,12 @@ public class Profiles implements Serializable {
 	}
 	public void setScript(String script) {
 		this.script = script;
+	}
+	public boolean isExclude() {
+		return exclude;
+	}
+	public void setExclude(boolean exclude) {
+		this.exclude = exclude;
 	}
 	public boolean isTerms() {
 		return terms;
