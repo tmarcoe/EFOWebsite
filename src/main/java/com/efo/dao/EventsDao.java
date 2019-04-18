@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -107,7 +108,7 @@ public class EventsDao implements IEvents {
 	@SuppressWarnings("unchecked")
 	public List<Events> getEvents(Date date) {
 		Session session = session();
-		List<Events> eventList = session.createCriteria(Events.class).add(Restrictions.eq("date", date)).list();
+		List<Events> eventList = session.createCriteria(Events.class).add(Restrictions.eq("date", date)).addOrder(Order.asc("date")).list();
 		session.disconnect();
 		
 		return eventList;

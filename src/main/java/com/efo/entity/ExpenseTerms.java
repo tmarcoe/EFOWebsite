@@ -22,7 +22,7 @@ import org.hibernate.annotations.Parameter;
 public class ExpenseTerms implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "revenues"))
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "expenses"))
 	@Id
 	@GeneratedValue(generator = "generator")
 	private Long reference;

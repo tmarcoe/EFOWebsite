@@ -23,10 +23,10 @@
 				<sf:checkbox class="fancy" path="active" checked="true" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Extra Variables: </b><br>
+			<td colspan="3"><b>Extra Variables: </b><br>
 				Use the form &lt;variable name&gt; ',' &lt;variable type&gt; ',' &lt;variable value&gt;.<br>
 				Variables are separated by a semicolon ';'.<br>
-				<sf:textarea class="fancy-textarea" path="variables" rows="5" cols="60"/>
+				<sf:textarea class="fancy-textarea" path="variables" rows="5" cols="75"/>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit"><b>Save</b></sf:button></td>

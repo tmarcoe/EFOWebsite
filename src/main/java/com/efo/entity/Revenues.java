@@ -27,7 +27,6 @@ public class Revenues implements Serializable {
 	private Double amount;
 	private Double tax;
 	private Double amt_received;
-	private boolean payments;
 	@Column(length = 1024)
 	private String descr;
 	
@@ -81,12 +80,6 @@ public class Revenues implements Serializable {
 	}
 	public void setAmt_received(Double amt_received) {
 		this.amt_received = amt_received;
-	}
-	public boolean isPayments() {
-		return payments;
-	}
-	public void setPayments(boolean payments) {
-		this.payments = payments;
 	}
 	public String getDescr() {
 		return descr;

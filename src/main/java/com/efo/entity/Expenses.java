@@ -19,13 +19,10 @@ public class Expenses implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
-	private Date billed;
 	private Date paid;
 	@Column(length = 64)
 	private String payee;
-	private Double amount_billed;
 	private Double amount;
-	private boolean payments;
 	@Column(length = 1024)
 	private String descr;
 	
@@ -37,12 +34,6 @@ public class Expenses implements Serializable {
 	}
 	public void setReference(Long reference) {
 		this.reference = reference;
-	}
-	public Date getBilled() {
-		return billed;
-	}
-	public void setBilled(Date billed) {
-		this.billed = billed;
 	}
 	public Date getPaid() {
 		return paid;
@@ -56,23 +47,11 @@ public class Expenses implements Serializable {
 	public void setPayee(String payee) {
 		this.payee = payee;
 	}
-	public Double getAmount_billed() {
-		return amount_billed;
-	}
-	public void setAmount_billed(Double amount_billed) {
-		this.amount_billed = amount_billed;
-	}
 	public Double getAmount() {
 		return amount;
 	}
 	public void setAmount(Double amount) {
 		this.amount = amount;
-	}
-	public boolean isPayments() {
-		return payments;
-	}
-	public void setPayments(boolean payments) {
-		this.payments = payments;
 	}
 	public String getDescr() {
 		return descr;
