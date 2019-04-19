@@ -30,7 +30,7 @@ public class Transactions implements Serializable {
 	private Double tax;
 	@NotBlank
 	@Column(length = 64)
-	private String recieve_from;
+	private String payment_name;
 	private Long user_id;
 	@NotBlank
 	@Column(length = 128)
@@ -89,12 +89,12 @@ public class Transactions implements Serializable {
 		this.tax = tax;
 	}
 
-	public String getRecieve_from() {
-		return recieve_from;
+	public String getPayment_name() {
+		return payment_name;
 	}
 
-	public void setRecieve_from(String recieve_from) {
-		this.recieve_from = recieve_from;
+	public void setPayment_name(String payment_name) {
+		this.payment_name = payment_name;
 	}
 
 	public Long getUser_id() {

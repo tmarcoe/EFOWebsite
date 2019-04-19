@@ -24,8 +24,7 @@
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="4"><button type="button" onclick="window.location.href='/basic/newreceivetransaction'">New Transaction</button></td>
-			<td><button type="button" onclick="window.location.href='/#tabs-3'">Back</button></td>
+			<td colspan="5"><button type="button" onclick="window.location.href='/#tabs-3'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

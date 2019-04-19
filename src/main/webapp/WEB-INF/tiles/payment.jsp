@@ -9,10 +9,10 @@
 <sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><b>Received From:</b><br><sf:input class="fancy" path="recieve_from" size="55" readonly="true" /></td>
+			<td colspan="2"><b>Received From:</b><br><sf:input class="fancy" path="payment_name" size="55" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="recieve_from" class="error"/>
+			<td><sf:errors path="payment_name" class="error"/>
 		</tr>
 		<tr>
 			<td><b>Amount Received:</b><br>

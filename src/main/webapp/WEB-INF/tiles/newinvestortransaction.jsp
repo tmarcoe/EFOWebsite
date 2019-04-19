@@ -10,10 +10,10 @@
 <sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><sf:input id="autocomplete" class="fancy" path="recieve_from" size="55" placeholder="Enter Vendor Name" /></td>
+			<td colspan="2"><sf:input id="autocomplete" class="fancy" path="payment_name" size="55" placeholder="Enter Investor Name" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="recieve_from" class="error" />
+			<td><sf:errors path="payment_name" class="error" />
 		</tr>
 		<tr>
 			<td><b>Amount of Transaction:</b><br> <sf:input class="fancy" id="total_due" path="amount" type="number"
@@ -114,7 +114,7 @@
 			{
 				lookup : function(query, done) {
 					var name = $("#autocomplete").val();
-					$.getJSON("/rest/lookupvendor?name=" + name,
+					$.getJSON("/rest/lookupinvestor?name=" + name,
 							function(result) {
 								var data = {
 									suggestions : result
@@ -129,7 +129,7 @@
 									});
 				},
 				onSelect : function(data) {
-					$("#user_id").val(data.data.user_id);
+					$("#user_id").val(data.data);
 				}
 			});
 </script>

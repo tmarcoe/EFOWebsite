@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.efo.entity.Customer;
 import com.efo.entity.Employee;
+import com.efo.entity.Investor;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
 import com.efo.service.EmployeeService;
+import com.efo.service.InvestorService;
 import com.efo.service.VendorService;
 
 @RestController
@@ -30,6 +32,9 @@ public class QueryController {
 	@Autowired
 	private EmployeeService employeeService;
 	
+	@Autowired
+	private InvestorService investorService;
+	
 	@RequestMapping("lookupcustomer")
 	public String lookupCustomer(@RequestParam(value = "name") String name) throws JSONException {
 		List<Customer> customer = customerService.queryCustomer(name);
@@ -38,10 +43,18 @@ public class QueryController {
 	}
 	
 	@RequestMapping("lookupvendor")
-	public String lookupVendor(@RequestParam(value = "name") String name) throws JSONException  {
-		List<Vendor> vendorList = vendorService.queryVendow(name);
+	public String lookupVendor(@RequestParam(value = "name") String name,@RequestParam(value = "type") String type ) throws JSONException  {
+		List<Vendor> vendorList = vendorService.queryVendow(name, type);
 		
 		return vendorToJson(vendorList);
+	}
+	
+	@RequestMapping("lookupinvestor")
+	public String lookupInvestor(@RequestParam(value = "name") String name) throws JSONException {
+		
+		List<Investor> investorList = investorService.queryInvestor(name);
+		
+		return investorToJson(investorList);
 	}
 	
 	@RequestMapping("lookupemployee")
@@ -70,6 +83,27 @@ public class QueryController {
 			suggestion.put("data", vendor);
 			jsonArray.put(suggestion);
 		}
+		return jsonArray.toString();
+	}
+	
+	private String investorToJson(List<Investor> i) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		for(Investor item: i) {
+			JSONObject suggestion = new JSONObject();
+			JSONObject investor = new JSONObject();
+			investor.put("user_id", item.getUser_id());
+			investor.put("firstname", item.getFirstname());
+			investor.put("lastname", item.getLastname());
+			investor.put("male_female", item.getMale_female());
+			investor.put("shares", item.getShares());
+			investor.put("preferred", item.isPreferred());
+			investor.putOpt("since", item.getSince());
+			
+			suggestion.put("value", item.getFirstname() + " " + item.getLastname());
+			suggestion.put("data", investor);
+			jsonArray.put(suggestion);
+		}
+		
 		return jsonArray.toString();
 	}
 	

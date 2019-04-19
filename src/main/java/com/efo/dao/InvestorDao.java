@@ -66,6 +66,17 @@ public class InvestorDao implements IInvestor {
 
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Investor> queryInvestor(String name) {
+		String sql = "FROM Investor WHERE CONCAT(firstname, ' ', lastname) LIKE :name";
+		name = "%" + name + "%";
+		Session session = session();
+		List<Investor> investor = session.createQuery(sql).setString("name", name).list();
+		session.disconnect();
+		
+		return investor;
+	}
+	
 	@Override
 	public void update(Investor investor) {
  		Session session = session();

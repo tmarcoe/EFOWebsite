@@ -10,10 +10,10 @@
 <sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><sf:input id="autocomplete" class="fancy" path="recieve_from" size="55" placeholder="Enter Customer Name" /></td>
+			<td colspan="2"><sf:input id="autocomplete" class="fancy" path="payment_name" size="55" placeholder="Enter Customer Name" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="recieve_from" class="error" />
+			<td><sf:errors path="payment_name" class="error" />
 		</tr>
 		<tr>
 			<td><b>Amount of Transaction:</b><br> <sf:input class="fancy" id="total_due" path="amount" type="number"

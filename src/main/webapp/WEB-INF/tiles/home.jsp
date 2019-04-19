@@ -54,16 +54,23 @@
 		<div id="tabs-3">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="/basic/newdisbursetransaction" ><img class="tile" alt="New Transactions"
-							src="<c:url value='/images/disbursefunds.png'/>"></a></td>
-					<td><a href="/basic/newreceivetransaction" ><img class="tile" alt="New Transactions"
-							src="<c:url value='/images/receivefunds.png'/>"></a></td>
-							
-					<td><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
+					<td colspan="2"><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
 							src="<c:url value='/images/transactions.png'/>"></a></td>
 				
-					<td><a href="/basic/profileslist"><img class="tile" alt="Profiles"
+					<td colspan="2"><a href="/basic/profileslist"><img class="tile" alt="Profiles"
 							src="<c:url value='/images/profile.png'/>"></a></td>
+				</tr>
+				<tr>
+					<td><a href="/basic/newoverheadtransaction" ><img class="tile" alt="New Overhead"
+							src="<c:url value='/images/overhead.png'/>"></a></td>
+				</tr>
+				<tr>
+					<td><a href="/basic/newretailtransaction" ><img class="tile" alt="New Retail"
+							src="<c:url value='/images/retail.png'/>"></a></td>
+					<td><a href="/basic/newloantransaction" ><img class="tile" alt="New Loan"
+							src="<c:url value='/images/loan.png'/>"></a></td>
+					<td><a href="/basic/newinvestortransaction" ><img class="tile" alt="New Investor"
+							src="<c:url value='/images/stock.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>

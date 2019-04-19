@@ -64,8 +64,8 @@ public class TransactionsController {
 		return "transactionslist";
 	}
 	
-	@RequestMapping("newreceivetransaction")
-	public String newReceiveTransaction(Model model) {
+	@RequestMapping("newretailtransaction")
+	public String newRetailTransaction(Model model) {
 		Transactions transaction = new Transactions();
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
@@ -73,11 +73,11 @@ public class TransactionsController {
 		model.addAttribute("namesList", profilesService.retrieveNames());
 		model.addAttribute("transaction", transaction);
 		
-		return "newreceivetransaction";
+		return "newretailtransaction";
 	}
 	
-	@RequestMapping("newdisbursetransaction")
-	public String newDisburseTransaction(Model model) {
+	@RequestMapping("newoverheadtransaction")
+	public String newOverheadTransaction(Model model) {
 		Transactions transaction = new Transactions();
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
@@ -85,7 +85,31 @@ public class TransactionsController {
 		model.addAttribute("namesList", profilesService.retrieveNames());
 		model.addAttribute("transaction", transaction);
 		
-		return "newdisbursetransaction";
+		return "newoverheadtransaction";
+	}
+	
+	@RequestMapping("newloantransaction")
+	public String newLoanTransaction(Model model) {
+		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(transaction.getTimestamp());
+		
+		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("transaction", transaction);
+		
+		return "newloantransaction";
+	}
+	
+	@RequestMapping("newinvestortransaction")
+	public String newInvestorTransaction(Model model) {
+		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(transaction.getTimestamp());
+		
+		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("transaction", transaction);
+		
+		return "newinvestortransaction";
 	}
 	
 	@RequestMapping("addtransaction")
@@ -93,7 +117,7 @@ public class TransactionsController {
 		Object[] variables = null;
 		if (result.hasErrors()) {
 			model.addAttribute("namesList", profilesService.retrieveNames());
-			return "newreceivetransaction";
+			return "newretailtransaction";
 		}
 
 		String profileName = transaction.getName();
@@ -122,14 +146,14 @@ public class TransactionsController {
 	
 	@RequestMapping("payment")
 	public String receivePayment(@ModelAttribute("id") Long id, 
-								 @ModelAttribute("recieve_from") String receiveFrom, 
+								 @ModelAttribute("payment_name") String paymentName, 
 								 @ModelAttribute("profilename") String profileName, Model model) {
 		
 		Transactions transaction = new Transactions();
 		transaction.setPayment_ref(id);
 		transaction.setTimestamp(new Date());
 		transaction.setName(profileName);
-		transaction.setRecieve_from(receiveFrom);
+		transaction.setPayment_name(paymentName);
 		transaction.setStart(transaction.getTimestamp());
 		
 		model.addAttribute("transaction", transaction);

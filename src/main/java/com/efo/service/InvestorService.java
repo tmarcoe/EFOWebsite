@@ -40,6 +40,10 @@ public class InvestorService implements IInvestor {
 	public PagedListHolder<User> retrieveEditList() {
 		return new PagedListHolder<User>(investorDao.retrieveEditList());
 	}
+	
+	public List<Investor> queryInvestor(String name) {
+		return investorDao.queryInvestor(name);
+	}
 
 	@Override
 	public void update(Investor investor) {
