@@ -129,7 +129,7 @@
 									});
 				},
 				onSelect : function(data) {
-					$("#user_id").val(data.data);
+					$("#user_id").val(data.data.user_id);
 				}
 			});
 </script>
