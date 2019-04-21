@@ -31,7 +31,7 @@ public class ExpenseTerms implements Serializable {
 	private Long num_payments;
 	private Long remaining;
 	private Double each_payment;
-	private Double balance;
+	private Double loan_balance;
 	private Date start;
 	@Column(length = 16)
 	private String schedule;
@@ -79,11 +79,11 @@ public class ExpenseTerms implements Serializable {
 	public void setEach_payment(Double each_payment) {
 		this.each_payment = each_payment;
 	}
-	public Double getBalance() {
-		return balance;
+	public Double getLoan_balance() {
+		return loan_balance;
 	}
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public void setLoan_balance(Double loan_balance) {
+		this.loan_balance = loan_balance;
 	}
 	public Date getStart() {
 		return start;
