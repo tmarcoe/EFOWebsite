@@ -4,47 +4,50 @@
 
 begin
 	mapFile: "accounts.xml";
+
 	string cashAccount = "Cash";
-	string accountsReceivable = "Accounts Receivable";
+	string arAccount = "Accounts Receivable";
 	decimal pmnt = 0.0;
+	number paymentRef = transactions.getPayment_ref();
 
-	debit(payment.getPayment(), cashAccount);
-	ledger(D, payment.getPayment(), cashAccount, getDescription());
-	credit(payment.getPayment(), accountsReceivable);
-	ledger(C, payment.getPayment(), accountsReceivable, getDescription());
 
-	merge(payment);
-	nextPayment.setReference(receivables.getReference());
-	date dateDue = nextDate(receivables.getInvoice_date(), payment.getDate_due(), receivables.getSchedule());
-	nextPayment.setDate_due(dateDue);
-	receivables.setTotal_balance(receivables.getTotal_balance() - payment.getPayment());
+	debit(transactions.getAmount(), cashAccount);
+	ledger(D, transactions.getAmount(), cashAccount, transactions.getDescr());
+	credit(transactions.getAmount(), arAccount);
+	ledger(C, transactions.getAmount(), arAccount, transactions.getDescr());
+
+	dao oldPayments = lookup("FROM RevenuePayments WHERE id = {d}", paymentRef );
+	dao revenueTerms = lookup("FROM RevenueTerms WHERE reference = {d}", oldPayments.getReference());
+	dao revenues = lookup("FROM Revenues WHERE reference = {d}", oldPayments.getReference());
+	update("UPDATE Events SET completed = true WHERE id = {d}", oldPayments.getEvent());
+
+	date dateDue = nextDate(transactions.getStart(), oldPayments.getDue(), "Monthly"); 
+	string name = lookup("SELECT name FROM Events WHERE id = {d}", oldPayments.getEvent());
+
+	update("UPDATE RevenuePayments SET payment_date = {F}, payment_made = {f} WHERE id = {d}", today(), transactions.getAmount(), paymentRef);
+	update("UPDATE RevenueTerms SET remaining = remaining - 1, loan_balance = loan_balance - {f} WHERE reference = {d}",  revenueTerms.getLoan_balance(), oldPayments.getReference());
+
+
+	newPayment.setReference(oldPayments.getReference());
+	newPayment.setDue(dateDue);
+	newPayment.setAmount_due(revenueTerms.getEach_payment());
+	newPayment.setPayment_made(0.00);
+	newPayment.setPenalties(0.00);
+	newPayment.setRevenueTerms(revenueTerms);
+	revenueTerms.add(newPayment);
+
+	insert(newPayment);
+
+
+	string link = "/basic/payment?id=" + newPayment.getId() + "&payment_name=" + transactions.getPayment_name() + "&profilename=Receive Payment";
+	newEvent.setDate(dateDue);
+	newEvent.setName(name);
+	newEvent.setLink(link);
+	newEvent.setCompleted(false);
+
+	insert(newEvent);
+
+	update("UPDATE RevenuePayments SET event = {d} WHERE id = {d}", newEvent.getId(), newPayment.getId());
 	
-	if (receivables.getEach_payment() <= receivables.getTotal_balance()) {
-		pmnt = receivables.getEach_payment();
-	}else{
-		pmnt = receivables.getTotal_balance();
-	}
-	
-	update("UPDATE Events SET completed = true WHERE id = {d}", payment.getEvent());
-
-	if (receivables.getTotal_balance() > 0.0) {
-		nextPayment.setPayment_due(pmnt);
-		nextPayment.setReceivables(receivables);
-		insert(nextPayment);
-		string eventName = "Receive " + pmnt + " from " + receivables.getCustomer();
-		event.setDate(dateDue);
-		event.setName(eventName);
-		event.setCompleted(false);
-
-		string link = "/accounting/receivepayment?id=" + nextPayment.getId();
-		event.setLink(link);
-		
-		insert(event);
-
-		nextPayment.setEvent(event.getId());
-	}else{
-		receivables.setStatus("C");
-	}
-
-	merge(receivables);
+			
 end

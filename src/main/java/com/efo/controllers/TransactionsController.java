@@ -64,8 +64,8 @@ public class TransactionsController {
 		return "transactionslist";
 	}
 	
-	@RequestMapping("newretailtransaction")
-	public String newRetailTransaction(Model model) {
+	@RequestMapping("newreceiveretailtransaction")
+	public String newreceiveretailtransaction(Model model) {
 		Transactions transaction = new Transactions();
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
@@ -73,7 +73,7 @@ public class TransactionsController {
 		model.addAttribute("namesList", profilesService.retrieveNames());
 		model.addAttribute("transaction", transaction);
 		
-		return "newretailtransaction";
+		return "newreceiveretailtransaction";
 	}
 	
 	@RequestMapping("newoverheadtransaction")
@@ -86,6 +86,30 @@ public class TransactionsController {
 		model.addAttribute("transaction", transaction);
 		
 		return "newoverheadtransaction";
+	}
+	
+	@RequestMapping("neworderretailtransaction")
+	public String newOrderRetailTransaction(Model model) {
+		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(transaction.getTimestamp());
+		
+		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("transaction", transaction);
+		
+		return "neworderretailtransaction";
+	}
+	
+	@RequestMapping("newcapitalexpensetransaction")
+	public String newCapitalExpenseTransaction(Model model) {
+		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(transaction.getTimestamp());
+		
+		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("transaction", transaction);
+		
+		return "newcapitalexpensetransaction";
 	}
 	
 	@RequestMapping("newloantransaction")
@@ -117,7 +141,7 @@ public class TransactionsController {
 		Object[] variables = null;
 		if (result.hasErrors()) {
 			model.addAttribute("namesList", profilesService.retrieveNames());
-			return "newretailtransaction";
+			return "newreceiveretailtransaction";
 		}
 
 		String profileName = transaction.getName();

@@ -199,16 +199,28 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="newretailtransaction" extends="accounting.base">
+	<definition name="newreceiveretailtransaction" extends="accounting.base">
 		<put-attribute name="title" value="Receive Retail Revenue"></put-attribute>
 		<put-attribute name="heading_title" value="Receive Retail Revenue"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/newretailtransaction.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newreceiveretailtransaction.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="newoverheadtransaction" extends="accounting.base">
 		<put-attribute name="title" value="Overhead Expense"></put-attribute>
 		<put-attribute name="heading_title" value="Overhead Expense"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/newoverheadtransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="neworderretailtransaction" extends="accounting.base">
+		<put-attribute name="title" value="Product Order"></put-attribute>
+		<put-attribute name="heading_title" value="Product Order"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/neworderretailtransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newcapitalexpensetransaction" extends="accounting.base">
+		<put-attribute name="title" value="Capital Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Capital Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newcapitalexpensetransaction.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="newloantransaction" extends="accounting.base">

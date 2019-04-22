@@ -58,15 +58,15 @@
 							src="<c:url value='/images/profile.png'/>"></a></td>
 					<td><a href="/basic/newoverheadtransaction" ><img class="tile" alt="New Overhead"
 							src="<c:url value='/images/overhead.png'/>"></a></td>
-					<td><a href="/basic/newoverheadtransaction" ><img class="tile" alt="New Retail Expense"
+					<td><a href="/basic/neworderretailtransaction" ><img class="tile" alt="New Retail Expense"
 							src="<c:url value='/images/retailexpense.png'/>"></a></td>
-					<td><a href="/basic/newoverheadtransaction" ><img class="tile" alt="New Capital Expense"
+					<td><a href="/basic/newcapitalexpensetransaction" ><img class="tile" alt="New Capital Expense"
 							src="<c:url value='/images/capitalexpense.png'/>"></a></td>
 				</tr>
 				<tr>
 					<td><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
 							src="<c:url value='/images/transactions.png'/>"></a></td>
-					<td><a href="/basic/newretailtransaction" ><img class="tile" alt="New Retail"
+					<td><a href="/basic/newreceiveretailtransaction" ><img class="tile" alt="New Retail"
 							src="<c:url value='/images/retail.png'/>"></a></td>
 					<td><a href="/basic/newloantransaction" ><img class="tile" alt="New Loan"
 							src="<c:url value='/images/loan.png'/>"></a></td>
