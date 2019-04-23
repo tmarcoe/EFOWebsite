@@ -32,9 +32,9 @@ public class ProfilesService implements IProfiles {
 		return profilesDao.retrieveRawList();
 	}
 	
-	public List<String> retrieveNames() {
+	public List<String> retrieveNames(String type) {
 		
-		return profilesDao.retrieveNames();
+		return profilesDao.retrieveNames(type);
 	}
 	
 	public PagedListHolder<Profiles> RetrieveList() {

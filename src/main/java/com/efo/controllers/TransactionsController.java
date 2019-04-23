@@ -70,11 +70,33 @@ public class TransactionsController {
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("namesList", profilesService.retrieveNames("RR"));
 		model.addAttribute("transaction", transaction);
 		
 		return "newreceiveretailtransaction";
 	}
+	@RequestMapping("addreceiveretail")
+	public String addTReceiveRetail(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+		Object[] variables = null;
+		if (result.hasErrors()) {
+			model.addAttribute("namesList", profilesService.retrieveNames("RR"));
+			return "newreceiveretailtransaction";
+		}
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
+		
+		return "redirect:/#tabs-5";
+	}
+	
 	
 	@RequestMapping("newoverheadtransaction")
 	public String newOverheadTransaction(Model model) {
@@ -82,10 +104,32 @@ public class TransactionsController {
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("namesList", profilesService.retrieveNames("O"));
 		model.addAttribute("transaction", transaction);
 		
 		return "newoverheadtransaction";
+	}
+	
+	@RequestMapping("addoverhead")
+	public String addOverhead(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+		Object[] variables = null;
+		if (result.hasErrors()) {
+			model.addAttribute("namesList", profilesService.retrieveNames("O"));
+			return "newoverheadtransaction";
+		}
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
+		
+		return "redirect:/#tabs-5";
 	}
 	
 	@RequestMapping("neworderretailtransaction")
@@ -94,10 +138,32 @@ public class TransactionsController {
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("namesList", profilesService.retrieveNames("RE"));
 		model.addAttribute("transaction", transaction);
 		
 		return "neworderretailtransaction";
+	}
+	
+	@RequestMapping("addorderretail")
+	public String addOrderRetail(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+		Object[] variables = null;
+		if (result.hasErrors()) {
+			model.addAttribute("namesList", profilesService.retrieveNames("RE"));
+			return "neworderretailtransaction";
+		}
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
+		
+		return "redirect:/#tabs-5";
 	}
 	
 	@RequestMapping("newcapitalexpensetransaction")
@@ -106,10 +172,32 @@ public class TransactionsController {
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("namesList", profilesService.retrieveNames("CE"));
 		model.addAttribute("transaction", transaction);
 		
 		return "newcapitalexpensetransaction";
+	}
+	
+	@RequestMapping("addcapitalexpense")
+	public String addCapitalExpense(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+		Object[] variables = null;
+		if (result.hasErrors()) {
+			model.addAttribute("namesList", profilesService.retrieveNames("CE"));
+			return "newcapitalexpensetransaction";
+		}
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
+		
+		return "redirect:/#tabs-5";
 	}
 	
 	@RequestMapping("newloantransaction")
@@ -118,10 +206,32 @@ public class TransactionsController {
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("namesList", profilesService.retrieveNames("L"));
 		model.addAttribute("transaction", transaction);
 		
 		return "newloantransaction";
+	}
+	
+	@RequestMapping("addloan")
+	public String addLoan(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+		Object[] variables = null;
+		if (result.hasErrors()) {
+			model.addAttribute("namesList", profilesService.retrieveNames("L"));
+			return "newloantransaction";
+		}
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
+		
+		return "redirect:/#tabs-5";
 	}
 	
 	@RequestMapping("newinvestortransaction")
@@ -130,18 +240,18 @@ public class TransactionsController {
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
 		
-		model.addAttribute("namesList", profilesService.retrieveNames());
+		model.addAttribute("namesList", profilesService.retrieveNames("I"));
 		model.addAttribute("transaction", transaction);
 		
 		return "newinvestortransaction";
 	}
 	
-	@RequestMapping("addtransaction")
-	public String addTransaction(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+	@RequestMapping("addequity")
+	public String addEquity(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
 		Object[] variables = null;
 		if (result.hasErrors()) {
-			model.addAttribute("namesList", profilesService.retrieveNames());
-			return "newreceiveretailtransaction";
+			model.addAttribute("namesList", profilesService.retrieveNames("I"));
+			return "newinvestortransaction";
 		}
 
 		String profileName = transaction.getName();
@@ -157,7 +267,7 @@ public class TransactionsController {
 		
 		return "redirect:/#tabs-3";
 	}
-	
+		
 	@RequestMapping("viewtransaction")
 	public String editTransaction(@ModelAttribute("reference") Long reference, Model model) {
 		
@@ -183,6 +293,29 @@ public class TransactionsController {
 		model.addAttribute("transaction", transaction);
 		
 		return "payment";
+	}
+	
+	@RequestMapping("addtransaction")
+	public String addTransaction(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
+		Object[] variables = null;
+		
+		if (result.hasErrors()) {
+		
+			return "payment";
+		}
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = getObject(profile.getVariables());
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
+		
+		return "redirect:/#tabs-5";
 	}
 	
 	@RequestMapping(value = "transactionspaging", method = RequestMethod.GET)

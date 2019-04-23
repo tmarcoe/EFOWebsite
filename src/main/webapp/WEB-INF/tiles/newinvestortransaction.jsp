@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
+<sf:form id="vendor" method="post" action="/basic/addequity" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td colspan="2"><sf:input id="autocomplete" class="fancy" path="payment_name" size="55" placeholder="Enter Investor Name" /></td>

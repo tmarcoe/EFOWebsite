@@ -13,8 +13,17 @@
 				<sf:input class="fancy" path="name"/></td>
 			<td><b>Script File: </b><br>
 				<sf:input class="fancy" path="script" size="40"/></td>
-			<td><b>Exclude From List: </b>
-				<sf:checkbox class="fancy" path="exclude"/></td>
+			<td><b>Profile Type: </b><br>
+				<sf:select class="fancy" path="type">
+					<sf:option value="">---Select---</sf:option>
+					<sf:option value="RR">Retail Revenue</sf:option>
+					<sf:option value="O">Overhead</sf:option>
+					<sf:option value="RE">Retail Expense</sf:option>
+					<sf:option value="CE">Capital Expense</sf:option>
+					<sf:option value="L">Loan</sf:option>
+					<sf:option value="I">Investment</sf:option>
+					<sf:option value="P">Payment</sf:option>
+				</sf:select></td>
 		</tr>
 		<tr>
 			<td><b>Created On: </b><br>

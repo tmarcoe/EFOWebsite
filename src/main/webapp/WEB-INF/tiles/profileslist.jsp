@@ -8,7 +8,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Script File</th>
-			<th>Payment Terms?</th>
+			<th>Profile Type</th>
 			<th>Created On</th>
 			<th>Active</th>
 			<th>&nbsp;</th>
@@ -18,7 +18,7 @@
 		<tr>
 			<td>${item.name}</td>
 			<td>${item.script}</td>
-			<td>${item.terms}</td>
+			<td>${item.type}</td>
 			<td><fmt:formatDate value="${item.created}" /></td>
 			<td>${item.active}</td>
 			<td><button type="button" onclick="window.location.href='/basic/editprofile?name=${item.name}'">Edit</button></td>

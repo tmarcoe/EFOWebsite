@@ -54,10 +54,10 @@ public class ProfilesDao implements IProfiles {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<String> retrieveNames() {
-		String hql = "SELECT name FROM Profiles WHERE exclude = false";
+	public List<String> retrieveNames(String type) {
+		String hql = "SELECT name FROM Profiles WHERE type = :type";
 		Session session = session();
-		List<String> names = session.createQuery(hql).list();
+		List<String> names = session.createQuery(hql).setString("type", type).list();
 		
 		return names;
 	}

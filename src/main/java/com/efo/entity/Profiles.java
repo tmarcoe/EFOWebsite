@@ -22,7 +22,7 @@ public class Profiles implements Serializable {
 	@Column(length = 64)
 	private String script;
 	private boolean exclude;
-	private boolean terms;
+	private String type;
 	private boolean depreciation;
 	@Column(length = 1024)
 	private String variables;
@@ -52,11 +52,11 @@ public class Profiles implements Serializable {
 	public void setExclude(boolean exclude) {
 		this.exclude = exclude;
 	}
-	public boolean isTerms() {
-		return terms;
+	public String getType() {
+		return type;
 	}
-	public void setTerms(boolean terms) {
-		this.terms = terms;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public boolean isDepreciation() {
 		return depreciation;
