@@ -28,43 +28,6 @@
 			<td><sf:errors path="name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Down Payment:</b><br> <sf:input class="fancy" path="down" id="down_payment" type="number" step=".01"
-					value="0" onchange="eachPayment()" /></td>
-			<td><b>Interest:</b><br> <sf:input class="fancy" path="interest" id="interest" type="number" step=".01"
-					value="0" onchange="eachPayment()" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="down" class="error" /></td>
-			<td><sf:errors path="interest" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Number of Payments:</b><br> <sf:input class="fancy" id="num_payments" path="num_payments"
-					type="number" step="1" value="0" onchange="eachPayment()" /></td>
-			<td><b>Each Payment:</b><br> <sf:input class="fancy" id="each_payment" path="each_payment" type="number"
-					step=".01" value="0" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="num_payments" class="error" /></td>
-			<td><sf:errors path="each_payment" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Start of Payments:</b><br> <sf:input class="fancy" path="start" type="date" /></td>
-			<td><b>Schedule:</b><br> <sf:select path="schedule" class="fancy">
-					<sf:option value="">---Select---</sf:option>
-					<sf:option value="Annually">Annually</sf:option>
-					<sf:option value="Bi-Annually">Bi-Annually</sf:option>
-					<sf:option value="Quarterly">Quarterly</sf:option>
-					<sf:option value="Monthly">Monthly</sf:option>
-					<sf:option value="Bi-Monthly">Bi-Monthly</sf:option>
-					<sf:option value="Weekly">Weekly</sf:option>
-					<sf:option value="Daily">Daily</sf:option>
-				</sf:select></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="start" class="error" /></td>
-			<td><sf:errors path="schedule" class="error" /></td>
-		</tr>
-		<tr>
 			<td colspan="2"><b>Transaction Description:</b><br> <sf:textarea class="fancy-textarea" path="descr"
 					rows="5" cols="50" /></td>
 		</tr>
@@ -80,6 +43,12 @@
 				</sf:button>
 		</tr>
 		<tr>
+			<td><sf:hidden path="down" value="0" /></td>
+			<td><sf:hidden path="interest" value="0" /></td>
+			<td><sf:hidden path="num_payments" value="0" /></td>
+			<td><sf:hidden path="each_payment" value="0" /></td>
+			<td><sf:hidden path=""  value="" /></td>
+			<td><sf:hidden path="start" /></td>
 			<td><sf:hidden path="reference" /></td>
 			<td><sf:hidden path="timestamp" /></td>
 			<td><sf:hidden path="payment_ref" /></td>

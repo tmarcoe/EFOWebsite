@@ -113,7 +113,12 @@ public class TransactionsController {
 	@RequestMapping("addoverhead")
 	public String addOverhead(@Valid @ModelAttribute("transaction") Transactions transaction, BindingResult result, Model model) throws NumberFormatException, Exception {
 		Object[] variables = null;
-		if (result.hasErrors()) {
+		if (result.hasErrors() || "".compareTo(transaction.getSchedule()) == 0 ) {
+			
+			if( "".compareTo(transaction.getSchedule()) == 0 ) {
+				result.rejectValue("schedule","NotBlank.transaction.schedule");
+			}
+			
 			model.addAttribute("namesList", profilesService.retrieveNames("O"));
 			return "newoverheadtransaction";
 		}

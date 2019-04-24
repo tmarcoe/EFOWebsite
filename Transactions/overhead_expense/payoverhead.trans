@@ -32,8 +32,9 @@
 
 	newPayment.setReference(oldPayments.getReference());
 	newPayment.setDue(nextPaymnt);
-	newPayment.setAmount_due(0.00);
-	newPayment.setPayment_made(0.00);
+	newPayment.setPayment_date(today());
+	newPayment.setAmount_due(transactions.getAmount());
+	newPayment.setPayment_made(transactions.getAmount());
 	newPayment.setPenalties(0.00);
 	expenseTerms.add(newPayment);
 	newPayment.setExpenseTerms(expenseTerms);

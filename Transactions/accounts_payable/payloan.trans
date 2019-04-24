@@ -16,13 +16,12 @@ begin
 	dao loanTerms = lookup("FROM LoanTerms WHERE reference = {d}", oldPayment.getReference());
 	dao loans = lookup("FROM Loans  WHERE reference = {d}", oldPayment.getReference());
 
-	if (loanTerms.getLoan_balance() <= loanTerms.getEach_payment()) {
+	if (loanTerms.getLoan_balance() <= transactions.getAmount()) {
 		payAmount = loanTerms.getLoan_balance();
 	}else{
-		payAmount = loanTerms.getEach_payment();
+		payAmount = transactions.getAmount();
 	}
 
-	print("Accounting");
  	debit(payAmount, loanAccount);
 	ledger(D, payAmount, loanAccount, descr);
 	credit(payAmount, cashAccount);
@@ -53,17 +52,21 @@ begin
 
 
 	merge(loans);
+
+	if ( loanTerms.getLoan_balance() > 0.00 ) {
+		
+		number newId = lookup("SELECT id FROM LoanPayments ORDER BY id DESC");
+
+		newEvent.setDate(nextDate(base, last, sched));
+		newEvent.setName("Pay " + payAmount + " to " + transactions.getPayment_name() + " for " + transactions.getDescr());
+		newEvent.setLink("/basic/payment?id=" + newId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Loan Payment");
+		newEvent.setCompleted(false);
+
+		insert(newEvent);
+
+		update("UPDATE LoanPayments SET event = {d} WHERE id = {d}", newEvent.getId(), newId);
+	}
 	
-	number newId = lookup("SELECT id FROM LoanPayments ORDER BY id DESC");
-
-	newEvent.setDate(nextDate(base, last, sched));
-	newEvent.setName("Pay " + payAmount + " to " + transactions.getPayment_name() + " for " + transactions.getDescr());
-	newEvent.setLink("/basic/payment?id=" + newId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Loan Payment");
-	newEvent.setCompleted(false);
-
-	insert(newEvent);
-
-	update("UPDATE LoanPayments SET event = {d} WHERE id = {d}", newEvent.getId(), newId);	
 	update("UPDATE Events SET completed = true WHERE id = {d}", oldPayment.getEvent());
 
 end
