@@ -58,7 +58,7 @@
 							src="<c:url value='/images/profile.png'/>"></a></td>
 					<td><a href="/basic/newoverheadtransaction" ><img class="tile" alt="New Overhead"
 							src="<c:url value='/images/overhead.png'/>"></a></td>
-					<td><a href="/basic/neworderretailtransaction" ><img class="tile" alt="New Retail Expense"
+					<td><a href="/basic/newretailexpensetransaction" ><img class="tile" alt="New Retail Expense"
 							src="<c:url value='/images/retailexpense.png'/>"></a></td>
 					<td><a href="/basic/newcapitalexpensetransaction" ><img class="tile" alt="New Capital Expense"
 							src="<c:url value='/images/capitalexpense.png'/>"></a></td>

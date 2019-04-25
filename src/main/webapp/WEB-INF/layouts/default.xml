@@ -211,10 +211,10 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/newoverheadtransaction.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="neworderretailtransaction" extends="accounting.base">
-		<put-attribute name="title" value="Product Order"></put-attribute>
-		<put-attribute name="heading_title" value="Product Order"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/neworderretailtransaction.jsp"></put-attribute>
+	<definition name="newretailexpensetransaction" extends="accounting.base">
+		<put-attribute name="title" value="Retail Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Retail Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newretailexpensetransaction.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="newcapitalexpensetransaction" extends="accounting.base">

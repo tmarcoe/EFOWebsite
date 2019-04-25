@@ -17,6 +17,7 @@ import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
 import com.efo.service.EmployeeService;
 import com.efo.service.InvestorService;
+import com.efo.service.TransactionsService;
 import com.efo.service.VendorService;
 
 @RestController
@@ -34,6 +35,9 @@ public class QueryController {
 	
 	@Autowired
 	private InvestorService investorService;
+	
+	@Autowired
+	private TransactionsService transactionsService;
 	
 	@RequestMapping("lookupcustomer")
 	public String lookupCustomer(@RequestParam(value = "name") String name) throws JSONException {
@@ -63,6 +67,13 @@ public class QueryController {
 		List<Employee> employeeList = employeeService.queryEmployee(name);
 		
 		return employeeToJson(employeeList);
+	}
+	
+	@RequestMapping("overheadexists")
+	public String overheadExists(@RequestParam(value = "name") String name, @RequestParam(value = "profilename") String profileName ) throws JSONException {
+		boolean exists = transactionsService.overheadExists(name, profileName);
+		
+		return overheadExistToJson(exists);
 	}
 	
 	private String vendorToJson(List<Vendor> v) throws JSONException {
@@ -130,5 +141,12 @@ public class QueryController {
 		}
 		
 		return jsonArray.toString();
+	}
+	
+	private String overheadExistToJson(boolean exists) throws JSONException {
+		JSONObject jsonExists = new JSONObject();
+		jsonExists.put("exists", exists);
+		
+		return jsonExists.toString();
 	}
 }

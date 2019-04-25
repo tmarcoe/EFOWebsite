@@ -74,5 +74,14 @@ public class TransactionsDao implements ITransactions {
 		session.disconnect();
 
 	}
+	
+	public boolean overheadExists(String name, String profileName)  {
+		String hql = "SELECT COUNT(*) FROM Transactions WHERE payment_name = :name AND name = :profileName";
+		Session session = session();
+		Long count = (Long) session.createQuery(hql).setString("name", name).setString("profileName", profileName).uniqueResult();
+		session.disconnect();
+		
+		return (count > 0);
+	}
 
 }

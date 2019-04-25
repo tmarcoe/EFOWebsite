@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form id="vendor" method="post" action="/basic/addreceiveretail" modelAttribute="transaction">
+<sf:form id="retailRevenue" method="post" action="/basic/addreceiveretail" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td colspan="2"><sf:input id="autocomplete" class="fancy" path="payment_name" size="55" placeholder="Enter Customer Name" /></td>
@@ -16,7 +16,7 @@
 			<td><sf:errors path="payment_name" class="error" />
 		</tr>
 		<tr>
-			<td><b>Amount of Transaction:</b><br> <sf:input class="fancy" id="total_due" path="amount" type="number"
+			<td><b>Amount Received (Plus Tax):</b><br> <sf:input class="fancy" id="total_due" path="amount" type="number"
 					step=".01" value="0" onchange="eachPayment()" /></td>
 			<td><b>Profile Name:</b><br> <sf:select class="fancy" path="name">
 					<sf:option value="">---Select---</sf:option>

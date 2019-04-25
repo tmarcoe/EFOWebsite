@@ -9,13 +9,13 @@
 <sf:form id="vendor" method="post" action="/basic/addtransaction" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><b>Received From:</b><br><sf:input class="fancy" path="payment_name" size="55" readonly="true" /></td>
+			<td colspan="2"><b>Payment To/Received From:</b><br><sf:input class="fancy" path="payment_name" size="55" readonly="true" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="payment_name" class="error"/>
 		</tr>
 		<tr>
-			<td><b>Amount Received:</b><br>
+			<td><b>Amount of Payment:</b><br>
 			<sf:input class="fancy" id="total_due" path="amount" type="number" step=".01" value="0" /></td>
 			<td><b>Profile Name:</b><br><sf:input class="fancy" path="name" readonly="true" /></td>
 		</tr>
@@ -39,12 +39,12 @@
 			<td><sf:hidden path="reference" /></td>
 			<td><sf:hidden path="timestamp" /></td>
 			<td><sf:hidden path="payment_ref"/></td>
-			<td><sf:hidden path="down"/></td>
-			<td><sf:hidden path="interest"/></td>
-			<td><sf:hidden path="num_payments"/></td>
-			<td><sf:hidden path="each_payment"/></td>
+			<td><sf:hidden path="down" value="0" /></td>
+			<td><sf:hidden path="interest" value="0" /></td>
+			<td><sf:hidden path="num_payments" value="0" /></td>
+			<td><sf:hidden path="each_payment" value="0" /></td>
 			<td><sf:hidden path="start"/></td>
-			<td><sf:hidden path="schedule"/></td>
+			<td><sf:hidden path="schedule" value="" /></td>
 			<td><input type="hidden" id="total_tax" value="0" /></td>
 		</tr>
 	</table>

@@ -45,5 +45,9 @@ public class TransactionsService implements ITransactions {
 	public void delete(Transactions transactions) {
 		transactionsDao.delete(transactions);
 	}
+	
+	public boolean overheadExists(String name, String profileName) {
+		return transactionsDao.overheadExists(name, profileName);
+	}
 
 }

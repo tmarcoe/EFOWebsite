@@ -137,8 +137,8 @@ public class TransactionsController {
 		return "redirect:/#tabs-5";
 	}
 	
-	@RequestMapping("neworderretailtransaction")
-	public String newOrderRetailTransaction(Model model) {
+	@RequestMapping("newretailexpensetransaction")
+	public String newRetailExpenseTransaction(Model model) {
 		Transactions transaction = new Transactions();
 		transaction.setTimestamp(new Date());
 		transaction.setStart(transaction.getTimestamp());
@@ -146,7 +146,7 @@ public class TransactionsController {
 		model.addAttribute("namesList", profilesService.retrieveNames("RE"));
 		model.addAttribute("transaction", transaction);
 		
-		return "neworderretailtransaction";
+		return "newretailexpensetransaction";
 	}
 	
 	@RequestMapping("addorderretail")
@@ -154,7 +154,7 @@ public class TransactionsController {
 		Object[] variables = null;
 		if (result.hasErrors()) {
 			model.addAttribute("namesList", profilesService.retrieveNames("RE"));
-			return "neworderretailtransaction";
+			return "newretailexpensetransaction";
 		}
 
 		String profileName = transaction.getName();
