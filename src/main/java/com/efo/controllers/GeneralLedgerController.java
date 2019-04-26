@@ -1,6 +1,8 @@
 package com.efo.controllers;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +23,7 @@ import org.xml.sax.SAXException;
 
 
 import com.efo.entity.GeneralLedger;
+import com.efo.forms.PrintGeneralLedgerForm;
 import com.efo.service.GeneralLedgerService;
 
 
@@ -29,7 +32,10 @@ import com.efo.service.GeneralLedgerService;
 public class GeneralLedgerController {
 	
 	@Autowired
-	GeneralLedgerService ledgerService;
+	private GeneralLedgerService ledgerService;
+	
+	@Autowired
+	private PrintGeneralLedgerForm printGeneralLedgerForm;
 	
 	private final String pageLink = "/accounting/glpaging";
 	
@@ -55,6 +61,12 @@ public class GeneralLedgerController {
 		model.addAttribute("pagelink", pageLink);
 
 		return "ledgerlist";
+	}
+	@RequestMapping("printgeneralledger/from/{from}/to/{to}")
+	public String printGeneralLedger(@PathVariable("from") Date from,@PathVariable("to") Date to) throws FileNotFoundException, MalformedURLException {
+		printGeneralLedgerForm.print(from, to);
+		
+		return "redirect:/#tabs-6";
 	}
 	
 	@RequestMapping(value = "glpaging", method = RequestMethod.GET)

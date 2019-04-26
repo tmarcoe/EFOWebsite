@@ -118,6 +118,12 @@
 		</div>
 		<div id="tabs-6">
 			<table class="menuTable menuTableSpace">
+				<tr>
+					<td><a href="#" onclick="inputDate('/accounting/printgeneralledger')"><img class="tile" alt="Print General Ledger"
+							src="<c:url value='/images/print-ledger.png'/>"></a></td>
+					<td><a href="/accounting/printaccounts"><img class="tile" alt="Print Chart Of Accounts"
+							src="<c:url value='/images/print-accounts.png'/>"></a></td>
+				</tr>
 			</table>
 		</div>
 	</div>
