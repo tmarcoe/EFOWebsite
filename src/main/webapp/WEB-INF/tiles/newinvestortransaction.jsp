@@ -47,7 +47,7 @@
 			<td><sf:hidden path="interest" value="0" /></td>
 			<td><sf:hidden path="num_payments" value="0" /></td>
 			<td><sf:hidden path="each_payment" value="0" /></td>
-			<td><sf:hidden path=""  value="" /></td>
+			<td><sf:hidden path="schedule"  value="" /></td>
 			<td><sf:hidden path="start" /></td>
 			<td><sf:hidden path="reference" /></td>
 			<td><sf:hidden path="timestamp" /></td>

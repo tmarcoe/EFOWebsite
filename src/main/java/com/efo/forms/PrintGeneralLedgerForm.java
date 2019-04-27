@@ -48,16 +48,15 @@ public class PrintGeneralLedgerForm {
 		
 		pdfUtilities.addLabels(table, labels, labelColor, 8, null);
 		PagedListHolder<GeneralLedger> glList = generalLedgerService.getPagedList(from, to);
-		populateTable(table, glList.getSource());
+		populateTable(doc, table, glList.getSource());
 		
 		
 		doc.add(table);
 		doc.close();
 	}
 	
-	
-	
-	private Table populateTable(Table table, List<GeneralLedger> data) {
+	private Table populateTable(Document doc, Table table, List<GeneralLedger> data) {
+		
 		String dateFormat = "MMMMM dd, yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
 		String[] row = new String[5];
@@ -86,6 +85,7 @@ public class PrintGeneralLedgerForm {
 			}else{
 				pdfUtilities.addRow(table, row, evenRowColor, justify, 8, null);
 			}
+			
 			rowNum++;
 		}
 

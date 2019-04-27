@@ -54,7 +54,7 @@ public class GeneralLedgerController {
 	public String ledgerList(@PathVariable("from") Date from,@PathVariable("to") Date to, Model model) throws SAXException, IOException, ParserConfigurationException{
 		
 		glList = ledgerService.getPagedList(from, to);
-		glList.setPageSize(30);
+		glList.setPageSize(35);
 		glList.setPage(0);
 
 		model.addAttribute("objectList", glList);
