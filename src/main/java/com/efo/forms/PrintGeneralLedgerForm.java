@@ -1,7 +1,6 @@
 package com.efo.forms;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +12,9 @@ import org.springframework.stereotype.Component;
 import com.efo.entity.GeneralLedger;
 import com.efo.pdf.PdfUtilities;
 import com.efo.service.GeneralLedgerService;
+import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
@@ -21,6 +23,8 @@ import com.itextpdf.layout.element.Table;
 @Component
 public class PrintGeneralLedgerForm {
 	private final String targetFile = "./documents/gl";
+	private PdfFont font = null;
+	private PdfFont boldFont = null;
 		
 	@Autowired
 	PdfUtilities pdfUtilities;
@@ -28,7 +32,12 @@ public class PrintGeneralLedgerForm {
 	@Autowired
 	private GeneralLedgerService generalLedgerService;
 	
-	public void print(Date from, Date to) throws FileNotFoundException, MalformedURLException {
+	public void print(Date from, Date to) throws IOException {
+		String headingPattern = "MMMMM dd, yyyy";
+		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
+		String period = String.format("From: %-20s To: %s", df.format(from), df.format(to));
+		font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+		boldFont = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
 		final String pattern = "yyyyMMddHHmmssSSS";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
@@ -38,15 +47,16 @@ public class PrintGeneralLedgerForm {
 		
 		PdfDocument pdfDoc = pdfUtilities.createForm(targetFile + date + ".pdf");
 		Document doc = pdfUtilities.createLayout(pdfDoc, "A4");
-		pdfUtilities.centerText(doc, "General Ledger", 18, null);
+		pdfUtilities.centerText(doc, "General Ledger", 18, boldFont);
+		pdfUtilities.centerText(doc, period, 12, boldFont);
 
 		pdfUtilities.addImage(doc, 5, 720, "FetalImage.png");
-		doc.add(new Paragraph("\n\n\n\n"));
+		doc.add(new Paragraph("\n\n"));
 		
 		Table table = pdfUtilities.addTable(widths, 0);
 		
 		
-		pdfUtilities.addLabels(table, labels, labelColor, 8, null);
+		pdfUtilities.addLabels(table, labels, labelColor, 8, boldFont);
 		PagedListHolder<GeneralLedger> glList = generalLedgerService.getPagedList(from, to);
 		populateTable(doc, table, glList.getSource());
 		
@@ -81,9 +91,9 @@ public class PrintGeneralLedgerForm {
 			row[4] = item.getDescription();
 			
 			if (rowNum % 2 == 1) {
-				pdfUtilities.addRow(table, row, oddRowColor, justify, 8, null);
+				pdfUtilities.addRow(table, row, oddRowColor, justify, 8, font);
 			}else{
-				pdfUtilities.addRow(table, row, evenRowColor, justify, 8, null);
+				pdfUtilities.addRow(table, row, evenRowColor, justify, 8, font);
 			}
 			
 			rowNum++;

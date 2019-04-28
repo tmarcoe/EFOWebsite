@@ -1,8 +1,6 @@
 package com.efo.controllers;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -63,7 +61,7 @@ public class GeneralLedgerController {
 		return "ledgerlist";
 	}
 	@RequestMapping("printgeneralledger/from/{from}/to/{to}")
-	public String printGeneralLedger(@PathVariable("from") Date from,@PathVariable("to") Date to) throws FileNotFoundException, MalformedURLException {
+	public String printGeneralLedger(@PathVariable("from") Date from,@PathVariable("to") Date to) throws IOException {
 		printGeneralLedgerForm.print(from, to);
 		
 		return "redirect:/#tabs-6";
