@@ -58,6 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/accounting/**").hasAuthority("ACCOUNTING")
 				.antMatchers("/events/**").hasAuthority("EVENTS")
 				.antMatchers("/reports/**").hasAuthority("REPORTS")
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
 				.defaultSuccessUrl("/")

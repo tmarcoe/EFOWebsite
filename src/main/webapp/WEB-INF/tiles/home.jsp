@@ -20,6 +20,7 @@
 			<li><a href="#tabs-4">Accounting</a></li>
 			<li><a href="#tabs-5">Event Calendar</a></li>
 			<li><a href="#tabs-6">Reports</a></li>
+			<li><a href="#tabs-7">Admin</a></li>
 
 		</ul>
 		<div id="tabs-1">
@@ -43,7 +44,8 @@
 				<tr>
 					<td><a href="/personel/customerlist"><img class="tile" alt="Customer"
 							src="<c:url value='/images/customer.png'/>"></a></td>
-					<td><a href="/personel/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
+					<td><a href="/personel/vendorlist"><img class="tile" alt="Vendor"
+							src="<c:url value='/images/vendor.png'/>"></a></td>
 					<td><a href="/personel/employeelist"><img class="tile" alt="Employees"
 							src="<c:url value='/images/employees.png'/>"></a></td>
 					<td><a href="/personel/investorlist"><img class="tile" alt="Investor"
@@ -56,21 +58,21 @@
 				<tr>
 					<td><a href="/basic/profileslist"><img class="tile" alt="Profiles"
 							src="<c:url value='/images/profile.png'/>"></a></td>
-					<td><a href="/basic/newoverheadtransaction" ><img class="tile" alt="New Overhead"
+					<td><a href="/basic/newoverheadtransaction"><img class="tile" alt="New Overhead"
 							src="<c:url value='/images/overhead.png'/>"></a></td>
-					<td><a href="/basic/newretailexpensetransaction" ><img class="tile" alt="New Retail Expense"
+					<td><a href="/basic/newretailexpensetransaction"><img class="tile" alt="New Retail Expense"
 							src="<c:url value='/images/retailexpense.png'/>"></a></td>
-					<td><a href="/basic/newcapitalexpensetransaction" ><img class="tile" alt="New Capital Expense"
+					<td><a href="/basic/newcapitalexpensetransaction"><img class="tile" alt="New Capital Expense"
 							src="<c:url value='/images/capitalexpense.png'/>"></a></td>
 				</tr>
 				<tr>
 					<td><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
 							src="<c:url value='/images/transactions.png'/>"></a></td>
-					<td><a href="/basic/newreceiveretailtransaction" ><img class="tile" alt="New Retail"
+					<td><a href="/basic/newreceiveretailtransaction"><img class="tile" alt="New Retail"
 							src="<c:url value='/images/retail.png'/>"></a></td>
-					<td><a href="/basic/newloantransaction" ><img class="tile" alt="New Loan"
+					<td><a href="/basic/newloantransaction"><img class="tile" alt="New Loan"
 							src="<c:url value='/images/loan.png'/>"></a></td>
-					<td><a href="/basic/newinvestortransaction" ><img class="tile" alt="New Investor"
+					<td><a href="/basic/newinvestortransaction"><img class="tile" alt="New Investor"
 							src="<c:url value='/images/stock.png'/>"></a></td>
 				</tr>
 			</table>
@@ -88,9 +90,13 @@
 		<div id="tabs-5">
 			<table class="calendarTitle">
 				<tr>
-					<td><button class="fancy-button" type="button" onclick="reverse()" style="font-size: 14px;"><b>&lt;&lt;</b></button></td>
+					<td><button class="fancy-button" type="button" onclick="reverse()" style="font-size: 14px;">
+							<b>&lt;&lt;</b>
+						</button></td>
 					<td><div id="month"></div></td>
-					<td><button class="fancy-button" type="button" onclick="forward()" style="font-size: 14px;"><b>&gt;&gt;</b></button></td>
+					<td><button class="fancy-button" type="button" onclick="forward()" style="font-size: 14px;">
+							<b>&gt;&gt;</b>
+						</button></td>
 				</tr>
 			</table>
 			<table class="calendarTable">
@@ -106,10 +112,8 @@
 					</tr>
 				</thead>
 				<c:forEach var="i" begin="1" end="42">
-					<td><input id="d${i}" type="hidden" />
-						<input id="m${i}" type="hidden" />
-						<input id="y${i}" type="hidden" />
-					<div id="div${i}" class="calendarContent" onclick="getEvents('#y${i}', '#m${i}', '#d${i}')"></div></td>
+					<td><input id="d${i}" type="hidden" /> <input id="m${i}" type="hidden" /> <input id="y${i}" type="hidden" />
+						<div id="div${i}" class="calendarContent" onclick="getEvents('#y${i}', '#m${i}', '#d${i}')"></div></td>
 					<c:if test="${i % 7 == 0}">
 						<tr></tr>
 					</c:if>
@@ -119,10 +123,18 @@
 		<div id="tabs-6">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="#" onclick="inputDate('/accounting/printgeneralledger')"><img class="tile" alt="Print General Ledger"
-							src="<c:url value='/images/print-ledger.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/printgeneralledger')"><img class="tile"
+							alt="Print General Ledger" src="<c:url value='/images/print-ledger.png'/>"></a></td>
 					<td><a href="/accounting/printaccounts"><img class="tile" alt="Print Chart Of Accounts"
 							src="<c:url value='/images/print-accounts.png'/>"></a></td>
+				</tr>
+			</table>
+		</div>
+		<div id="tabs-7">
+			<table class="menuTable menuTableSpace">
+				<tr>
+					<td><a href="/admin/shutdown"><img class="tile" alt="Print Chart Of Accounts"
+							src="<c:url value='/images/shutdown.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
@@ -215,8 +227,11 @@
 		var mnth = $(monthInput).val();
 		var day = $(dayInput).val();
 
-		$.getJSON( "/rest/getevents?year=" + yr + "&month=" + mnth + "&day=" + day, function(data) {
-					if (data.length > 0) {
+		$
+				.getJSON(
+						"/rest/getevents?year=" + yr + "&month=" + mnth
+								+ "&day=" + day, function(data) {
+							if (data.length > 0) {
 								eventPopup(data);
 							}
 						}).fail(
@@ -231,16 +246,16 @@
 
 		for (i = 0; i < data.length; i++) {
 			if (data[i].completed == false) {
-				
-				content = content + "<li><a href='" + data[i].link + "'>" + data[i].name + "</a></li>";
-			}else{
+
+				content = content + "<li><a href='" + data[i].link + "'>"
+						+ data[i].name + "</a></li>";
+			} else {
 				content = content + "<li><del>" + data[i].name + "</del></li>";
 			}
 		}
 		content = content + "<br><b>Click here to close</b></ul>";
 		$("#eventList").html(content);
 	}
-
 
 	function closeShowEvents() {
 		$("#showEvents").hide();
