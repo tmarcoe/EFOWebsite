@@ -7,9 +7,7 @@
  	
  	// Accounts to be debited or credited
  	string accountsPayable = "Accounts Payable";
- 	string inventoryAccount = "Inventory Expense";
- 	string taxAccount = "Tax Account";
- 	
+ 	string inventoryAccount = "Inventory";
 
  	decimal amount = transactions.getAmount();
 

@@ -34,7 +34,7 @@
 	revenues.setDescr(transactions.getDescr());
 	
 	insert(revenues);
-
+	
 	events.setDate(transactions.getStart());
 	events.setName("Received funds from " + transactions.getPayment_name() + " for the amount of " + total);
 	events.setLink("#");

@@ -7,17 +7,17 @@
  	
  	// Accounts to be debited or credited
  	string cashAccount = "Cash";
- 	string salesAccount = "Sales";
+ 	string inventoryAccount = "Inventory";
 
  	string source = "Direct Sales";
 
- 	decimal amount = transactions.getAmount() 
+ 	decimal amount = transactions.getAmount(); 
  	
 	// Set accounting housekeeping first
-  	debit(amount , cashAccount);
- 	ledger(D, amount, cashAccount, transactions.getDescr());
-	credit(amount, salesAccount);
- 	ledger(C,amount , salesAccount, transactions.getDescr());
+  	debit(amount , inventoryAccount);
+ 	ledger(D, amount, inventoryAccount, transactions.getDescr());
+	credit(amount, cashAccount);
+ 	ledger(C,amount , cashAccount, transactions.getDescr());
  
 
 	// Construct the expense record

@@ -44,6 +44,8 @@ public class ProfilesController {
 		
 		profilesList = profilesService.RetrieveList();
 		
+		profilesList.setPage(0);
+		profilesList.setPageSize(35);
 		model.addAttribute("objectList", profilesList);
 		model.addAttribute("pagelink", pageLink);
 

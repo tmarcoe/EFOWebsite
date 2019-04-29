@@ -9,7 +9,7 @@
  	string capitalAccount = "Capital";
 	string cashAccount = "Cash";
  
- 	decimal amount = transactions.getAmount() 
+ 	decimal amount = transactions.getAmount(); 
  	
 	// Set accounting housekeeping first
   	debit(amount , capitalAccount);
