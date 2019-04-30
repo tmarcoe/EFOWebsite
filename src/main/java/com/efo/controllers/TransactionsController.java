@@ -94,7 +94,7 @@ public class TransactionsController {
 		
 		transactionsService.create(transaction);
 		
-		return "redirect:/#tabs-5";
+		return "redirect:/#tabs-3";
 	}
 	
 	
@@ -134,7 +134,7 @@ public class TransactionsController {
 		
 		transactionsService.create(transaction);
 		
-		return "redirect:/#tabs-5";
+		return "redirect:/#tabs-3";
 	}
 	
 	@RequestMapping("newretailexpensetransaction")
@@ -168,7 +168,7 @@ public class TransactionsController {
 		
 		transactionsService.create(transaction);
 		
-		return "redirect:/#tabs-5";
+		return "redirect:/#tabs-3";
 	}
 	
 	@RequestMapping("newcapitalexpensetransaction")
@@ -202,7 +202,7 @@ public class TransactionsController {
 		
 		transactionsService.create(transaction);
 		
-		return "redirect:/#tabs-5";
+		return "redirect:/#tabs-3";
 	}
 	
 	@RequestMapping("newloantransaction")
@@ -236,7 +236,7 @@ public class TransactionsController {
 		
 		transactionsService.create(transaction);
 		
-		return "redirect:/#tabs-5";
+		return "redirect:/#tabs-3";
 	}
 	
 	@RequestMapping("newinvestortransaction")
@@ -320,7 +320,7 @@ public class TransactionsController {
 		
 		transactionsService.create(transaction);
 		
-		return "redirect:/#tabs-5";
+		return "redirect:/#tabs-3";
 	}
 	
 	@RequestMapping(value = "transactionspaging", method = RequestMethod.GET)

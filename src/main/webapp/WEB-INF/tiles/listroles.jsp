@@ -16,7 +16,7 @@
 			<td><button type="button" onclick="enterRole()">New
 					Role</button></td>
 			<td><button type="button"
-					onclick="window.location.href='/#tabs-1'">Back</button></td>
+					onclick="window.location.href='/#tabs-7'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>
@@ -42,6 +42,6 @@
 	}
 	function addRole() {
 		var r = document.getElementById('newrole');
-		window.location.href = '/personel/addrole?role=' + r.value;
+		window.location.href = '/admin/addrole?role=' + r.value;
 	}
 </script>

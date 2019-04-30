@@ -12,7 +12,7 @@ import com.efo.entity.Role;
 import com.efo.service.RoleService;
 
 @Controller
-@RequestMapping("/personel/")
+@RequestMapping("/admin/")
 public class RoleController {
 	
 	@Autowired
@@ -38,7 +38,7 @@ public class RoleController {
 		
 		roleService.create(r);
 		
-		return "redirect:/personel/listroles";
+		return "redirect:/admin/listroles";
 	}
 	
 	@RequestMapping(value = "rolepaging", method = RequestMethod.GET)
