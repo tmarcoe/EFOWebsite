@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,8 @@ import com.itextpdf.layout.element.Table;
 
 @Component
 public class PrintGeneralLedgerForm {
-	private final String targetFile = "./documents/gl";
+	@Value("${efo.documentsPath}")
+	private String targetFile;
 	private PdfFont font = null;
 	private PdfFont boldFont = null;
 		
@@ -45,7 +47,7 @@ public class PrintGeneralLedgerForm {
 		final String[] labels = {"Date","Account Number","Debit","Credit", "Description"};
 		final String labelColor = "F7F9B9";
 		
-		PdfDocument pdfDoc = pdfUtilities.createForm(targetFile + date + ".pdf");
+		PdfDocument pdfDoc = pdfUtilities.createForm(targetFile + "/gl" + date + ".pdf");
 		Document doc = pdfUtilities.createLayout(pdfDoc, "A4");
 		pdfUtilities.centerText(doc, "General Ledger", 18, boldFont);
 		pdfUtilities.centerText(doc, period, 12, boldFont);

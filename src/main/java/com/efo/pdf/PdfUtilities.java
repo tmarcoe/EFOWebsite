@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.io.image.ImageData;
@@ -29,6 +30,8 @@ import com.itextpdf.layout.property.TabAlignment;
 
 @Component
 public class PdfUtilities {
+	@Value("${efo.formimagePath}")
+	private String imagePath;
 	
 	@Autowired
 	PdfTable pdfTable;
@@ -118,9 +121,8 @@ public class PdfUtilities {
 	}
 
 	public Image addImage(Document doc, float x, float y, String imageFile) throws MalformedURLException {
-		final String imagePath = "./formimages/";
 		
-		ImageData data = ImageDataFactory.create(imagePath + imageFile); 
+		ImageData data = ImageDataFactory.create(imagePath + "/" + imageFile); 
 		Image image = new Image(data);
 		image.setFixedPosition(x,y);
 		doc.add(image);

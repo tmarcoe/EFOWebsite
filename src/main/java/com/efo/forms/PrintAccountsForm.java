@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.efo.entity.ChartOfAccounts;
@@ -19,7 +20,8 @@ import com.itextpdf.layout.element.Table;
 
 @Component
 public class PrintAccountsForm {
-	private final String targetFile = "./documents/cofa";
+	@Value("${efo.documentsPath}")
+	private String targetFile;
 	String pattern = "yyyyMMddHHmmssSSS";
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
@@ -35,7 +37,7 @@ public class PrintAccountsForm {
 		final String[] labels = {"Account Number","Account Name","Balance","Account Type"};
 		final String labelColor = "F7F9B9";
 		
-		PdfDocument pdfDoc = pdfUtilities.createForm(targetFile + date + ".pdf");
+		PdfDocument pdfDoc = pdfUtilities.createForm(targetFile + "/cofa" + date + ".pdf");
 		Document doc = pdfUtilities.createLayout(pdfDoc, "A4");
 		pdfUtilities.centerText(doc, "Chart Of Accounts", 18, null);
 
