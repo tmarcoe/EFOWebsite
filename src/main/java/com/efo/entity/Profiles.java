@@ -24,6 +24,7 @@ public class Profiles implements Serializable {
 	private boolean exclude;
 	private String type;
 	private boolean depreciation;
+	private boolean show_credit_terms;
 	@Column(length = 1024)
 	private String variables;
 	private Date created;
@@ -63,6 +64,12 @@ public class Profiles implements Serializable {
 	}
 	public void setDepreciation(boolean depreciation) {
 		this.depreciation = depreciation;
+	}
+	public boolean isShow_credit_terms() {
+		return show_credit_terms;
+	}
+	public void setShow_credit_terms(boolean show_credit_terms) {
+		this.show_credit_terms = show_credit_terms;
 	}
 	public String getVariables() {
 		return variables;

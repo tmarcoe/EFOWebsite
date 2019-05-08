@@ -29,7 +29,9 @@
 			<td><b>Created On: </b><br>
 				<sf:input class="fancy" type="date" path="created" /></td>
 			<td><b>Active: </b>
-				<sf:checkbox class="fancy" path="active" checked="true" /></td>
+				<sf:checkbox class="fancy" path="active" checked="true" />
+				<b>Show Credit Terms: </b>
+				<sf:checkbox path="show_credit_terms" /></td>
 		</tr>
 		<tr>
 			<td colspan="3"><b>Extra Variables: </b><br>

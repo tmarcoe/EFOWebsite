@@ -6,6 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
 <sf:form id="retailRevenue" method="post" action="/basic/addreceiveretail" modelAttribute="transaction">
 	<table class="fancy-table tableshadow">
@@ -18,7 +19,7 @@
 		<tr>
 			<td><b>Amount Received (Plus Tax):</b><br> <sf:input class="fancy" id="total_due" path="amount" type="number"
 					step=".01" value="0" onchange="eachPayment()" /></td>
-			<td><b>Profile Name:</b><br> <sf:select class="fancy" path="name">
+			<td><b>Profile Name:</b><br> <sf:select id="profileName" class="fancy" path="name">
 					<sf:option value="">---Select---</sf:option>
 					<sf:options items="${namesList}" />
 				</sf:select></td>
@@ -28,41 +29,7 @@
 			<td><sf:errors path="name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Down Payment:</b><br> <sf:input class="fancy" path="down" id="down_payment" type="number" step=".01"
-					value="0" onchange="eachPayment()" /></td>
-			<td><b>Interest:</b><br> <sf:input class="fancy" path="interest" id="interest" type="number" step=".01"
-					value="0" onchange="eachPayment()" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="down" class="error" /></td>
-			<td><sf:errors path="interest" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Number of Payments:</b><br> <sf:input class="fancy" id="num_payments" path="num_payments"
-					type="number" step="1" value="0" onchange="eachPayment()" /></td>
-			<td><b>Each Payment:</b><br> <sf:input class="fancy" id="each_payment" path="each_payment" type="number"
-					step=".01" value="0" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="num_payments" class="error" /></td>
-			<td><sf:errors path="each_payment" class="error" /></td>
-		</tr>
-		<tr>
 			<td><b>Start of Payments:</b><br> <sf:input class="fancy" path="start" type="date" /></td>
-			<td><b>Schedule:</b><br> <sf:select path="schedule" class="fancy">
-					<sf:option value="">---Select---</sf:option>
-					<sf:option value="Annually">Annually</sf:option>
-					<sf:option value="Bi-Annually">Bi-Annually</sf:option>
-					<sf:option value="Quarterly">Quarterly</sf:option>
-					<sf:option value="Monthly">Monthly</sf:option>
-					<sf:option value="Bi-Monthly">Bi-Monthly</sf:option>
-					<sf:option value="Weekly">Weekly</sf:option>
-					<sf:option value="Daily">Daily</sf:option>
-				</sf:select></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="start" class="error" /></td>
-			<td><sf:errors path="schedule" class="error" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>Transaction Description:</b><br> <sf:textarea class="fancy-textarea" path="descr"
@@ -72,12 +39,15 @@
 			<td><sf:errors path="descr" class="error" /></td>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit">
+			<td><sf:button class="fancy-button" type="button" onclick="checkTerms()">
 					<b>Save</b>
+				</sf:button>
+				<sf:button class="fancy-button" type="button" onclick="$('#showTerms').show()">
+					<b>Show Terms</b>
 				</sf:button></td>
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">
 					<b>Back</b>
-				</sf:button>
+				</sf:button></td>
 		</tr>
 		<tr>
 			<td><sf:hidden path="reference" /></td>
@@ -87,6 +57,39 @@
 			<td><input type="hidden" id="total_tax" value="0" /></td>
 		</tr>
 	</table>
+	<div id="showTerms" class="modal">
+		<div class="modal-content small-modal fancy">
+			<table style="margin-left: auto; margin-right: auto;">
+				<tr>
+					<td><b>Down Payment:</b><br> <sf:input class="fancy" path="down" id="down_payment" type="number"
+							step=".01" value="0" onchange="eachPayment()" /></td>
+					<td><b>Interest:</b><br> <sf:input class="fancy" path="interest" id="interest" type="number" step=".01"
+							value="0" onchange="eachPayment()" /></td>
+				</tr>
+				<tr>
+					<td><b>Number of Payments:</b><br> <sf:input class="fancy" id="num_payments" path="num_payments"
+							type="number" step="1" value="0" onchange="eachPayment()" /></td>
+					<td><b>Each Payment:</b><br> <sf:input class="fancy" id="each_payment" path="each_payment" type="number"
+							step=".01" value="0" /></td>
+				</tr>
+				<tr>
+					<td><b>Schedule:</b><br> <sf:select path="schedule" id="sched" class="fancy">
+							<sf:option value="">---Select---</sf:option>
+							<sf:option value="Annually">Annually</sf:option>
+							<sf:option value="Bi-Annually">Bi-Annually</sf:option>
+							<sf:option value="Quarterly">Quarterly</sf:option>
+							<sf:option value="Monthly">Monthly</sf:option>
+							<sf:option value="Bi-Monthly">Bi-Monthly</sf:option>
+							<sf:option value="Weekly">Weekly</sf:option>
+							<sf:option value="Daily">Daily</sf:option>
+						</sf:select></td>
+				</tr>
+				<tr>
+					<td><sf:button class="fancy-button" type="button" onclick="$('#showTerms').hide()" ><b>Save</b></sf:button>
+				</tr>
+			</table>
+		</div>
+	</div>
 </sf:form>
 <script type="text/javascript">
 	function eachPayment() {
@@ -132,4 +135,26 @@
 					$("#user_id").val(data.data);
 				}
 			});
+	
+	function checkTerms() {
+		var profileName = $('#profileName option:selected').val();
+		if (profileName != '') {
+		$.getJSON("/rest/showterms?profilename=" + profileName,
+				function(result) {
+					if (result.showCreditTerms == true && ($('#num_payments').val() == 0 || $('#sched option:selected').val() === "" )) {
+						$('#showTerms').show();
+					}else{
+						$('#retailRevenue').submit();
+					}
+			
+				}).fail(
+						function(jqXHR, textStatus, errorThrown) {
+							alert("error " + textStatus + "\n"
+									+ "incoming Text "
+									+ jqXHR.responseText);
+						});	
+				}
+
+			}
+
 </script>

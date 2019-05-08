@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.efo.entity.Customer;
 import com.efo.entity.Employee;
 import com.efo.entity.Investor;
+import com.efo.entity.Profiles;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
 import com.efo.service.EmployeeService;
 import com.efo.service.InvestorService;
+import com.efo.service.ProfilesService;
 import com.efo.service.TransactionsService;
 import com.efo.service.VendorService;
 
@@ -38,6 +40,9 @@ public class QueryController {
 	
 	@Autowired
 	private TransactionsService transactionsService;
+	
+	@Autowired
+	private ProfilesService profilesService;
 	
 	@RequestMapping("lookupcustomer")
 	public String lookupCustomer(@RequestParam(value = "name") String name) throws JSONException {
@@ -74,6 +79,15 @@ public class QueryController {
 		boolean exists = transactionsService.overheadExists(name, profileName);
 		
 		return overheadExistToJson(exists);
+	}
+	
+	@RequestMapping("showterms")
+	public String showTerms(@RequestParam(value = "profilename") String profileName) throws JSONException {
+		
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		
+		return showTermsToJson(profile.isShow_credit_terms());
 	}
 	
 	private String vendorToJson(List<Vendor> v) throws JSONException {
@@ -149,4 +163,12 @@ public class QueryController {
 		
 		return jsonExists.toString();
 	}
+	
+	private String showTermsToJson(boolean showTerms) throws JSONException {
+		JSONObject jsonShowTerms = new JSONObject();
+		jsonShowTerms.put("showCreditTerms", showTerms);
+		
+		return jsonShowTerms.toString();
+	}
+	
 }
