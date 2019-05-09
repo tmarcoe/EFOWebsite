@@ -286,13 +286,15 @@ public class TransactionsController {
 	@RequestMapping("payment")
 	public String receivePayment(@ModelAttribute("id") Long id, 
 								 @ModelAttribute("payment_name") String paymentName, 
-								 @ModelAttribute("profilename") String profileName, Model model) {
+								 @ModelAttribute("profilename") String profileName, 
+								 @ModelAttribute("amount") Double amount, Model model) {
 		
 		Transactions transaction = new Transactions();
 		transaction.setPayment_ref(id);
 		transaction.setTimestamp(new Date());
 		transaction.setName(profileName);
 		transaction.setPayment_name(paymentName);
+		transaction.setAmount(amount);
 		transaction.setStart(transaction.getTimestamp());
 		
 		model.addAttribute("transaction", transaction);

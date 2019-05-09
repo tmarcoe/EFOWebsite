@@ -50,7 +50,7 @@
 	string name = "Remit to " + frm + " for " + descr;
 
 	newEvent.setDate(nextDate(base, nextPaymnt, sched));
-	newEvent.setLink("/basic/payment?id=" + paymentId + "&payment_name=" + frm + "&profilename=Pay Overhead");
+	newEvent.setLink("/basic/payment?id=" + paymentId + "&payment_name=" + frm + "&profilename=Pay Overhead&amount=" + transactions.getAmount());
 	newEvent.setName(name);
 	newEvent.setCompleted(false);
 

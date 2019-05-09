@@ -59,7 +59,7 @@ begin
 
 		newEvent.setDate(nextDate(base, last, sched));
 		newEvent.setName("Pay " + payAmount + " to " + transactions.getPayment_name() + " for " + transactions.getDescr());
-		newEvent.setLink("/basic/payment?id=" + newId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Loan Payment");
+		newEvent.setLink("/basic/payment?id=" + newId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Loan Payment&amount=" + payAmount);
 		newEvent.setCompleted(false);
 
 		insert(newEvent);

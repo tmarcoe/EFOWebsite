@@ -53,7 +53,7 @@
 	name = "Remit to " + transactions.getPayment_name() + " for " + transactions.getDescr();
 
 	newEvent.setDate(nextDate(transactions.getStart(), expensePayments.getDue(), transactions.getSchedule()));
-	newEvent.setLink("/basic/payment?id=" + expensePayments.getId() + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Overhead");
+	newEvent.setLink("/basic/payment?id=" + expensePayments.getId() + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Overhead&amount=" + transactions.getAmount());
 	newEvent.setName(name);
 	newEvent.setCompleted(false);
 

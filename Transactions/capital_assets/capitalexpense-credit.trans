@@ -49,7 +49,7 @@
 	
 	events.setDate(transactions.getStart());
 	events.setName("Pay credit note to " + transactions.getPayment_name() + " for " + transactions.getDescr());
-	events.setLink("/basic/payment?id=" + nextId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Credit Note");
+	events.setLink("/basic/payment?id=" + nextId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Credit Note&amount=" + transactions.getEach_payment());
 	events.setCompleted(false);
 
 	insert(events);

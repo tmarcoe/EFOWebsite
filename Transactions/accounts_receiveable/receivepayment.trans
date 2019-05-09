@@ -54,7 +54,7 @@ begin
 		
 		number nextId = lookup("SELECT id from RevenuePayments ORDER BY id DESC");
 	
-		string link = "/basic/payment?id=" + nextId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Receive Payment";
+		string link = "/basic/payment?id=" + nextId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Receive Payment&amount=" + pmnt;
 		newEvent.setDate(dateDue);
 		newEvent.setName(name);
 		newEvent.setLink(link);

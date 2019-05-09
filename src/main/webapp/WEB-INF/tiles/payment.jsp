@@ -16,7 +16,7 @@
 		</tr>
 		<tr>
 			<td><b>Amount of Payment:</b><br>
-			<sf:input class="fancy" id="total_due" path="amount" type="number" step=".01" value="0" /></td>
+			<sf:input class="fancy" id="total_due" path="amount" type="number" step=".01" /></td>
 			<td><b>Profile Name:</b><br><sf:input class="fancy" path="name" readonly="true" /></td>
 		</tr>
 		<tr>
