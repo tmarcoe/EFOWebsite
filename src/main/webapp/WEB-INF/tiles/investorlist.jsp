@@ -32,11 +32,11 @@
 				<td><fmt:formatNumber type="number" maxFractionDigits = "3" value = "${user.investor.shares}" /></td>
 				<td>${user.investor.preferred}</td>
 				<td>${user.username}</td>
-				<td><button type="button" onclick="window.location.href='/personel/editinvestor?user_id=${user.user_id}'">Edit</button></td>
+				<td><button type="button" onclick="window.location.href='/personnel/editinvestor?user_id=${user.user_id}'">Edit</button></td>
 				<td><button type="button" onclick="deleteUser('${user.user_id}')">Delete</button></td>
 				<c:choose>
 					<c:when test="${user.enabled == true}">
-						<td><button type="button" onclick="window.location.href='/personel/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
+						<td><button type="button" onclick="window.location.href='/personnel/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
 					</c:when>
 					<c:otherwise>
 						<td>&nbsp;</td>
@@ -46,7 +46,7 @@
 		</c:forEach>
 		<tfoot class="tablefooter" >
 			<tr>
-				<td colspan="8"><button type="button" onclick="window.location.href = '/personel/newinvestor'" >New Investor</button></td>
+				<td colspan="8"><button type="button" onclick="window.location.href = '/personnel/newinvestor'" >New Investor</button></td>
 				<td colspan="1"><button type="button" onclick="window.location.href = '/#tabs-2'">Back</button></td>
 			</tr>
 		</tfoot>
@@ -55,7 +55,7 @@
 <script type="text/javascript">
 	function deleteUser(user_id) {
 		if (confirm("Do you really want to delete this user?") == true) {
-			window.location.href="/personel/deleteuser?user_id=" + user_id;
+			window.location.href="/personnel/deleteuser?user_id=" + user_id;
 		}
 	}
 </script>

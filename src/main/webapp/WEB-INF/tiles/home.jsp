@@ -15,8 +15,8 @@
 	<div id="tabs">
 		<ul>
 			<li><a href="#tabs-1">Login and Security</a></li>
-			<sec:hasRole role="PERSONEL">
-				<li><a href="#tabs-2">Personel</a></li>
+			<sec:hasRole role="PERSONNEL">
+				<li><a href="#tabs-2">Personnel</a></li>
 			</sec:hasRole>
 			<sec:hasRole role="BASIC">
 				<li><a href="#tabs-3">Basic Application</a></li>
@@ -38,9 +38,9 @@
 		<div id="tabs-1">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="#" onclick="openPopup()"><img class="tile" alt="Change Password"
-							src="<c:url value='/images/password.png'/>"></a></td>
 					<sec:isAuthenticated>
+						<td><a href="#" onclick="openPopup()"><img class="tile" alt="Change Password"
+							src="<c:url value='/images/password.png'/>"></a></td>
 						<td><a href="/logout"><img class="tile" alt="Login" src="<c:url value='/images/logout.png'/>"></a></td>
 					</sec:isAuthenticated>
 					<sec:isNotAuthenticated>
@@ -49,17 +49,17 @@
 				</tr>
 			</table>
 		</div>
-		<sec:hasRole role="PERSONEL">
+		<sec:hasRole role="PERSONNEL">
 			<div id="tabs-2">
 				<table class="menuTable menuTableSpace">
 					<tr>
-						<td><a href="/personel/customerlist"><img class="tile" alt="Customer"
+						<td><a href="/personnel/customerlist"><img class="tile" alt="Customer"
 								src="<c:url value='/images/customer.png'/>"></a></td>
-						<td><a href="/personel/vendorlist"><img class="tile" alt="Vendor"
+						<td><a href="/personnel/vendorlist"><img class="tile" alt="Vendor"
 								src="<c:url value='/images/vendor.png'/>"></a></td>
-						<td><a href="/personel/employeelist"><img class="tile" alt="Employees"
+						<td><a href="/personnel/employeelist"><img class="tile" alt="Employees"
 								src="<c:url value='/images/employees.png'/>"></a></td>
-						<td><a href="/personel/investorlist"><img class="tile" alt="Investor"
+						<td><a href="/personnel/investorlist"><img class="tile" alt="Investor"
 								src="<c:url value='/images/investor.png'/>"></a></td>
 					</tr>
 				</table>

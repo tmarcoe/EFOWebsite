@@ -29,7 +29,7 @@ import com.efo.service.RoleService;
 import com.efo.service.UserService;
 
 @Controller
-@RequestMapping("/personel/")
+@RequestMapping("/personnel/")
 public class InvestorController {
 	
 	@Autowired
@@ -44,7 +44,7 @@ public class InvestorController {
 	@Autowired 
 	private UserService userService;
 	
-	private final String pageLink = "/personel/investorpaging";
+	private final String pageLink = "/personnel/investorpaging";
 
 	private PagedListHolder<User> invList;
 
@@ -108,7 +108,7 @@ public class InvestorController {
 		
 		userService.create(user);
 		
-		return "redirect:/personel/investorlist";
+		return "redirect:/personnel/investorlist";
 	}
 	
 	@RequestMapping("editinvestor")
@@ -136,7 +136,7 @@ public class InvestorController {
 		
 		userService.merge(user);
 
-		return "redirect:/personel/investorlist";
+		return "redirect:/personnel/investorlist";
 	}
 
 	@RequestMapping(value = "investorpaging", method = RequestMethod.GET)

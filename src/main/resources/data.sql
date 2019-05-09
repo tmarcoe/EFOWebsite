@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: efo
+-- Host: 127.0.0.1    Database: efo
 -- ------------------------------------------------------
 -- Server version	5.7.22-log
 
@@ -171,7 +171,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
-INSERT INTO `profiles` (`name`, `active`, `created`, `depreciation`, `descr`, `exclude`, `script`, `type`, `variables`, `show_credit_terms`) VALUES ('Add Equity','','2019-04-29 00:00:00','\0',NULL,'\0','equity/addequity.trans','I','events,dao,Events;equity,dao,Equity','\0'),('Capital Expense (cash)','','2019-04-29 00:00:00','\0',NULL,'\0','capital_assets/capitalexpense-cash.trans','CE','expenses,dao,Expenses;events,dao,Events','\0'),('Capital Expense (credit)','','2019-04-29 00:00:00','\0',NULL,'\0','capital_assets/capitalexpense-credit.trans','CE','expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments;events,dao,Events',''),('Loan Payment','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_payable/payloan.trans','P','newPayment,dao,LoanPayments;newEvent,dao,Events','\0'),('New Loan','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_payable/newloan.trans','L','loans,dao,Loans;loanTerms,dao,LoanTerms;loanPayments,dao,LoanPayments;events,dao,Events',''),('New Overhead','','2019-04-29 00:00:00','\0',NULL,'\0','overhead_expense/newoverhead.trans','O','events,dao,Events;newEvent,dao,Events;expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments','\0'),('Order Retail (Cash)','','2019-04-29 00:00:00','\0',NULL,'\0','order_inventory/orderretail-cash.trans','RE','expenses,dao,Expenses;events,dao,Events','\0'),('Order Retail (Credit)','','2019-04-29 00:00:00','\0',NULL,'\0','order_inventory/orderretail-credit.trans','RE','expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments;events,dao,Events',''),('Pay Credit Note','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_payable/paycreditnote.trans','P','newPayment,dao,ExpensePayments;newEvent,dao,Events','\0'),('Pay Overhead','','2019-04-29 00:00:00','\0',NULL,'\0','overhead_expense/payoverhead.trans','P','newEvent,dao,Events;newPayment,dao,ExpensePayments','\0'),('Receive Payment','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_receiveable/receivepayment.trans','P','newPayment,dao,RevenuePayments;newEvent,dao,Events','\0'),('Retail Sales (Cash)','','2019-04-29 00:00:00','\0',NULL,'\0','retail_sales/retailsales-cash.trans','RR','taxRate,decimal,%tax%;revenues,dao,Revenues;events,dao,Events','\0'),('Retail Sales (Credit)','','2019-04-29 00:00:00','\0',NULL,'\0','retail_sales/retailsales-credit.trans','RR','taxRate,decimal,%tax%;revenues,dao,Revenues;revenueTerms,dao,RevenueTerms;revenuePayments,dao,RevenuePayments;events,dao,Events','');
+INSERT INTO `profiles` (`name`, `active`, `created`, `depreciation`, `descr`, `exclude`, `script`, `show_credit_terms`, `type`, `variables`) VALUES ('Add Equity','','2019-04-29 00:00:00','\0',NULL,'\0','equity/addequity.trans','\0','I','events,dao,Events;equity,dao,Equity'),('Capital Expense (cash)','','2019-04-29 00:00:00','\0',NULL,'\0','capital_assets/capitalexpense-cash.trans','\0','CE','expenses,dao,Expenses;events,dao,Events'),('Capital Expense (credit)','','2019-04-29 00:00:00','\0',NULL,'\0','capital_assets/capitalexpense-credit.trans','','CE','expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments;events,dao,Events'),('Loan Payment','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_payable/payloan.trans','\0','P','newPayment,dao,LoanPayments;newEvent,dao,Events'),('New Loan','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_payable/newloan.trans','','L','loans,dao,Loans;loanTerms,dao,LoanTerms;loanPayments,dao,LoanPayments;events,dao,Events'),('New Overhead','','2019-04-29 00:00:00','\0',NULL,'\0','overhead_expense/newoverhead.trans','\0','O','events,dao,Events;newEvent,dao,Events;expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments'),('Order Retail (Cash)','','2019-04-29 00:00:00','\0',NULL,'\0','order_inventory/orderretail-cash.trans','\0','RE','expenses,dao,Expenses;events,dao,Events'),('Order Retail (Credit)','','2019-04-29 00:00:00','\0',NULL,'\0','order_inventory/orderretail-credit.trans','','RE','expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments;events,dao,Events'),('Pay Credit Note','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_payable/paycreditnote.trans','\0','P','newPayment,dao,ExpensePayments;newEvent,dao,Events'),('Pay Overhead','','2019-04-29 00:00:00','\0',NULL,'\0','overhead_expense/payoverhead.trans','\0','P','newEvent,dao,Events;newPayment,dao,ExpensePayments'),('Receive Payment','','2019-04-29 00:00:00','\0',NULL,'\0','accounts_receiveable/receivepayment.trans','\0','P','newPayment,dao,RevenuePayments;newEvent,dao,Events'),('Retail Sales (Cash)','','2019-04-29 00:00:00','\0',NULL,'\0','retail_sales/retailsales-cash.trans','\0','RR','taxRate,decimal,%tax%;revenues,dao,Revenues;events,dao,Events'),('Retail Sales (Credit)','','2019-04-29 00:00:00','\0',NULL,'\0','retail_sales/retailsales-credit.trans','','RR','taxRate,decimal,%tax%;revenues,dao,Revenues;revenueTerms,dao,RevenueTerms;revenuePayments,dao,RevenuePayments;events,dao,Events');
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +208,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` (`role_id`, `role`) VALUES (1,'USER'),(2,'PERSONEL'),(3,'BASIC'),(4,'ACCOUNTING'),(5,'EVENTS'),(6,'REPORTS'),(7,'ADMIN');
+INSERT INTO `role` (`role_id`, `role`) VALUES (1,'USER'),(2,'PERSONNEL'),(3,'BASIC'),(4,'ACCOUNTING'),(5,'EVENTS'),(6,'REPORTS'),(7,'ADMIN');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-08 12:58:53
+-- Dump completed on 2019-05-09 20:54:49

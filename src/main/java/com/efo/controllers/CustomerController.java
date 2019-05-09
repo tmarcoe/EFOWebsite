@@ -32,7 +32,7 @@ import com.efo.service.UserService;
 
 
 @Controller
-@RequestMapping("/personel/")
+@RequestMapping("/personnel/")
 public class CustomerController {
 	
 	@Value("${spring.mail.username}")
@@ -56,7 +56,7 @@ public class CustomerController {
 	@Autowired
 	private RoleService roleService;
 	
-	private final String pageLink = "/personel/customerpaging";
+	private final String pageLink = "/personnel/customerpaging";
 
 	private PagedListHolder<User> customerList;
 
@@ -106,7 +106,7 @@ public class CustomerController {
 		
 		userService.merge(user);
 		
-		return "redirect:/personel/customerlist";
+		return "redirect:/personnel/customerlist";
 	}
 	
 	@RequestMapping("newcustomer")
@@ -155,7 +155,7 @@ public class CustomerController {
 		}
 		userService.create(user);
 		
-		return "redirect:/personel/customerlist";
+		return "redirect:/personnel/customerlist";
 	}
 	
 	@RequestMapping("choosecustomer")

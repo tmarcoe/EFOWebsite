@@ -18,7 +18,7 @@ public class RoleController {
 	@Autowired
 	RoleService roleService;
 	
-	private final String pageLink = "/personel/rolepaging";
+	private final String pageLink = "/personnel/rolepaging";
 	PagedListHolder<Role> listRoles;
 	
 	@RequestMapping("listroles")
