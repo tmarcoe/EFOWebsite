@@ -129,7 +129,7 @@
 					<th>SSN</th>
 					<th>Marital Status</th>
 					<th>Exemptions</th>
-					<th>Employee Number</th>
+					<th>Employer Number (EIN)</th>
 				</tr>
 				<tr>
 					<td><sf:input class="fancy" type="text" path="employee.emp_financial.ssn" /></td>
@@ -142,10 +142,10 @@
 					<td><sf:input class="fancy" type="text" path="employee.emp_financial.ein"/></td>
 				</tr>
 				<tr>
-					<td>Hourly Rate</td>
-					<td>% Federal Tax</td>
-					<td>% State Tax</td>
-					<td>% Unemployment</td>
+					<th>Hourly Rate</th>
+					<th>% Federal Tax</th>
+					<th>% State Tax</th>
+					<th>% Unemployment</th>
 				</tr>
 				<tr>
 					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.rate" /></td>
@@ -154,9 +154,9 @@
 					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.unemployment" /></td>
 				</tr>
 				<tr>
-					<td>% Medical</td>
-					<td>% Retirement</td>
-					<td>% Garnishment</td>
+					<th>% Medical</th>
+					<th>% Retirement</th>
+					<th>% Garnishment</th>
 				</tr>
 				<tr>
 					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.medical" /></td>
@@ -173,9 +173,9 @@
 				</tr>
 
 				<tr>
-					<td>Payment Method</td>
-					<td>Account Number</td>
-					<td>Routing Number</td>
+					<th>Payment Method</th>
+					<th>Account Number</th>
+					<th>Routing Number</th>
 				</tr>
 				<tr>
 					<td><sf:select class="fancy" type="text" path="employee.emp_financial.pay_method">
