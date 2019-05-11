@@ -6,7 +6,7 @@
 	<canvas class="reportCharts divshadow" id="myChart"></canvas>
 	<table class="buttonTable">
 	<tr>
-		<td><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-3'"><b>OK</b></button></td>
+		<td><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-6'"><b>OK</b></button></td>
 		<td><button class="fancy-button" type="button" onclick="renderCanvas()"><b>View/Save Image</b></button></td>
 	</tr>
 </table>
@@ -18,12 +18,13 @@
 
 <script>
 
-var ctx = document.getElementById("myChart");
 var frm = $("#fromValue").val();
 var to =  $("#toValue").val();
 var rpt = $("#rpt").val();
 
+
 $(document).ready(function () { $.getJSON("/rest/" + rpt + "?from=" + frm + "&to=" + to, function(data) {
+		var ctx = $('#myChart');
 		var myChart = new Chart(ctx, data);
 		}).fail(function(jqXHR, textStatus, errorThrown) {
 			alert("error " + textStatus + "\n" + "incoming Text " + jqXHR.responseText);

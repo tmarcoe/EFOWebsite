@@ -146,6 +146,9 @@
 								alt="Print General Ledger" src="<c:url value='/images/print-ledger.png'/>"></a></td>
 						<td><a href="/accounting/printaccounts"><img class="tile" alt="Print Chart Of Accounts"
 								src="<c:url value='/images/print-accounts.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/reports/revenuereport')"><img class="tile"
+								alt="Revenue Report" src="<c:url value='/images/revenues.png'/>"></a></td>
+					
 					</tr>
 				</table>
 			</div>

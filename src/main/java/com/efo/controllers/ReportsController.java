@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/accounting/")
+@RequestMapping("/reports/")
 public class ReportsController {
 	
 	private SimpleDateFormat dateFormat;
@@ -23,17 +23,7 @@ public class ReportsController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
-	
-	@RequestMapping("cogsreport/from/{from}/to/{to}")
-	public String cogsReport(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
 		
-		model.addAttribute("from", dateFormat.format(from));
-		model.addAttribute("to", dateFormat.format(to));
-		model.addAttribute("report", "cogs");
-		
-		return "cogsreport";
-	}
-	
 	@RequestMapping("revenuereport/from/{from}/to/{to}")
 	public String revenueReport(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
 		
@@ -42,26 +32,6 @@ public class ReportsController {
 		model.addAttribute("report", "revenue");
 
 		return "revenuereport";
-	}
-
-	@RequestMapping("plreport/from/{from}/to/{to}")
-	public String profitAndLossReport(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
-		
-		model.addAttribute("from", dateFormat.format(from));
-		model.addAttribute("to", dateFormat.format(to));
-		model.addAttribute("report", "profitandloss");
-		
-		return "plreport";
-	}
-	
-	@RequestMapping("unitssold/from/{from}/to/{to}")
-	public String unitsSold(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
-		
-		model.addAttribute("from", dateFormat.format(from));
-		model.addAttribute("to", dateFormat.format(to));
-		model.addAttribute("report", "unitsld");
-		
-		return "unitssold";
 	}
 
 }
