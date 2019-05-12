@@ -33,5 +33,12 @@ public class ReportsController {
 
 		return "revenuereport";
 	}
+	
+	@RequestMapping("malefemale")
+	public String maleVSFemal(Model model) {
+		model.addAttribute("report", "gender");
+		
+		return "malefemale";
+	}
 
 }

@@ -85,4 +85,15 @@ public class CustomerDao implements ICustomer {
 		return customer;
 	}
 
+	public Object[] getMaleFemaleCount() {
+		String hql = "SELECT COUNT(*) AS total, " +
+					"SUM(CASE WHEN male_female = 'M' THEN 1 ELSE 0 END) AS males, " +
+					"SUM(CASE WHEN male_female = 'F' THEN 1 ELSE 0 END) AS females " +
+					"FROM customer";
+		Session session = session();
+		Object[] counts = (Object[]) session.createSQLQuery(hql).uniqueResult();
+		session.disconnect();
+		
+		return counts;
+	}
 }

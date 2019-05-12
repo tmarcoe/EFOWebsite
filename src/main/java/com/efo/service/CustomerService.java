@@ -52,4 +52,8 @@ public class CustomerService implements ICustomer {
 		return customerDao.queryCustomer(name);
 	}
 	
+	public Object[] getMaleFemaleCount() {
+		return customerDao.getMaleFemaleCount();
+	}
+	
 }

@@ -83,6 +83,7 @@ public class RevenueReport {
 		exp.put("label", "Revenue by month" );
 		exp.put("data",dataPoints);
 		exp.put("borderColor", "rgba(158, 3, 3, .5)");
+		exp.put("backgroundColor", "rgba(158, 3, 3, .5)");
 		exp.put("fill", false);
 		json.put("options", options);
 		//options.put("scales", scales);

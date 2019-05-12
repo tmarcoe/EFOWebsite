@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.efo.reports.MaleVsFemaleReport;
 import com.efo.reports.RevenueReport;
 
 @RestController
@@ -21,6 +22,9 @@ public class ReportsRestController {
 
 	@Autowired 
 	private RevenueReport revenueReport;
+	
+	@Autowired
+	private MaleVsFemaleReport maleVsFemale;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -37,6 +41,11 @@ public class ReportsRestController {
 		
 		return result;
 
+	}
+	
+	@RequestMapping("gender")
+	public String gender() throws JSONException {
+		return maleVsFemale.maleVsFemale();
 	}
 
 }

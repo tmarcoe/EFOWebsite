@@ -142,6 +142,8 @@
 			<div id="tabs-6">
 				<table class="menuTable menuTableSpace">
 					<tr>
+						<td><a href="/reports/malefemale"><img class="tile" alt="Demographics"
+								src="<c:url value='/images/gender.png'/>"></a></td>
 						<td><a href="#" onclick="inputDate('/accounting/printgeneralledger')"><img class="tile"
 								alt="Print General Ledger" src="<c:url value='/images/print-ledger.png'/>"></a></td>
 						<td><a href="/accounting/printaccounts"><img class="tile" alt="Print Chart Of Accounts"

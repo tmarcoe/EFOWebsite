@@ -1,13 +1,14 @@
 @CHARSET "ISO-8859-1";
 
 .pieChart {
-	height: 500px;
-	width: 500px;	
+	margin: auto;
+	height: 600px;
+	width: 1200px;	
 }
 .lineChart {
 	margin: auto;
 	height: 720px;
-	width: 1500px;	
+	width: 1400px;	
 	background-color: none;
 }
 .barChart {
