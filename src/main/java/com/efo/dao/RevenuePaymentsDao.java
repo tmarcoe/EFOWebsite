@@ -52,6 +52,17 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 		
 		return revList;
 	}
+	
+	public Double sumCreditPayments(int month, int year) {
+		String hql = "SELECT SUM(payment_made) FROM revenue_payments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
+		Session session = session();
+		
+		Double result = (Double) session.createSQLQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
+		if (result == null) result = 0.0;
+		session.disconnect();
+		
+		return result;
+	}
 
 	@Override
 	public void merge(RevenuePayments revenuePayments) {

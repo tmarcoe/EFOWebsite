@@ -1,6 +1,5 @@
 package com.efo.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,8 @@ public class RevenuesService implements IRevenues {
 		return revenuesDao.retrieveRawList();
 	}
 	
-	public List<Object[]> listCashRevenue(Date begin, Date end) {
-		return revenuesDao.listCashRevenue(begin, end);
+	public Double sumCashRevenue(int month, int year) {
+		return revenuesDao.sumCashRevenue(month, year);
 	}
 
 	@Override

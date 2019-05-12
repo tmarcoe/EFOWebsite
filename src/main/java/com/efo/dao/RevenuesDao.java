@@ -1,6 +1,5 @@
 package com.efo.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -54,15 +53,13 @@ public class RevenuesDao implements IRevenues {
 		return revList;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Object[]> listCashRevenue(Date begin, Date end) {
-		String hql = "SELECT YEAR(r.received), MONTH(r.received), SUM(r.amount) FROM revenues r " +
-					 "WHERE received BETWEEN :begin AND :end AND " + 
-					 "reference NOT IN(SELECT NULL FROM revenue_terms t WHERE r.reference = t.reference ) " + 
-					 "GROUP BY YEAR(r.received), MONTH(r.received)";
+
+	public Double sumCashRevenue(int month, int year) {
+		String hql = "SELECT SUM(r.amount) FROM revenues r WHERE MONTH(received) = :month AND YEAR(received) = :year";
 		Session session = session();
 		
-		List<Object[]> result = session.createSQLQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		Double result = (Double) session.createSQLQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
+		if (result == null) result = 0.0;
 		session.disconnect();
 		
 		return result;

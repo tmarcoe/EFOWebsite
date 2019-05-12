@@ -10,7 +10,7 @@ import com.efo.entity.RevenuePayments;
 import com.efo.interfaces.IRevenuePayments;
 
 @Service
-public class RevenuePaymentsServicce implements IRevenuePayments {
+public class RevenuePaymentsService implements IRevenuePayments {
 	
 	@Autowired
 	RevenuePaymentsDao revenuePaymentsDao;
@@ -29,6 +29,10 @@ public class RevenuePaymentsServicce implements IRevenuePayments {
 	@Override
 	public List<RevenuePayments> retrieveRawList(Long reference) {
 		return revenuePaymentsDao.retrieveRawList(reference);
+	}
+	
+	public Double sumCreditPayments(int month, int year) {
+		return revenuePaymentsDao.sumCreditPayments(month, year);
 	}
 
 	@Override

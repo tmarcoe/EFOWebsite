@@ -2,6 +2,7 @@ package com.efo.reports;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.efo.service.RevenuePaymentsService;
 import com.efo.service.RevenuesService;
 
 @Component
@@ -22,24 +24,36 @@ public class RevenueReport {
 	@Autowired
 	private RevenuesService revenuesService;
 	
+	@Autowired
+	private RevenuePaymentsService revenuePaymentsService;
+	
 	public String revenuesByMonth(Date begin, Date end) throws JSONException {
+		String headingPattern = "MMMMM dd, yyyy";
+		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
+		String reportTitle = String.format("Revenues From: %-20s To: %s", df.format(begin), df.format(end));
 		LocalDate jBegin = new LocalDate(begin);
 		LocalDate jEnd = new LocalDate(end);
 		int diff = Months.monthsBetween(jBegin, jEnd).getMonths() + 1;
 		List<Double> sums = new ArrayList<Double>();
 
-		List<Object[]> result = revenuesService.listCashRevenue(begin, end);
-		for (Object[] obj : result) {
-			Double var = round((Double) obj[2], 2);
-			sums.add(var);
+		int m = jBegin.getMonthOfYear();
+		int y = jBegin.getYear();
+		for (int i = 0; i < diff; i++) {
+			Double cash = revenuesService.sumCashRevenue(m, y);
+			Double credit = revenuePaymentsService.sumCreditPayments(m, y);
+			sums.add(round((cash + credit), 2));
+			m++;
+			if (m > 12) {
+				m = 1;
+				y++;
+			}
 		}
 		
-		return convertToJSON(sums, diff, jBegin,String.format("Revenues From %tD To %tD", begin, end)).toString();
+		return convertToJSON(sums, diff, jBegin, reportTitle).toString();
 	}
 	
 	private JSONObject convertToJSON(List<Double> revenue, int length, LocalDate start, String reportTitle) throws JSONException {	
 		final String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-		//final int[] temp = {10,2,3,45,78,9,86,94,73,29,59,62};
 		JSONObject json = new JSONObject();
 		JSONObject data = new JSONObject();
 		JSONArray datasets = new JSONArray();
