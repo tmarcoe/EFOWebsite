@@ -11,12 +11,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.ExpensePayments;
-import com.efo.interfaces.IExpensePayments;
+import com.efo.entity.LoanPayments;
+import com.efo.interfaces.ILoanPayments;
 
 @Transactional
 @Repository
-public class ExpensePaymentsDao implements IExpensePayments {
+public class LoanPaymentsDao implements ILoanPayments {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -26,47 +26,49 @@ public class ExpensePaymentsDao implements IExpensePayments {
 	}
 	
 	@Override
-	public void create(ExpensePayments expensePayments) {
+	public void create(LoanPayments loanPayments) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(expensePayments);
+		session.save(loanPayments);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public ExpensePayments retrieve(Long id) {
+	public LoanPayments retreive(Long id) {
 		Session session = session();
-		ExpensePayments expensePayments = (ExpensePayments) session.createCriteria(ExpensePayments.class).add(Restrictions.idEq(id)).uniqueResult();
+		LoanPayments loanPayments = (LoanPayments) session.createCriteria(LoanPayments.class)
+														  .add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
-		return expensePayments;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ExpensePayments> retrieveRawList(Long reference) {
-		Session session = session();
-		List<ExpensePayments> expList = session.createCriteria(ExpensePayments.class).add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
-		
-		return expList;
+		return loanPayments;
 	}
 
 	@Override
-	public void merge(ExpensePayments expensePayments) {
+	public List<LoanPayments> retreiveRawList(Long reference) {
+		Session session = session();
+		@SuppressWarnings("unchecked")
+		List<LoanPayments> payList = session.createCriteria(LoanPayments.class)
+											.add(Restrictions.eq("reference", reference)).list();
+		session.disconnect();
+		
+		return payList;
+	}
+
+	@Override
+	public void update(LoanPayments loanPayments) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.merge(expensePayments);
+		session.update(loanPayments);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public void delete(ExpensePayments expensePayments) {
+	public void delete(LoanPayments loanPayments) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.delete(expensePayments);
+		session.delete(loanPayments);
 		tx.commit();
 		session.disconnect();
 	}

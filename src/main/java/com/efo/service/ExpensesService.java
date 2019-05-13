@@ -42,5 +42,7 @@ public class ExpensesService implements IExpenses {
 		expensesDao.delete(expenses);
 
 	}
-
+	public Double sumMonthlyExpenses(int month, int year) {
+		return expensesDao.sumMonthlyExpenses(month, year);
+	}
 }

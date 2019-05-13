@@ -11,12 +11,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.Expenses;
-import com.efo.interfaces.IExpenses;
+import com.efo.entity.Loans;
+import com.efo.interfaces.ILoans;
 
 @Transactional
 @Repository
-public class ExpensesDao implements IExpenses {
+public class LoansDao implements ILoans {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -24,61 +24,51 @@ public class ExpensesDao implements IExpenses {
 	private Session session() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	@Override
-	public void create(Expenses expenses) {
+	public void create(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(expenses);
+		session.save(loans);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public Expenses retrieve(Long reference) {
+	public Loans retrieve(Long reference) {
 		Session session = session();
-		Expenses expenses = (Expenses) session.createCriteria(Expenses.class).add(Restrictions.idEq(reference)).uniqueResult();
+		Loans loan = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(reference)).uniqueResult();
 		session.disconnect();
 		
-		return expenses;
+		return loan;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Expenses> retrieveRawList() {
+	public List<Loans> retrieveRawList() {
 		Session session = session();
-		List<Expenses> expList = session.createCriteria(Expenses.class).list();
+		List<Loans> loanList = session.createCriteria(Loans.class).list();
 		session.disconnect();
 		
-		return expList;
+		return loanList;
 	}
 
 	@Override
-	public void merge(Expenses expenses) {
+	public void merge(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.merge(expenses);
+		session.merge(loans);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public void delete(Expenses expenses) {
+	public void delete(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.delete(expenses);
+		session.delete(loans);
 		tx.commit();
 		session.disconnect();
-	}
-	
-	public Double sumMonthlyExpenses(int month, int year) {
-		Session session = session();
-		String hql = "SELECT SUM(amount) FROM Expenses WHERE MONTH(paid) = :month AND YEAR(paid) = :year";
-		
-		Double sum = (Double) session.createQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
-		if (sum == null) sum = 0.0;
-		
-		return sum;
 	}
 
 }
