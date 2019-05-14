@@ -75,7 +75,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 	
 	public Double sumMontlyPayments(int month, int year) {
 		Session session = session();
-		String hql = "SELECT SUM(payment_made) FROM ExpensePayments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
+		String hql = "SELECT SUM(payment_made) FROM LoanPayments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
 		
 		Double sum = (Double) session.createQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
 		

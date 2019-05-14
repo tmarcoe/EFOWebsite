@@ -45,7 +45,7 @@ public class ExpensePaymentsService implements IExpensePayments {
 	
 	public Double sumMontlyPayments(int month, int year) {
 		
-		return expensePaymentsDao.sumMontlyPayments(month, month);
+		return expensePaymentsDao.sumMontlyPayments(month, year);
 	}
 
 }
