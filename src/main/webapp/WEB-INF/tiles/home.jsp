@@ -200,12 +200,8 @@
 			<h2>Enter the Period</h2>
 			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
-					<th>Start Date</th>
-					<th>End Date</th>
-				</tr>
-				<tr>
-					<td><input class="fancy" id="stDate" type="date" /></td>
-					<td><input class="fancy" id="endDate" type="date" /></td>
+					<td><input class="fancy" id="stDate" type="text" placeholder="Start of Period" /></td>
+					<td><input class="fancy" id="endDate" type="text" placeholder="End of Period" /></td>
 				</tr>
 				<tr>
 					<td><button class="fancy-button" type="button" onclick="setDate()">
@@ -423,6 +419,20 @@
 	function showWarning() {
 		$("#warning").show();
 	}
+	  $( function() {
+		    var dates = $( "#stDate" ).datepicker({
+		    	dateFormat: "yy-mm-dd",
+		        changeMonth: true,
+		        changeYear: true,
+		        clickInput: true
+		    	});
+		    $( "#endDate" ).datepicker({
+		    	dateFormat: "yy-mm-dd",
+		    	    changeMonth: true,
+		    	    changeYear: true,
+		    	    clickInput: true
+		    	});
+		  } );
 </script>
 <c:if test="${user.isTemp_pw() == true}">
 	<script>

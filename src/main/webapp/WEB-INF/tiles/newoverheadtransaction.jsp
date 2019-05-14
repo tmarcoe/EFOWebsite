@@ -29,7 +29,7 @@
 			<td><sf:errors path="name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Start of Payments:</b><br> <sf:input class="fancy" path="start" type="date" /></td>
+			<td><b>Start of Payments:</b><br> <sf:input id="start" class="fancy" path="start" type="text" /></td>
 			<td><b>Schedule:</b><br> <sf:select path="schedule" class="fancy">
 					<sf:option value="">---Select---</sf:option>
 					<sf:option value="Annually">Annually</sf:option>
@@ -140,4 +140,12 @@
 					$("#user_id").val(data.data.user_id);
 				}
 			});
+	  $( function() {
+		    $( "#start" ).datepicker({
+		    	dateFormat: "yy-mm-dd",
+		        changeMonth: true,
+		        changeYear: true,
+		        clickInput: true
+		    	});
+		  } );
 </script>

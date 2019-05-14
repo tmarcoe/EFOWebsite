@@ -41,7 +41,7 @@
 				<sf:input class="fancy" type="number" step=".01" path="investor.shares"/>
 			</td>
 			<td><b>Started On</b><br>
-				<sf:input class="fancy" type="date" path="investor.since" />
+				<sf:input id="since" class="fancy" type="text" path="investor.since" />
 			</td>
 			<td><b>Preferred Stock? </b>
 				<sf:checkbox path="investor.preferred"/>
@@ -158,4 +158,13 @@
 			$("#confirmpass").prop("readonly", false);
 		}
 	}
+	
+	  $( function() {
+		    $( "#since" ).datepicker({
+		    	dateFormat: "yy-mm-dd",
+		        changeMonth: true,
+		        changeYear: true,
+		        clickInput: true
+		    	});
+		  } );
 </script>

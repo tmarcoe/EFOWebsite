@@ -16,11 +16,15 @@ begin
 	dao loanTerms = lookup("FROM LoanTerms WHERE reference = {d}", oldPayment.getReference());
 	dao loans = lookup("FROM Loans  WHERE reference = {d}", oldPayment.getReference());
 
+
 	if (loanTerms.getLoan_balance() <= transactions.getAmount()) {
 		payAmount = loanTerms.getLoan_balance();
 	}else{
 		payAmount = transactions.getAmount();
 	}
+	
+	oldPayment.setPayment_date(today());
+	oldPayment.setPayment_made(payAmount);
 
  	debit(payAmount, loanAccount);
 	ledger(D, payAmount, loanAccount, descr);

@@ -30,7 +30,7 @@
 			<td><sf:errors path="name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Start of Payments:</b><br> <sf:input class="fancy" path="start" type="date" /></td>
+			<td><b>Start of Payments:</b><br> <sf:input id="stDate" class="fancy" path="start" type="text" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>Transaction Description:</b><br> <sf:textarea class="fancy-textarea" path="descr"
@@ -156,4 +156,13 @@
 				}
 
 			}
+	  $( function() {
+		    $( "#stDate" ).datepicker({
+		    	dateFormat: "yy-mm-dd",
+		        changeMonth: true,
+		        changeYear: true,
+		        clickInput: true
+		    	});
+		  } );
+
 </script>

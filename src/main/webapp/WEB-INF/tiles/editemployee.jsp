@@ -32,8 +32,8 @@
 		</tr>
 		<tr>
 			<td><b>Position: </b><br><sf:input class="fancy" path="employee.position" /></td>
-			<td><b>Starting Date: </b><br><sf:input class="fancy" type="date" path="employee.start_date"/></td>
-			<td><b>Ending Date: </b><br><sf:input class="fancy" type="date" path="employee.end_date"/></td>
+			<td><b>Starting Date: </b><br><sf:input id="stDate" class="fancy" type="text" path="employee.start_date"/></td>
+			<td><b>Ending Date: </b><br><sf:input  id="endDate" class="fancy" type="text" path="employee.end_date"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.position" class="error"/></td>
@@ -236,5 +236,20 @@ function formSubmit() {
 	rs.value = userRoles;
 	document.getElementById("details").submit();
 }
+
+$( function() {
+    $( "#stDate" ).datepicker({
+    	dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true,
+        clickInput: true
+    	});
+    $( "#endDate" ).datepicker({
+    	dateFormat: "yy-mm-dd",
+    	    changeMonth: true,
+    	    changeYear: true,
+    	    clickInput: true
+    	});
+  } );
 
 </script>

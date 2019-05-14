@@ -27,7 +27,7 @@
 		</tr>
 		<tr>
 			<td><b>Created On: </b><br>
-				<sf:input class="fancy" type="date" path="created" /></td>
+				<sf:input class="fancy" id="crDate" type="text" path="created" /></td>
 			<td><b>Active: </b>
 				<sf:checkbox class="fancy" path="active" checked="true" />
 				<b>Show Credit Terms: </b>
@@ -46,4 +46,13 @@
 	</table>
 </sf:form>
 <script type="text/javascript">
+
+$( function() {
+    $( "#crDate" ).datepicker({
+    	dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true,
+        clickInput: true
+    	});
+  });
 </script>

@@ -40,7 +40,7 @@ public class RevenueReport {
 	public String revenuesByMonth(Date begin, Date end) throws JSONException {
 		String headingPattern = "MMMMM dd, yyyy";
 		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
-		String reportTitle = String.format("Revenues and Expenses From: %-20s To: %s", df.format(begin), df.format(end));
+		String reportTitle = String.format("Revenues, Expenses and Profit\n From: %-20s To: %s", df.format(begin), df.format(end));
 		LocalDate jBegin = new LocalDate(begin);
 		LocalDate jEnd = new LocalDate(end);
 		int diff = Months.monthsBetween(jBegin, jEnd).getMonths() + 1;
@@ -74,6 +74,7 @@ public class RevenueReport {
 	private JSONObject convertToJSON(List<Double> revenues, List<Double> expenses, List<Double> profits, 
 									int length, LocalDate start, String reportTitle) throws JSONException {	
 		final String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+		String[] ttle = reportTitle.split("\n");
 		JSONObject json = new JSONObject();
 		JSONObject data = new JSONObject();
 		JSONArray datasets = new JSONArray();
@@ -89,6 +90,7 @@ public class RevenueReport {
 		JSONArray revenueDataPoints = new JSONArray();
 		JSONArray expenseDataPoints = new JSONArray();
 		JSONArray profitsDataPoints = new JSONArray();
+		JSONArray t = new JSONArray();
 		JSONArray yAxes = new JSONArray();
 		JSONObject yObj = new JSONObject();
 		JSONObject ticks = new JSONObject();
@@ -104,6 +106,9 @@ public class RevenueReport {
 		}
 		for (Double item : profits) {
 			profitsDataPoints.put(item);
+		}
+		for (int i = 0 ; i < ttle.length ; i++) {
+			t.put(ttle[i]);
 		}
 		json.put("type", "line");
 		json.put("data", data);
@@ -132,8 +137,8 @@ public class RevenueReport {
 		options.put("responsive", false);
 		options.put("title", title);
 		title.put("display", true);
-		title.put("text", reportTitle);
-		title.put("fontSize", 28);
+		title.put("text", t);
+		title.put("fontSize", 20);
 		scales.put("yAxes", yAxes);
 		yObj.put("ticks", ticks);
 		ticks.put("beginAtZero", true);

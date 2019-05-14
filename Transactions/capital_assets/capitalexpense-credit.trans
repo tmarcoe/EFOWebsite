@@ -18,7 +18,6 @@
  	ledger(C,amount , accountsPayable, transactions.getDescr());
 
 	// Construct the revenue record
-	expenses.setPaid(today());
 	expenses.setPayee(transactions.getPayment_name());
 	expenses.setAmount(amount);
 	expenses.setDescr(transactions.getDescr());

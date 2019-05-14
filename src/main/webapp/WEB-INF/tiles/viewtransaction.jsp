@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<td><b>Start of Payments:</b><br>
-				<sf:input class="fancy" path="start" type="date" readonly="true" /></td>
+				<sf:input class="fancy" path="start" type="text" readonly="true" /></td>
 			<td><b>Schedule:</b><br>
 				<sf:input class="fancy" path="schedule" readonly="true" />	</td>
 		</tr>

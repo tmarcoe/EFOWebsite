@@ -96,7 +96,7 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><b>Start Date:</b><br><sf:input class="fancy" path="customer.since" type="date" /></td>
+			<td><b>Start Date:</b><br><sf:input id="since" class="fancy" path="customer.since" type="text" /></td>
 			<td><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
@@ -154,4 +154,12 @@
 			$("#confirmpass").prop("readonly",false);
 		}
 	}
+	$(function(){
+		$("#since").datepicker({
+	    	dateFormat: "yy-mm-dd",
+	        changeMonth: true,
+	        changeYear: true,
+	        clickInput: true		
+		});
+	});
 </script>
