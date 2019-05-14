@@ -1,7 +1,5 @@
 package com.efo.reports;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,17 +46,21 @@ public class RevenueReport {
 		int diff = Months.monthsBetween(jBegin, jEnd).getMonths() + 1;
 		List<Double> revenues = new ArrayList<Double>();
 		List<Double> expenses = new ArrayList<Double>();
+		List<Double> profits = new ArrayList<Double>();
 
 		int m = jBegin.getMonthOfYear();
 		int y = jBegin.getYear();
 		for (int i = 0; i < diff; i++) {
 			Double cash = revenuesService.sumCashRevenue(m, y);
 			Double credit = revenuePaymentsService.sumCreditPayments(m, y);
-			revenues.add(round((cash + credit), 2));
+			Double rev = cash + credit;
+			revenues.add(rev);
 			cash = expensesService.sumMonthlyExpenses(m, y);
 			credit = expensePaymentsService.sumMontlyPayments(m, y);
 			Double loanPayments = loanPaymentsService.sumMontlyPayments(m, y);
-			expenses.add((cash + credit + loanPayments));
+			Double exp = cash + credit + loanPayments;
+			expenses.add(exp);
+			profits.add(rev - exp);
 			m++;
 			if (m > 12) {
 				m = 1;
@@ -66,10 +68,11 @@ public class RevenueReport {
 			}
 		}
 		
-		return convertToJSON(revenues, expenses, diff, jBegin, reportTitle).toString();
+		return convertToJSON(revenues, expenses, profits, diff, jBegin, reportTitle).toString();
 	}
 	
-	private JSONObject convertToJSON(List<Double> revenues, List<Double> expenses, int length, LocalDate start, String reportTitle) throws JSONException {	
+	private JSONObject convertToJSON(List<Double> revenues, List<Double> expenses, List<Double> profits, 
+									int length, LocalDate start, String reportTitle) throws JSONException {	
 		final String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 		JSONObject json = new JSONObject();
 		JSONObject data = new JSONObject();
@@ -78,12 +81,14 @@ public class RevenueReport {
 		
 		JSONObject rev = new JSONObject();
 		JSONObject exp = new JSONObject();
+		JSONObject prf = new JSONObject();
 
 		JSONObject options = new JSONObject();
 		JSONObject scales = new JSONObject();
 		JSONObject title = new JSONObject();
 		JSONArray revenueDataPoints = new JSONArray();
 		JSONArray expenseDataPoints = new JSONArray();
+		JSONArray profitsDataPoints = new JSONArray();
 		JSONArray yAxes = new JSONArray();
 		JSONObject yObj = new JSONObject();
 		JSONObject ticks = new JSONObject();
@@ -96,6 +101,9 @@ public class RevenueReport {
 		}
 		for (Double item : expenses) {
 			expenseDataPoints.put(item);
+		}
+		for (Double item : profits) {
+			profitsDataPoints.put(item);
 		}
 		json.put("type", "line");
 		json.put("data", data);
@@ -113,6 +121,12 @@ public class RevenueReport {
 		exp.put("borderColor", "#ff0000");
 		exp.put("backgroundColor", "#ff0000");
 		exp.put("fill", false);
+		datasets.put(prf);
+		prf.put("label", "Profits");
+		prf.put("data", profitsDataPoints);
+		prf.put("borderColor", "#00ff00");
+		prf.put("backgroundColor", "#00ff00");
+		prf.put("fill", false);		
 		json.put("options", options);
 		//options.put("scales", scales);
 		options.put("responsive", false);
@@ -128,11 +142,4 @@ public class RevenueReport {
 		return json;
 	}
 	
-	private double round(double value, int places) {
-	    if (places < 0) throw new IllegalArgumentException();
-
-	    BigDecimal bd = new BigDecimal(value);
-	    bd = bd.setScale(places, RoundingMode.HALF_UP);
-	    return bd.doubleValue();
-	}
 }

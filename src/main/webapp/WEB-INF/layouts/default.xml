@@ -269,8 +269,8 @@
 	
 	<!-- Reports Controller -->
 	<definition name="revenuereport" extends="accounting.base">
-		<put-attribute name="title" value="Revenues"></put-attribute>
-		<put-attribute name="heading_title" value="Revenues"></put-attribute>
+		<put-attribute name="title" value="Revenues/Expenses"></put-attribute>
+		<put-attribute name="heading_title" value="Revenues/Expenses"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
 	</definition>
 	
