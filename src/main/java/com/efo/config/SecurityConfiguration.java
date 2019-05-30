@@ -52,6 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/loggedout").permitAll()
 				.antMatchers("/public/**").permitAll()
 				.antMatchers("/rest/**").permitAll()
+				.antMatchers("/index/**").permitAll()
+				.antMatchers("/getfile/**").permitAll()
 				.antMatchers("/user/**").authenticated()
 				.antMatchers("/personnel/**").hasAuthority("PERSONNEL")
 				.antMatchers("/basic/**").hasAuthority("BASIC")
@@ -59,14 +61,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/events/**").hasAuthority("EVENTS")
 				.antMatchers("/reports/**").hasAuthority("REPORTS")
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
+				.antMatchers("/settings/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/")
+				.defaultSuccessUrl("/index/introduction-a")
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
+				.logoutSuccessUrl("/index/introduction-a").and().exceptionHandling()
 				.accessDeniedPage("/access-denied");
 	}
 	

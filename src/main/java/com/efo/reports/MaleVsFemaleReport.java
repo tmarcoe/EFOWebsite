@@ -2,7 +2,6 @@ package com.efo.reports;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,15 +23,15 @@ public class MaleVsFemaleReport {
 		BigInteger t = (BigInteger) counts[0];
 		BigDecimal m =  (BigDecimal) counts[1];
 		BigDecimal f = (BigDecimal) counts[2];
-		BigDecimal p = BigDecimal.valueOf(100);
 		BigDecimal ttl = new BigDecimal(t);
 		
 		
 		
-		BigDecimal mPercent = m.divide(ttl).multiply(p);
-		BigDecimal fPercent = f.divide(ttl).multiply(p);
+		double mPercent = ((m.doubleValue()/ ttl.doubleValue()) * 100.00);
+		double fPercent = ((f.doubleValue()/ ttl.doubleValue()) * 100.00);
 		
-		return mfToJSON(mPercent.doubleValue(), fPercent.doubleValue(), "Male vs Female Customers").toString();
+		
+		return mfToJSON(mPercent, fPercent, "Male vs Female Customers").toString();
 	}
 	
 	private JSONObject mfToJSON(Double mPercent, Double fPercent, String reportTitle) throws JSONException {

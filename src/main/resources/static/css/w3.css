@@ -312,6 +312,21 @@ a {
 	white-space: nowrap
 }
 
+.w3-div {
+	border: none;
+	display: inline-block;
+	outline: 0;
+	padding: 8px 16px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+	background-color: inherit;
+	text-align: center;
+	cursor: default;
+	white-space: nowrap
+}
+
 .w3-btn:hover {
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19)
@@ -1360,7 +1375,9 @@ to {
 	color: #fff !important;
 	background-color: #607d8b !important
 }
-
+.w3-red-color {
+	color: red;
+}
 .w3-green, .w3-hover-green:hover {
 	color: #fff !important;
 	background-color: #4CAF50 !important

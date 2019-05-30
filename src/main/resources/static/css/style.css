@@ -395,7 +395,7 @@ Wide styles
 .content {
 	min-height: 91%;
 	background-image: url(../../images/background-3108962_1280.jpg);
-	background-size: contain;
+	background-size: 100% 100%;
 }
 .pageBody {
 	position: absolute;

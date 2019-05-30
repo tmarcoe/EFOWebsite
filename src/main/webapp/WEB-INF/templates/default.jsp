@@ -4,16 +4,14 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 
 <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost/donzalma_peachys?useSSL=false"
+	url="jdbc:mysql://localhost/efoweb?useSSL=false"
 	user="root" password="3xc7vbkjlv99" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="description"
-	content="Enjoy the taste of the Philippines. Enjoy Peach's Coffee.">
-<meta name="keywords" content="coffee">
 <title><tiles:insertAttribute name="title"></tiles:insertAttribute></title>
 <link rel="icon" href="<c:url value='/images/favicon.png' />">
 <link type="text/css" href="/css/style.css" rel="stylesheet" />
@@ -29,6 +27,7 @@
 
 <body>
 	<div class="content">
+
 		<div class="heading">
 			<tiles:insertAttribute name="heading_title"></tiles:insertAttribute>
 		</div>
@@ -38,6 +37,9 @@
 		</div>
 		<div class="pageBody">
 			<tiles:insertAttribute name="content"></tiles:insertAttribute>
+		<sec:hasRole role="ADMIN">
+			<a style="position: absolute; bottom: 10px; left: 10px;" href="/index/introduction-a">Back to Website</a>
+		</sec:hasRole>
 		</div>
 		<tiles:insertAttribute name="footer" />
 	</div>

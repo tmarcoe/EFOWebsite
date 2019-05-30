@@ -33,6 +33,9 @@
 				<tr>
 					<td><input class="fancy" type='password' name='password' /></td>
 				</tr>
+				<tr>
+					<td><a href="#" onclick="resetPassword()" >Forgot My Password</a>
+				</tr>
 				<!-- 
 		<tr>
 			<td>Remember me:</td>
@@ -55,7 +58,7 @@
 	<div class="modal-content small fancy" id="extraInfo">
 		<h3>Email Field is Blank</h3>
 		<br>
-		<button class="fancy-button" type="button" onclick="clearMsg()">
+		<button class="fancy-button" type="button" onclick="$('#enterEmail').hide()">
 			<b>OK</b>
 		</button>
 	</div>
@@ -84,12 +87,12 @@
 	function resetPassword() {
 		var uName = $("#username").val();
 		if (uName.length > 0) {
-			window.location.href = "/resetpassword?username=" + uName;
+			window.location.href = "/index/forgotmypassword?username=" + uName;
 		} else {
-			$("#enterEmail").css("display", "block");
+			$("#enterEmail").show();
 		}
 	}
 	function clearMsg() {
-		$("#enterEmail").css("display", "none");
+		$("#enterEmail").hide();
 	}
 </script>

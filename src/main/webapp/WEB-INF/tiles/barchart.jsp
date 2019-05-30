@@ -31,7 +31,7 @@
 
 	function renderCanvas() {
 		var canvas = document.getElementById("myChart");
-		var img = canvas.toDataURL("image/png");
+		var img = canvas.toDataURL("image/jpg");
 
 		document.write('<img src="'+img+'"/>');
 	}

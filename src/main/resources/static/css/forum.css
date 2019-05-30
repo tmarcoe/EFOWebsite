@@ -1,0 +1,61 @@
+@CHARSET "ISO-8859-1";
+
+/* Header/Blog Title */
+.forumHeader {
+  padding: 20px;
+  font-size: 48px;
+  font-family: "JosefinSans-BoldItalic";
+  text-align: center;
+  background: none;
+}
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.forumLeftcolumn { 
+  float: left;
+  width: 75%;
+  padding-left: 1em;
+}
+
+/* Right column */
+.forumRightcolumn {
+  float: right;
+  width: 25%;
+  padding-left: 20px;
+}
+
+/* Add a card effect for articles */
+.forumCard {
+  margin-top: 0;
+  padding-left: 0;
+}
+
+/* Clear floats after the columns */
+.forumRow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.forumFooter {
+	position: absolute;
+	bottom: -50px;
+	right: 0;
+	left: 0;
+	text-align: center;
+	background: #ddd;
+}
+.scrollRegion {
+	position: fixed;
+	overflow: scroll;
+	height: 80%;
+	width: 100%;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn { 
+    width: 100%;
+    padding: 0;
+  }
+}

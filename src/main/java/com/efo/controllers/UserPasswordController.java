@@ -32,7 +32,7 @@ public class UserPasswordController {
 		
 		userService.merge(mergeUser);
 		
-		return "redirect:/";
+		return "redirect:/index/introduction-a";
 	}
 	
 

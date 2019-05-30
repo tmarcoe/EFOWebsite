@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
-
-
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
-<link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 <sf:form id="editAccount" method="post" action="/accounting/updateaccount" modelAttribute="account">
 	<table class="fancy-table tableshadow">

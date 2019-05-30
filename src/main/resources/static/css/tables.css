@@ -130,6 +130,12 @@ tfoot.tablefooter td
  	text-align: center;
  }
  /*********************************************************
+  * Left Justified
+  ********************************************************/
+  .ljfirst td:nth-child(1) {
+  	text-align: left;
+  }
+ /*********************************************************
   * Table options
   *********************************************************/
 .tableborder td {
@@ -144,4 +150,8 @@ tfoot.tablefooter td
 .tableSpacing th {
 	padding-right: 1em;
 	padding-left: 1em;
+}
+
+.largeType {
+	font-size: 32;
 }

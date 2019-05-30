@@ -5,7 +5,7 @@
 		<put-attribute name="includes" value=""></put-attribute>
 		<put-attribute name="heading_title" value=""></put-attribute>
 		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/toolbar.jsp"></put-attribute>
-		<put-attribute name="title" value="Coffee - Peachy's Coffee"></put-attribute>
+		<put-attribute name="title" value="EFO"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/tiles/static/header.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/footer.jsp"></put-attribute>
@@ -280,4 +280,195 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/piechart.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Below this point are all the pages for the website -->
+	<definition name="mainpage.base" template="/WEB-INF/templates/mainpage.jsp">
+		<put-attribute name="includes" value=""></put-attribute>
+		<put-attribute name="heading_title" value=""></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/toolbar.jsp"></put-attribute>
+		<put-attribute name="title" value="EFO Software"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/tiles/static/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/blank.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="webpage.base" template="/WEB-INF/templates/webpage.jsp">
+		<put-attribute name="includes" value=""></put-attribute>
+		<put-attribute name="heading_title" value=""></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/toolbar.jsp"></put-attribute>
+		<put-attribute name="title" value="EFO Software"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/tiles/static/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/blank.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Website Home Controller -->
+	<definition name="index" extends="mainpage.base">
+		<put-attribute name="title" value="EFO"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/index.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="introduction-a" extends="webpage.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="Introduction"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/introduction-a.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="introduction-b" extends="webpage.base">
+		<put-attribute name="title" value="Introduction"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/introduction-b.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="introduction-c" extends="webpage.base">
+		<put-attribute name="title" value="Introduction"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/introduction-c.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="introduction-d" extends="webpage.base">
+		<put-attribute name="title" value="Introduction"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/introduction-d.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="contactus" extends="webpage.base">
+		<put-attribute name="title" value="Contact Information"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/contactus.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="aboutus" extends="webpage.base">
+		<put-attribute name="title" value="About Us"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/aboutus.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="distribute.base" template="/WEB-INF/templates/distribute.jsp">
+		<put-attribute name="includes" value=""></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="title" value="EFO Software"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/blank.jsp"></put-attribute>
+	</definition>
+
+	<!-- Website Download Controller -->
+	<definition name="documentation" extends="distribute.base">
+		<put-attribute name="title" value="Documentation"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/documentation.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Blog controller -->
+	<definition name="viewblog" extends="distribute.base">
+		<put-attribute name="title" value="Blogs"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/viewblog.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="createblog" extends="distribute.base">
+		<put-attribute name="title" value="Create Blog"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createblog.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="manageblogs" extends="distribute.base">
+		<put-attribute name="title" value="Manage Blogs"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/manageblogs.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editblog" extends="distribute.base">
+		<put-attribute name="title" value="Edit Blog"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editblog.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Forum Controller -->
+	<definition name="createpost" extends="distribute.base">
+		<put-attribute name="title" value="Create Forum Post"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createpost.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="viewPosts" extends="distribute.base">
+		<put-attribute name="title" value="Forum Posts"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/viewposts.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="replytopost" extends="distribute.base">
+		<put-attribute name="title" value="Forum Posts"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/replytopost.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editpost" extends="distribute.base">
+		<put-attribute name="title" value="Edit Post"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editpost.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editreply" extends="distribute.base">
+		<put-attribute name="title" value="Edit Reply"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editreply.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Product Controller -->
+	<definition name="efo" extends="distribute.base">
+		<put-attribute name="title" value="Efo Download"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/efo.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="ftl" extends="distribute.base">
+		<put-attribute name="title" value="Ftl Download"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/ftl.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="ftlide" extends="distribute.base">
+		<put-attribute name="title" value="Ftl Download"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/ftlide.jsp"></put-attribute>
+	</definition>
+
+	<!-- User Profile Controller -->		
+	<definition name="createuserprofile" extends="distribute.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="New Customer"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createuserprofile.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="edituserprofile" extends="distribute.base">
+		<put-attribute name="title" value="Edit Customer"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/edituserprofile.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="verifyemail" extends="distribute.base">
+		<put-attribute name="title" value="Verify Email"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/blank.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/verifyemail.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="notify" extends="distribute.base">
+		<put-attribute name="title" value="Notification"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/notify.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="forgotmypassword" extends="distribute.base">
+		<put-attribute name="title" value="Forgot My Password"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/forgotmypassword.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="changepassword" extends="distribute.base">
+		<put-attribute name="title" value="Forgot My Password"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/changepassword.jsp"></put-attribute>
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+	</definition>
+		
 </tiles-definitions>

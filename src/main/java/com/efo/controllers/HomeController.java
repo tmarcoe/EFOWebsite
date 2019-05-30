@@ -30,13 +30,7 @@ public class HomeController {
 	@Autowired
 	private UserService userService;
 
-	@Value("${efo.formsPath}")
-	private String formsPath;
-
-	@Value("${efo.formRepository}")
-	private String target;
-
-	@RequestMapping("/")
+	@RequestMapping(value={"/","/settings"})
 	public String showHome(Model model, Principal principal){
 		LocalDate today = new LocalDate();
 		User user = null;
