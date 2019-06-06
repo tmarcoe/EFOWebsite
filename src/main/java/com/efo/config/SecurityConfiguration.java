@@ -62,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/reports/**").hasAuthority("REPORTS")
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.antMatchers("/settings/**").hasAuthority("ADMIN")
+				.antMatchers("/marketplace/**").hasAuthority("MARKETPLACE")
 				.anyRequest().authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
 				.defaultSuccessUrl("/index/introduction-a")

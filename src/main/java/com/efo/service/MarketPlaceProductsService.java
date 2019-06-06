@@ -9,7 +9,7 @@ import com.efo.dao.MarketPlaceProductsDao;
 import com.efo.interfaces.IMarketPlaceProducts;
 
 @Service
-public class MarketPlaceProducts implements IMarketPlaceProducts {
+public class MarketPlaceProductsService implements IMarketPlaceProducts {
 	
 	@Autowired
 	private MarketPlaceProductsDao marketPlaceProductsDao;

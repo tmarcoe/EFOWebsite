@@ -20,6 +20,7 @@ public class MarketPlaceVendors implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
 	private Long user_id;		// User ID from Customer table
+	private String name;
 	private Double total_sales;
 	private Double commission_paid;
 	
@@ -40,6 +41,14 @@ public class MarketPlaceVendors implements Serializable {
 
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Double getTotal_sales() {

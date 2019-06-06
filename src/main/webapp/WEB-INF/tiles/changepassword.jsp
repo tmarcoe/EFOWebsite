@@ -27,6 +27,9 @@
 			<td><button class="fancy-button" type="submit">
 					<b>Save</b>
 				</button></td>
+			<td><button class="fancy-button" type="button" onclick="window.history.back()">
+					<b>Cancel</b>
+				</button></td>
 		</tr>
 	</table>
 </sf:form>

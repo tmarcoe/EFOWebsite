@@ -52,7 +52,7 @@ public class PrintGeneralLedgerForm {
 		pdfUtilities.centerText(doc, "General Ledger", 18, boldFont);
 		pdfUtilities.centerText(doc, period, 12, boldFont);
 
-		pdfUtilities.addImage(doc, 5, 720, "FetalImage.png");
+		pdfUtilities.addImage(doc, 0, 800, "efologo.png");
 		doc.add(new Paragraph("\n\n"));
 		
 		Table table = pdfUtilities.addTable(widths, 0);

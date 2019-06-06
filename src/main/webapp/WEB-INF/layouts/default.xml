@@ -471,4 +471,9 @@
 		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
 	</definition>
 		
+	<definition name="marketplaceregister" extends="distribute.base">
+		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/marketplaceregister.jsp"></put-attribute>
+	</definition>
+		
 </tiles-definitions>

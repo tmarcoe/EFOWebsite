@@ -29,5 +29,14 @@
 			<required>true</required>
 		</attribute>
 	</tag>
+	<tag>
+		<name>notHasRole</name>
+		<tag-class>com.efo.taglibs.NotHasRole</tag-class>
+		<body-content>scriptless</body-content>		
+		<attribute>
+			<name>role</name>
+			<required>true</required>
+		</attribute>
+	</tag>
 </taglib>
 

@@ -24,6 +24,7 @@ public class MarketPlaceProducts implements Serializable {
 	private Long product_reference;
 	private Long reference;
 	private String product_name;
+	private String product_description;
 	private Double product_price;
 	private Double product_tax;
 	private String version;
@@ -58,6 +59,14 @@ public class MarketPlaceProducts implements Serializable {
 
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
+	}
+
+	public String getProduct_description() {
+		return product_description;
+	}
+
+	public void setProduct_description(String product_description) {
+		this.product_description = product_description;
 	}
 
 	public Double getProduct_price() {
