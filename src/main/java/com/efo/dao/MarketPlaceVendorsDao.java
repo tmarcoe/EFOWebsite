@@ -54,6 +54,17 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 		
 		return mList;
 	}
+	
+	public MarketPlaceVendors retrieveByUserId(Long userId) {
+		Session session = session();
+		
+		MarketPlaceVendors vendors = (MarketPlaceVendors) session.createCriteria(MarketPlaceVendors.class)
+																 .add(Restrictions.eq("user_id", userId))
+																 .setMaxResults(1).uniqueResult();
+		session.disconnect();
+		
+		return vendors;
+	}
 
 	@Override
 	public void merge(MarketPlaceVendors marketPlaceVendors) {
@@ -65,10 +76,11 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 	}
 
 	@Override
-	public void delete(MarketPlaceVendors marketPlaceVendors) {
+	public void delete(Long reference) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-
+		String hql = "DELETE FROM MarketPlaceVendors WHERE reference = :reference";
+		session.createQuery(hql).setLong("reference", reference).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

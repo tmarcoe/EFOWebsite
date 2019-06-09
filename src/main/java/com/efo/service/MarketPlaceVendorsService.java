@@ -30,7 +30,11 @@ public class MarketPlaceVendorsService implements IMarketPlaceVendors {
 	public List<MarketPlaceVendors> retrieveRawList() {
 		return marketPlaceVendorsDao.retrieveRawList();
 	}
-
+	
+	public MarketPlaceVendors retrieveByUserId(Long userId) {
+		return marketPlaceVendorsDao.retrieveByUserId(userId);
+	}
+	
 	@Override
 	public void merge(MarketPlaceVendors marketPlaceVendors) {
 		marketPlaceVendorsDao.merge(marketPlaceVendors);
@@ -38,8 +42,8 @@ public class MarketPlaceVendorsService implements IMarketPlaceVendors {
 	}
 
 	@Override
-	public void delete(MarketPlaceVendors marketPlaceVendors) {
-		marketPlaceVendorsDao.delete(marketPlaceVendors);
+	public void delete(Long reference) {
+		marketPlaceVendorsDao.delete(reference);
 
 	}
 

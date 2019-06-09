@@ -10,6 +10,6 @@ public interface IMarketPlaceVendors {
 	public MarketPlaceVendors retrieve(Long reference);
 	public List<MarketPlaceVendors> retrieveRawList();
 	public void merge(MarketPlaceVendors marketPlaceVendors);
-	public void delete(MarketPlaceVendors marketPlaceVendors);
+	public void delete(Long reference);
 
 }

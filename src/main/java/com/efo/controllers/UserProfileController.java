@@ -15,7 +15,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,12 +42,6 @@ import com.efo.service.VerifyService;
 
 @Controller
 public class UserProfileController {
-
-	@Value("${efo.upload.profileimages}")
-	private String uploadProfileImage;
-
-	@Value("${efo.download.profileimages}")
-	private String downloadProfileImage;
 
 	@Autowired
 	private UserService userService;
@@ -130,7 +123,6 @@ public class UserProfileController {
 
 		user.setRoleString(roleUtilities.roleToString(user.getRoles()));
 		model.addAttribute("user", user);
-		model.addAttribute("imageDir", downloadProfileImage);
 
 		return "edituserprofile";
 	}

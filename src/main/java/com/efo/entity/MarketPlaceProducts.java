@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class MarketPlaceProducts implements Serializable {
@@ -23,10 +26,14 @@ public class MarketPlaceProducts implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long product_reference;
 	private Long reference;
+	@NotBlank
 	private String product_name;
+	@NotBlank
 	private String product_description;
 	private Double product_price;
 	private Double product_tax;
+	private String file_name;
+	@NotBlank
 	private String version;
 	private Date introduced_on;
 
@@ -36,6 +43,18 @@ public class MarketPlaceProducts implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private MarketPlaceVendors marketPlaceVendors;
+	
+	@Transient
+	private boolean firstTime;
+	
+	@Transient
+	private String company_name;
+	
+	@Transient
+	private MultipartFile company_logo;
+	
+	@Transient
+	private MultipartFile file;
 
 	public Long getProduct_reference() {
 		return product_reference;
@@ -85,6 +104,14 @@ public class MarketPlaceProducts implements Serializable {
 		this.product_tax = product_tax;
 	}
 
+	public String getFile_name() {
+		return file_name;
+	}
+
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+
 	public String getVersion() {
 		return version;
 	}
@@ -116,6 +143,37 @@ public class MarketPlaceProducts implements Serializable {
 	public void setMarketPlaceVendors(MarketPlaceVendors marketPlaceVendors) {
 		this.marketPlaceVendors = marketPlaceVendors;
 	}
-	
-	
+
+	public boolean isFirstTime() {
+		return firstTime;
+	}
+
+	public void setFirstTime(boolean firstTime) {
+		this.firstTime = firstTime;
+	}
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
+
+	public MultipartFile getCompany_logo() {
+		return company_logo;
+	}
+
+	public void setCompany_logo(MultipartFile company_logo) {
+		this.company_logo = company_logo;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
 }

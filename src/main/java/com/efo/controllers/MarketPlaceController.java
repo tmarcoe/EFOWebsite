@@ -1,15 +1,23 @@
 package com.efo.controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,10 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.MarketPlaceVendors;
-import com.efo.entity.Role;
 import com.efo.entity.User;
 import com.efo.service.MarketPlaceVendorsService;
-import com.efo.service.RoleService;
 import com.efo.service.UserService;
 
 @Controller
@@ -32,9 +38,12 @@ public class MarketPlaceController {
 	@Autowired
 	private MarketPlaceVendorsService marketPlaceVendorsService;
 	
-	@Autowired
-	private RoleService roleService;
-		
+	@Value("${efo.upload.logo}")
+	private String uploadLogo;
+	
+	@Value("${efo.download.logo}")
+	private String downloadLogo;
+	
 	private SimpleDateFormat dateFormat;
 
 	@InitBinder
@@ -49,16 +58,27 @@ public class MarketPlaceController {
 	public String MarketPlaceRegister(Model model, Principal principal) {
 		MarketPlaceVendors marketPlaceVendors = null;
 		MarketPlaceProducts marketPlaceProducts = null;
+		
 		if (principal != null) {
 			User user = userService.retrieve(principal.getName());
-			marketPlaceVendors = new MarketPlaceVendors();
-			marketPlaceVendors.setUser_id(user.getUser_id());
-			marketPlaceVendors.setTotal_sales(0.0);
-			marketPlaceVendors.setCommission_paid(0.0);
-			assignName(marketPlaceVendors, user);
-			marketPlaceVendorsService.create(marketPlaceVendors);
+			marketPlaceVendors = marketPlaceVendorsService.retrieveByUserId(user.getUser_id());
 			
 			marketPlaceProducts = new MarketPlaceProducts();
+			marketPlaceProducts.setFirstTime(false);
+			
+			if (marketPlaceVendors == null ) {
+				marketPlaceVendors = new MarketPlaceVendors();
+				marketPlaceVendors.setUser_id(user.getUser_id());
+				marketPlaceVendors.setTotal_sales(0.0);
+				marketPlaceVendors.setCommission_paid(0.0);
+				assignName(marketPlaceVendors, user);
+				marketPlaceVendorsService.create(marketPlaceVendors);
+				marketPlaceProducts.setFirstTime(true);
+			}else if ( marketPlaceVendors.getMarketPlaceProducts().size() == 0){
+				marketPlaceProducts.setFirstTime(true);
+			}
+			
+			
 			marketPlaceProducts.setReference(marketPlaceVendors.getReference());
 			marketPlaceProducts.setIntroduced_on(new Date());
 		}
@@ -67,18 +87,66 @@ public class MarketPlaceController {
 		
 		return "marketplaceregister";
 	}
-	
+	@RequestMapping("/user/cancelregistry")
+	public String cancelRegistry(@ModelAttribute("reference") Long reference) {
+		MarketPlaceVendors mpv = marketPlaceVendorsService.retrieve(reference);
+		
+		if (mpv.getMarketPlaceProducts().size() == 0) {
+			marketPlaceVendorsService.delete(reference);
+		}
+		
+		return "redirect:/index/introduction-a";
+	}
 	@RequestMapping("/user/addregistry")
-	public String addRegistry(@ModelAttribute("marketPlaceProduct") MarketPlaceProducts marketPlaceProduct) {
+	public String addRegistry(@Valid @ModelAttribute("marketPlaceProduct") MarketPlaceProducts marketPlaceProduct, BindingResult result) throws IOException {
+		File file = null;
+		
+		if (result.hasErrors() || marketPlaceProduct.getFile().isEmpty()) {
+			if (marketPlaceProduct.getFile().isEmpty()) {
+				result.rejectValue("file", "NotBlank.marketPlaceProduct.file");
+			}
+			return "marketplaceregister";
+		}
 		
 		MarketPlaceVendors marketPlaceVendors = marketPlaceVendorsService.retrieve(marketPlaceProduct.getReference());
+		if (marketPlaceProduct.isFirstTime()) {
+			marketPlaceVendors.setCompany_name(marketPlaceProduct.getCompany_name());
+			if (marketPlaceProduct.getCompany_logo().isEmpty() == false) {
+				InputStream is = marketPlaceProduct.getCompany_logo().getInputStream();
+
+				File f1 = new File(uploadLogo);
+
+				file = File.createTempFile("img", ".png", f1);
+				marketPlaceVendors.setLogo(file.getName());
+				FileOutputStream fos = new FileOutputStream(file);
+
+				int data = 0;
+				while ((data = is.read()) != -1) {
+					fos.write(data);
+				}
+
+				fos.close();
+				is.close();
+			}
+		}
+		InputStream is = marketPlaceProduct.getFile().getInputStream();
+
+		File f1 = new File(uploadLogo);
+
+		file = File.createTempFile("zip", ".zip", f1);
+		marketPlaceVendors.setLogo(file.getName());
+		FileOutputStream fos = new FileOutputStream(file);
+
+		int data = 0;
+		while ((data = is.read()) != -1) {
+			fos.write(data);
+		}
+
+		fos.close();
+		is.close();
+		
 		marketPlaceVendors.getMarketPlaceProducts().add(marketPlaceProduct);
 		marketPlaceProduct.setMarketPlaceVendors(marketPlaceVendors);
-		User user = userService.retrieve(marketPlaceVendors.getUser_id());
-		Role role = roleService.retrieve("MARKETPLACE");
-		
-		user.getRoles().add(role);
-		userService.merge(user);
 		
 		marketPlaceVendorsService.merge(marketPlaceVendors);
 		
