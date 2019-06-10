@@ -49,8 +49,10 @@
 				<li><div class="dropdown">
 						<button class="dropbtn">EFO Marketplace</button>
 						<div class="dropdown-content">
-							<a href="/user/marketplaceregister">Add A Product</a> 
-							<a href="#">Shop</a>
+							<sec:isAuthenticated>
+								<a href="/user/marketplaceregister">Add A Product</a> 
+							</sec:isAuthenticated>
+							<a href="/index/viewmarketplace">Shop</a>
 						</div>
 					</div></li>
 			</sec:isAuthenticated>

@@ -8,6 +8,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.MarketPlaceVendors;
 import com.efo.entity.User;
+import com.efo.service.MarketPlaceProductsService;
 import com.efo.service.MarketPlaceVendorsService;
 import com.efo.service.UserService;
 
@@ -38,11 +40,20 @@ public class MarketPlaceController {
 	@Autowired
 	private MarketPlaceVendorsService marketPlaceVendorsService;
 	
+	@Autowired
+	private MarketPlaceProductsService marketPlaceProductsService;
+	
 	@Value("${efo.upload.logo}")
 	private String uploadLogo;
 	
 	@Value("${efo.download.logo}")
 	private String downloadLogo;
+	
+	@Value("${efo.upload.repository}")
+	private String uploadrepository;
+	
+	@Value("${efo.download.repository}")
+	private String downloadrepository;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -129,12 +140,16 @@ public class MarketPlaceController {
 				is.close();
 			}
 		}
+		
+		String type = marketPlaceProduct.getFile().getOriginalFilename();
+		type = type.substring(type.lastIndexOf('.'));
+
 		InputStream is = marketPlaceProduct.getFile().getInputStream();
 
-		File f1 = new File(uploadLogo);
+		File f1 = new File(uploadrepository);
 
-		file = File.createTempFile("zip", ".zip", f1);
-		marketPlaceVendors.setLogo(file.getName());
+		file = File.createTempFile("upl", type, f1);
+		marketPlaceProduct.setFile_name(file.getName());
 		FileOutputStream fos = new FileOutputStream(file);
 
 		int data = 0;
@@ -151,6 +166,17 @@ public class MarketPlaceController {
 		marketPlaceVendorsService.merge(marketPlaceVendors);
 		
 		return "redirect:/index/introduction-a";
+	}
+	
+	@RequestMapping("/index/viewmarketplace")
+	public String viewMarketPlace(Model model) {
+		
+		List<MarketPlaceProducts> mpList = marketPlaceProductsService.retrieveRawList();
+		
+		model.addAttribute("logoPath", downloadLogo);
+		model.addAttribute("mpList", mpList);
+		
+		return "viewmarketplace";
 	}
 	
 	private void assignName(MarketPlaceVendors maketPlaceVendor, User user)  {
