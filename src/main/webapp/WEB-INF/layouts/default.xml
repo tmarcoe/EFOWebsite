@@ -470,7 +470,8 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/changepassword.jsp"></put-attribute>
 		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
 	</definition>
-		
+	
+	<!-- MarketPlace Controller -->
 	<definition name="marketplaceregister" extends="distribute.base">
 		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/marketplaceregister.jsp"></put-attribute>
@@ -479,6 +480,11 @@
 	<definition name="viewmarketplace" extends="distribute.base">
 		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/viewmarketplace.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editmpproduct" extends="distribute.base">
+		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editmpproduct.jsp"></put-attribute>
 	</definition>
 		
 </tiles-definitions>

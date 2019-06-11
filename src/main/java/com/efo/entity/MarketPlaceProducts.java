@@ -30,6 +30,7 @@ public class MarketPlaceProducts implements Serializable {
 	private String product_name;
 	@NotBlank
 	private String product_description;
+	private String keywords;
 	private Double product_price;
 	private Double product_tax;
 	private String file_name;
@@ -86,6 +87,14 @@ public class MarketPlaceProducts implements Serializable {
 
 	public void setProduct_description(String product_description) {
 		this.product_description = product_description;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 	public Double getProduct_price() {

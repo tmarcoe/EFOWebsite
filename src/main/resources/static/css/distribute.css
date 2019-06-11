@@ -662,6 +662,12 @@ div.scrollPanel {
 	overflow: auto;
 }
 
+.searchArea {
+	position: absolute;
+	top: 1em;
+	left: 1em;
+}
+
 .totalsDiv {
 	text-align: right;
 	font-family: JosefinSans-BoldItalic;

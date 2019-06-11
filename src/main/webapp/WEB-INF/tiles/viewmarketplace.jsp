@@ -8,9 +8,17 @@
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
+<div class="searchArea">
+	<i class="fa fa-search searchIcon"></i> <input id="srch" type="search" class="fancy searchBox" placeholder="Search...">
+	<button class="fancy-button" onclick="search()">
+		<b>Search</b>
+	</button>
+</div>
 <c:forEach var="item" items="${mpList}">
-	<table class="fancy-table tableshadow rjsecond" style="width: 50%;" >
+	<table class="fancy-table tableshadow rjsecond" style="width: 50%;">
 		<tr>
 			<td><img alt="Logo" src="<c:url value='${logoPath}${item.marketPlaceVendors.logo}'/>" width="70px"></td>
 
@@ -21,7 +29,7 @@
 		</tr>
 		<tr>
 			<td><b>Version: </b> ${item.version}</td>
-			<td><b>Submitted On:</b> <fmt:formatDate value="${item.introduced_on}"/>
+			<td><b>Submitted On:</b> <fmt:formatDate value="${item.introduced_on}" />
 		</tr>
 		<tr>
 			<td>${item.product_description}</td>
@@ -30,7 +38,18 @@
 			<td><b>Price </b></td>
 			<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${item.product_price}" /></b></td>
 		</tr>
+		<c:if test="${userId == item.marketPlaceVendors.user_id}">
+			<tr>
+				<td><a href="/user/editmpproduct?product_reference=${item.product_reference}">Edit</a></td>
+				<td><a href="/user/deletempproduct?product_reference=${item.product_reference}">Delete</a></td>
+			</tr>
+		</c:if>
 	</table>
 	<br>
 </c:forEach>
-
+<script>
+	function search() {
+		window.location.href = "/index/marketplacesearch?search="
+				+ $('#srch').val();
+	}
+</script>

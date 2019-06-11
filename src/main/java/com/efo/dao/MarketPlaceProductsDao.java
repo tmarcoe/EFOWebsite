@@ -53,6 +53,19 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		session.disconnect();
 		return mList;
 	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<MarketPlaceProducts> keywordSearch(String search) {
+		search = "%" + search + "%";
+		Session session = session();
+		String hql = "FROM MarketPlaceProducts WHERE UPPER(CONCAT(product_name, ' ', keywords)) LIKE :search";
+		List<MarketPlaceProducts> mList = session.createQuery(hql).setString("search", search.toUpperCase()).list();
+		
+		session.disconnect();
+		
+		return mList;
+	}
 
 	@Override
 	public void merge(MarketPlaceProducts marketPlaceProducts) {
@@ -64,9 +77,11 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 	}
 
 	@Override
-	public void delete(MarketPlaceProducts marketPlaceProducts) {
+	public void delete(Long product_reference) {
+		String hql = "DELETE FROM MarketPlaceProducts WHERE product_reference = :product_reference";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setLong("product_reference", product_reference).executeUpdate();
 		
 		tx.commit();
 		session.disconnect();

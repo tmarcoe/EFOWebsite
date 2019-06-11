@@ -44,6 +44,13 @@
 			<td><sf:errors class="error" path="product_description"/>
 		</tr>
 		<tr>
+			<td colspan="3"><b>Enter Product Keywords (Separate by space)</b><br> <sf:textarea class="fancy-textarea"
+					path="keywords" rows="10" cols="65" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors class="error" path="keywords"/>
+		</tr>
+		<tr>
 			<td><sf:button class="fancy-button" type="submit">
 					<b>Register</b>
 				</sf:button></td>

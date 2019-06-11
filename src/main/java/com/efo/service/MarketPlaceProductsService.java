@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.MarketPlaceProductsDao;
+import com.efo.entity.MarketPlaceProducts;
 import com.efo.interfaces.IMarketPlaceProducts;
 
 @Service
@@ -29,6 +30,10 @@ public class MarketPlaceProductsService implements IMarketPlaceProducts {
 		return marketPlaceProductsDao.retrieveRawList();
 	}
 
+	public List<MarketPlaceProducts> keywordSearch(String search) {
+		return marketPlaceProductsDao.keywordSearch(search);
+	}
+	
 	@Override
 	public void merge(com.efo.entity.MarketPlaceProducts marketPlaceProducts) {
 		marketPlaceProductsDao.merge(marketPlaceProducts);
@@ -36,8 +41,8 @@ public class MarketPlaceProductsService implements IMarketPlaceProducts {
 	}
 
 	@Override
-	public void delete(com.efo.entity.MarketPlaceProducts marketPlaceProducts) {
-		marketPlaceProductsDao.delete(marketPlaceProducts);
+	public void delete(Long product_reference) {
+		marketPlaceProductsDao.delete(product_reference);
 
 	}
 

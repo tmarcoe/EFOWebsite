@@ -169,14 +169,61 @@ public class MarketPlaceController {
 	}
 	
 	@RequestMapping("/index/viewmarketplace")
-	public String viewMarketPlace(Model model) {
+	public String viewMarketPlace(Model model, Principal principal) {
+		Long uid = 0L;
 		
 		List<MarketPlaceProducts> mpList = marketPlaceProductsService.retrieveRawList();
+		if (principal != null) {
+			User user = userService.retrieve(principal.getName());
+			uid = user.getUser_id();
+		}
+		
+		model.addAttribute("userId", uid);
+		model.addAttribute("logoPath", downloadLogo);
+		model.addAttribute("mpList", mpList);
+		
+		return "viewmarketplace";
+	}
+	
+	@RequestMapping("/index/marketplacesearch")
+	public String marketPlaceSearch(@ModelAttribute("search") String search, Model model) {
+		
+		List<MarketPlaceProducts> mpList = marketPlaceProductsService.keywordSearch(search);
 		
 		model.addAttribute("logoPath", downloadLogo);
 		model.addAttribute("mpList", mpList);
 		
 		return "viewmarketplace";
+	}
+	
+	@RequestMapping("/user/editmpproduct")
+	public String editMarketPlaceProduct(@ModelAttribute("product_reference") Long product_reference, Model model, Principal principal) {
+		MarketPlaceProducts marketPlaceProduct = marketPlaceProductsService.retrieve(product_reference);
+
+		model.addAttribute("marketPlaceProduct", marketPlaceProduct);
+		
+		return "editmpproduct";
+	}
+	
+	@RequestMapping("/user/updatempproduct")
+	public String updateMarketPlaceProduct(@Valid @ModelAttribute("marketPlaceProduct") MarketPlaceProducts marketPlaceProduct, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			
+			return "editmpproduct";
+		}
+		
+		marketPlaceProductsService.merge(marketPlaceProduct);
+		
+		return "redirect:/index/viewmarketplace";
+	}
+	
+	@RequestMapping("/user/deletempproduct")
+	public String deleteMarketPlaceProduct(@ModelAttribute("product_reference") Long product_reference) {
+		
+		marketPlaceProductsService.delete(product_reference);
+		
+		return "redirect:/index/viewmarketplace";
 	}
 	
 	private void assignName(MarketPlaceVendors maketPlaceVendor, User user)  {
