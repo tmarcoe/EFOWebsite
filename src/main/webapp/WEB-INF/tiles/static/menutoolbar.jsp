@@ -40,14 +40,15 @@
 			<li><div class="dropdown">
 					<button class="dropbtn">Products</button>
 					<div class="dropdown-content">
-						<a href="/index/efo">Electronic Financial Officer</a> <a href="/index/ftl">Flexible Transaction Language</a> <a
-							href="/index/ftlide">FTL IDE</a>
+						<a href="/index/efo">Electronic Financial Officer</a> 
+						<a href="/index/ftl">Flexible Transaction Language</a> 
+						<a href="/index/ftlide">FTL IDE</a>
 					</div>
 				</div></li>
 			<li><button class="dropbtn" onclick="window.location.href = '/index/documentation'">Documentation</button></li>
 			<sec:isAuthenticated>
 				<li><div class="dropdown">
-						<button class="dropbtn">EFO Marketplace</button>
+						<button class="dropbtn" title="We want you to compete with us" >EFO Marketplace</button>
 						<div class="dropdown-content">
 							<sec:isAuthenticated>
 								<a href="/user/marketplaceregister">Add A Product</a> 

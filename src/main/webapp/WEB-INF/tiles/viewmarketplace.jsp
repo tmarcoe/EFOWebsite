@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
@@ -18,7 +19,7 @@
 	</button>
 </div>
 <c:forEach var="item" items="${mpList}">
-	<table class="fancy-table tableshadow rjsecond" style="width: 50%;">
+	<table class="fancy-table tableshadow rjsecond" style="width: 50%;" onclick="window.location.href='#'">
 		<tr>
 			<td><img alt="Logo" src="<c:url value='${logoPath}${item.marketPlaceVendors.logo}'/>" width="70px"></td>
 
@@ -38,12 +39,22 @@
 			<td><b>Price </b></td>
 			<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${item.product_price}" /></b></td>
 		</tr>
-		<c:if test="${userId == item.marketPlaceVendors.user_id}">
-			<tr>
-				<td><a href="/user/editmpproduct?product_reference=${item.product_reference}">Edit</a></td>
-				<td><a href="/user/deletempproduct?product_reference=${item.product_reference}">Delete</a></td>
-			</tr>
-		</c:if>
+		<c:choose>
+			<c:when test="${userId == item.marketPlaceVendors.user_id}">
+				<tr>
+					<td><a href="/user/editmpproduct?product_reference=${item.product_reference}">Edit</a></td>
+					<td><a href="/user/deletempproduct?product_reference=${item.product_reference}">Delete</a></td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<sec:hasRole role="ADMIN">
+					<tr>
+						<td><a href="/user/editmpproduct?product_reference=${item.product_reference}">Edit</a></td>
+						<td><a href="/user/deletempproduct?product_reference=${item.product_reference}">Delete</a></td>
+					</tr>
+				</sec:hasRole>
+			</c:otherwise>
+		</c:choose>
 	</table>
 	<br>
 </c:forEach>
