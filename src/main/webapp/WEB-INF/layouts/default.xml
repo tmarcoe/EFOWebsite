@@ -487,4 +487,9 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editmpproduct.jsp"></put-attribute>
 	</definition>
 		
+	<definition name="displayprd" extends="distribute.base">
+		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/displayprd.jsp"></put-attribute>
+	</definition>
+		
 </tiles-definitions>

@@ -4,9 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 
-<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,7 +19,8 @@
 	</button>
 </div>
 <c:forEach var="item" items="${mpList}">
-	<table class="fancy-table tableshadow rjsecond" style="width: 50%;" onclick="window.location.href='#'">
+	<fmt:formatNumber var="prdId" pattern="0000000000" value="${item.product_reference}"/>
+	<table class="fancy-table tableshadow rjsecond" style="width: 50%;" onclick="window.location.href='/user/displayprd/${prdId}'">
 		<tr>
 			<td><img alt="Logo" src="<c:url value='${logoPath}${item.marketPlaceVendors.logo}'/>" width="70px"></td>
 

@@ -37,9 +37,6 @@
 		</div>
 		<div class="pageBody">
 			<tiles:insertAttribute name="content"></tiles:insertAttribute>
-		<sec:hasRole role="ADMIN">
-			<a style="position: absolute; bottom: 10px; left: 10px;" href="/index/introduction-a">Back to Website</a>
-		</sec:hasRole>
 		</div>
 		<tiles:insertAttribute name="footer" />
 	</div>

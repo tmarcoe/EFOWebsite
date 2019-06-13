@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.efo.entity.MarketPlaceProducts;
@@ -186,10 +187,17 @@ public class MarketPlaceController {
 	}
 	
 	@RequestMapping("/index/marketplacesearch")
-	public String marketPlaceSearch(@ModelAttribute("search") String search, Model model) {
+	public String marketPlaceSearch(@ModelAttribute("search") String search, Model model, Principal principal) {
+		Long uid = 0L;
+		
+		if (principal != null) {
+			User user = userService.retrieve(principal.getName());
+			uid = user.getUser_id();
+		}
 		
 		List<MarketPlaceProducts> mpList = marketPlaceProductsService.keywordSearch(search);
 		
+		model.addAttribute("userId", uid);
 		model.addAttribute("logoPath", downloadLogo);
 		model.addAttribute("mpList", mpList);
 		
@@ -216,6 +224,17 @@ public class MarketPlaceController {
 		marketPlaceProductsService.merge(marketPlaceProduct);
 		
 		return "redirect:/index/viewmarketplace";
+	}
+	
+	@RequestMapping("/user/displayprd/{prdNumber}")
+	public String displayPrd(@PathVariable("prdNumber") String prdNumber, Model model) {
+		
+		MarketPlaceProducts marketPlaceProduct = marketPlaceProductsService.retrieve(Long.valueOf(prdNumber));
+		
+		model.addAttribute("product", marketPlaceProduct);
+		model.addAttribute("logoPath", downloadLogo);
+		
+		return "displayprd";
 	}
 	
 	@RequestMapping("/user/deletempproduct")

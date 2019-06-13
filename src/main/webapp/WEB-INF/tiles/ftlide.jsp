@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js"
+	data-api-key="MDc1NzE4OTYtODU2Mi00NWJiLTg0YzctNzZiMGE5ODUyY2JkNjM1ODgwMTIzNDIwNTMxODQz" id="snipcart"></script>
 
 <link rel="stylesheet" href="/css/w3.css">
 <link rel="stylesheet" href="/css/products.css">
+<link rel="stylesheet" href="/css/fancy-input.css">
+<link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" rel="stylesheet" type="text/css" />
 <style>
 	.mySlides {display:none;}
 </style>
@@ -31,6 +38,20 @@
 		<td><b>Price</b></td>
  		<td>....................................................................................................................................</td>
  		<td><b>$0.00</b></td>
+ 		<sec:isAuthenticated>
+ 		 <tr>
+ 		
+			<td colspan="2"><button class="snipcart-add-item fancy-button" 
+				data-item-id="EFO3" 
+				data-item-name="FTLIDE"
+				data-item-price="0.00" 
+				data-item-max-quantity="1"
+				data-item-url="/index/ftlide"
+				data-item-description="FTL IDE">
+				<b>Add To Cart</b>
+			</button></td>
+		</tr>
+		</sec:isAuthenticated>
 	</tr>
 </table>
 </div>

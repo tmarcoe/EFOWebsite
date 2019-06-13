@@ -229,11 +229,12 @@
 			</table>
 		</div>
 	</div>
+	<sec:hasRole role="ADMIN">
+		<a style="position: absolute; bottom: 10px; left: 10px;" href="/index/introduction-a">Back to Website</a>
+	</sec:hasRole>
 	<input id="destination" type="hidden" />
 	<input id="calMonth" type="hidden" value="${calMonth}" />
 	<input id="calYear" type="hidden" value="${calYear}" />
-
-
 </sf:form>
 <script type="text/javascript">
 	$(document).ready(function() {
