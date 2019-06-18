@@ -5,7 +5,7 @@
 
 <div class="centerTitle" >
 	<h1>Documentation</h1>
-	<table class="fancy-table tableshadow ljfirst" >
+	<table class="fancy-table tableshadow ljfirst ljfourth" >
 	<tr>
 		<th>Description</th>
 		<th>&nbsp;</th>
@@ -16,13 +16,13 @@
 		<td>Users manual</td>
 		<td>..........................................</td>
 		<td>..........................................</td>
-		<td><a href="/getfile/UsersManual.pdf">UsersManual.pdf</a></td>
+		<td><a href="/documentation/UsersManual.pdf" download >UsersManual.pdf</a></td>
 	</tr>
 	<tr>
 		<td>FTL programming guide</td>
 		<td>..........................................</td>
 		<td>..........................................</td>
-		<td><a href="/getfile/FTL.pdf">FTL.pdf</a></td>
+		<td><a href="/documentation/FTL.pdf" download>FTL.pdf</a></td>
 	</tr>
 	</table>
 </div>

@@ -135,6 +135,21 @@ tfoot.tablefooter td
   .ljfirst td:nth-child(1) {
   	text-align: left;
   }
+  
+  .ljsecond td:nth-child(2) {
+  	text-align: left;
+	
+  }
+  
+  .ljthird td:nth-child(3) {
+  	text-align: left;
+	
+  }
+  
+  .ljfourth td:nth-child(4) {
+  	text-align: left;
+	
+  }
  /*********************************************************
   * Table options
   *********************************************************/

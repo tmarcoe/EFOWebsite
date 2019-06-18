@@ -22,12 +22,14 @@
 <h4 class="w3-center">This is just the basic system. We have add-ons that enhance this product.</h4>
 
 <div class="w3-content w3-section" style="max-width: 800px">
-	<img class="mySlides" src="/images/slideshow/fig14.png" style="width: 100%"> <img class="mySlides"
-		src="/images/slideshow/fig15.png" style="width: 100%"> <img class="mySlides" src="/images/slideshow/fig19.png"
-		style="width: 100%"> <img class="mySlides" src="/images/slideshow/fig30.png" style="width: 100%"> <img
-		class="mySlides" src="/images/slideshow/fig31.png" style="width: 100%"> <img class="mySlides"
-		src="/images/slideshow/fig32.png" style="width: 100%"> <img class="mySlides" src="/images/slideshow/fig4.png"
-		style="width: 100%"> <img class="mySlides" src="/images/slideshow/fig6.png" style="width: 100%">
+	<img class="mySlides" src="/images/slideshow/fig14.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig15.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig19.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig30.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig31.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig32.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig4.png" style="width: 100%"> 
+	<img class="mySlides" src="/images/slideshow/fig6.png" style="width: 100%">
 </div>
 
 <div class="w3-center">
@@ -55,7 +57,8 @@
 						data-item-name="EFO"
 						data-item-price="100.00" 
 						data-item-max-quantity="1"
-						data-item-url="/index/efo"
+						data-item-shippable="false"
+						data-item-url="http://121520c9.ngrok.io/index/efo"
 						data-item-description="Electronic Financial Officer">
 						<b>Add To Cart</b>
 					</button></td>

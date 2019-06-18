@@ -80,6 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       .ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/script/**", 
 	    		   		"/images/**", "blogimages/**", "/formimages/**", "/logo/**",
-	    		   		"/documents/**");
+	    		   		"/documents/**", "/documentation/**");
 	}
 }

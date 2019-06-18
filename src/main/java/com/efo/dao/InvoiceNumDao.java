@@ -2,6 +2,7 @@ package com.efo.dao;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -66,8 +67,9 @@ public class InvoiceNumDao implements IInvoiceNum {
 		Long keySeq = 0L;
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		String hql = "FROM InvoiceNum WHERE invoice_num LIKE :keySearch ORDER BY invoice_num DESC";
-		InvoiceNum inv = (InvoiceNum) session.createQuery(hql).setString("keySearch", keySearch).setMaxResults(1).uniqueResult();
+		String hql = "FROM InvoiceNum inv WHERE invoice_num LIKE :keySearch ORDER BY invoice_num DESC";
+		InvoiceNum inv = (InvoiceNum) session.createQuery(hql).setLockMode("inv", LockMode.PESSIMISTIC_WRITE)
+											 .setString("keySearch", keySearch).setMaxResults(1).uniqueResult();
 		if (inv == null) {
 			keySeq = 1L;
 		}else{
