@@ -57,7 +57,15 @@
 						</div>
 					</div></li>
 			</sec:isAuthenticated>
-			<li></li>
+			<sec:hasRole role="ADMIN">
+					<li><div class="dropdown">
+						<button class="dropbtn" >Product Managment Tool</button>
+						<div class="dropdown-content">
+							<a href="/admin/newproduct">New Product</a> 
+							<a href="/admin/manageproducts">Manage Products</a>
+						</div>
+					</div></li>
+			</sec:hasRole>
 			<li><button class="dropbtn" onclick="window.location.href = '/index/contactus'">Contact Us</button></li>
 			<li><button class="dropbtn" onclick="window.location.href = '/index/aboutus'">About Us</button></li>
 		</ul>

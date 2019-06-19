@@ -126,6 +126,7 @@ tfoot.tablefooter td
  .cjnineth td:nth-child(9) {
  	text-align: center;
  }
+ 
  .cjeleventh td:nth-child(11) {
  	text-align: center;
  }
@@ -150,6 +151,16 @@ tfoot.tablefooter td
   	text-align: left;
 	
   }
+  .ljfifth td:nth-child(5) {
+   	text-align: left;
+  }
+    .ljsixth td:nth-child(6) {
+   	text-align: left;
+  }
+    .ljseventh td:nth-child(7) {
+   	text-align: left;
+  }
+  
  /*********************************************************
   * Table options
   *********************************************************/

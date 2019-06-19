@@ -3,6 +3,7 @@ package com.efo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.ProductsDao;
@@ -29,6 +30,11 @@ public class ProductsService implements IProducts {
 	@Override
 	public List<Products> retrieveRawList() {
 		return productsDao.retrieveRawList();
+	}
+	
+	public PagedListHolder<Products> retrieveList() {
+		
+		return new PagedListHolder<Products>(productsDao.retrieveRawList());
 	}
 
 	@Override

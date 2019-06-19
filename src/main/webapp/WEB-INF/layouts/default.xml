@@ -491,5 +491,22 @@
 		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/displayprd.jsp"></put-attribute>
 	</definition>
+	
+	<!-- Products Controller -->
+	<definition name="newproduct" extends="distribute.base">
+		<put-attribute name="title" value="New Product"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newproduct.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="manageproducts" extends="distribute.base">
+		<put-attribute name="title" value="New Product"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/manageproducts.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="scproductedit" extends="distribute.base">
+		<put-attribute name="title" value="New Product"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
+	</definition>
 		
 </tiles-definitions>

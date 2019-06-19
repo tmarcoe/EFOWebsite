@@ -4,17 +4,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js"
-	data-api-key="MDc1NzE4OTYtODU2Mi00NWJiLTg0YzctNzZiMGE5ODUyY2JkNjM1ODgwMTIzNDIwNTMxODQz" id="snipcart"></script>
-
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/efoweb?useSSL=false"
+	user="root" password="3xc7vbkjlv99" />
+	
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
-<link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
-<fmt:formatNumber var="prdId" pattern="0000000000" value="${product.product_reference}"/>
-<fmt:formatNumber var="price" type="currency" currencySymbol="" value="${product.product_price}"/>
+<fmt:formatNumber var="prdId" pattern="0000000000" value="${product.product_reference}" />
+<fmt:formatNumber var="price" type="currency" currencySymbol="" value="${product.product_price}" />
 
 <table class="fancy-table tableshadow rjsecond" style="width: 50%;">
 	<tr>
@@ -37,15 +36,21 @@
 		<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${product.product_price}" /></b></td>
 	</tr>
 	<tr>
-		<td><button class="snipcart-add-item fancy-button" 
-						data-item-id="${prdId}" 
-						data-item-name="${product.product_name}"
-						data-item-price="${price}" 
-						data-item-max-quantity="1"
-						data-item-url="/user/displayprd/${prdId}"
-						data-item-description="${product.product_description}">
-						<b>Add To Cart</b>
-					</button></td>
-		<td><button class="fancy-button" onclick="window.location.href='/index/viewmarketplace'"><b>Back to Shopping</b></button>
+
+		<td><button class="fancy-button" onclick="window.location.href='/index/viewmarketplace'">
+				<b>Back to Shopping</b>
+			</button>
 	</tr>
 </table>
+<div id="warning" class="modal">
+	<div class="modal-content small-modal fancy">
+		<table style="margin-left: auto; margin-right: auto;">
+			<tr>
+			</tr>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	
+
+</script>

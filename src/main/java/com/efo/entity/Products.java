@@ -11,6 +11,8 @@ public class Products implements Serializable {
 	
 	@Id
 	private String product_id;
+	private String product_name;
+	private String product_description;
 	private Double product_price;
 	private Double product_tax;
 	private Double product_discount;
@@ -20,6 +22,18 @@ public class Products implements Serializable {
 	}
 	public void setProduct_id(String product_id) {
 		this.product_id = product_id;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public String getProduct_description() {
+		return product_description;
+	}
+	public void setProduct_description(String product_description) {
+		this.product_description = product_description;
 	}
 	public Double getProduct_price() {
 		return product_price;
