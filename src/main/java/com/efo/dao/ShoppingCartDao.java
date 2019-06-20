@@ -47,8 +47,14 @@ public class ShoppingCartDao implements IShoppngCart {
 	public ShoppingCart retrieveByUserId(Long user_id) {
 		Session session = session();
 		ShoppingCart cart = (ShoppingCart) session.createCriteria(ShoppingCart.class)
-							.add(Restrictions.eq("user_id", user_id)).setMaxResults(1).uniqueResult();
+							.add(Restrictions.eq("user_id", user_id))
+							.add(Restrictions.isNull("time_processed"))
+							.add(Restrictions.isNotNull("time_ordered"))
+							.setMaxResults(1).uniqueResult();
 		session.disconnect();
+		if (cart == null) {
+			cart = new ShoppingCart();
+		}
 		
 		return cart;
 	}

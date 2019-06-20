@@ -20,6 +20,7 @@ public class ShoppingCartItems implements Serializable {
 	private Long id;
 	private String reference;
 	private String product_id;
+	private String product_name;
 	private Integer qty;
 	private Double product_price;
 	private Double product_tax;
@@ -51,6 +52,14 @@ public class ShoppingCartItems implements Serializable {
 
 	public void setProduct_id(String product_id) {
 		this.product_id = product_id;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
 	}
 
 	public Integer getQty() {
