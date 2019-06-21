@@ -27,7 +27,6 @@ public class ShoppingCartRestController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	
-	@SuppressWarnings("unused")
 	@Autowired
 	private ShoppingCartItemsService shoppingCartItemsService;
 	
@@ -48,32 +47,40 @@ public class ShoppingCartRestController {
 		if(prdId.startsWith("EFO") ) {
 			Products product = productsService.retrieve(prdId);
 			item.setReference(cartId);
+			item.setProduct_name(product.getProduct_name());
 			item.setProduct_id(prdId);
+			if (shoppingCartItemsService.checkIfItemExists(cartId, prdId)) {
+				return addItemToJSON("ERROR", "You already have this in your shopping cart");
+			}
 			item.setQty(qty);
 			item.setProduct_price(product.getProduct_price());
 			item.setProduct_discount(product.getProduct_discount());
+			if (product.getProduct_tax() == null) product.setProduct_tax(0.0);
 			item.setProduct_tax(product.getProduct_tax());
 			item.setShoppingCart(cart);
 			cart.getShoppingCartItems().add(item);	
 		}else{
 			MarketPlaceProducts product = marketPlaceProductsService.retrieve(Long.valueOf(prdId));
 			item.setReference(cartId);
+			item.setProduct_name(product.getProduct_name());
 			item.setProduct_id(prdId);
+			if (shoppingCartItemsService.checkIfItemExists(cartId, prdId)) {
+				return addItemToJSON("ERROR", "You already have this in your shopping cart");
+			}
 			item.setQty(qty);
 			item.setProduct_price(product.getProduct_price());
 			item.setProduct_discount(0.0);
+			if (product.getProduct_tax() == null) product.setProduct_tax(0.0);
 			item.setProduct_tax(product.getProduct_tax());
 			item.setShoppingCart(cart);
 			cart.getShoppingCartItems().add(item);
 		}
 		if (item.getQty() > 1) {
-			addItemToJSON("ERROR", "You are only allowed 1 of this item");
+			return addItemToJSON("ERROR", "You are only allowed 1 of this item");
 		}else{
 			shoppingCartService.merge(cart);
-			addItemToJSON("SUCCESS", "Item Successfully added");
+			return addItemToJSON("SUCCESS", "Item Successfully added");
 		}
-		
-		return "";
 	}
 	
 	private String addItemToJSON(String result, String msg) throws JSONException {

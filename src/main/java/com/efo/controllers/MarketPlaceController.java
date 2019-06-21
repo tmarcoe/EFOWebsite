@@ -25,11 +25,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.efo.dao.InvoiceNumDao;
 import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.MarketPlaceVendors;
+import com.efo.entity.ShoppingCart;
 import com.efo.entity.User;
 import com.efo.service.MarketPlaceProductsService;
 import com.efo.service.MarketPlaceVendorsService;
+import com.efo.service.ShoppingCartService;
 import com.efo.service.UserService;
 
 @Controller
@@ -44,6 +47,12 @@ public class MarketPlaceController {
 	@Autowired
 	private MarketPlaceProductsService marketPlaceProductsService;
 	
+	@Autowired
+	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	private InvoiceNumDao invoiceNumService;
+	
 	@Value("${efo.upload.logo}")
 	private String uploadLogo;
 	
@@ -55,6 +64,9 @@ public class MarketPlaceController {
 	
 	@Value("${efo.download.repository}")
 	private String downloadrepository;
+	
+	@Value("${efo.payment.gateway}")
+	private String gateway;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -227,10 +239,23 @@ public class MarketPlaceController {
 	}
 	
 	@RequestMapping("/user/displayprd/{prdNumber}")
-	public String displayPrd(@PathVariable("prdNumber") String prdNumber, Model model) {
+	public String displayPrd(@PathVariable("prdNumber") String prdNumber, Model model, Principal principal) {
+		
+		User user = userService.retrieve(principal.getName());
+		ShoppingCart shoppingCart = shoppingCartService.retrieveByUserId(user.getUser_id());
+		
+		if (shoppingCart.getTime_ordered() == null) {
+			// This is a new Shopping Cart
+			shoppingCart.setReference(invoiceNumService.getNextKey());
+			shoppingCart.setUser_id(user.getUser_id());
+			shoppingCart.setTime_ordered(new Date());
+			shoppingCart.setPayment_gateway(gateway);
+			shoppingCartService.create(shoppingCart);
+		}
 		
 		MarketPlaceProducts marketPlaceProduct = marketPlaceProductsService.retrieve(Long.valueOf(prdNumber));
 		
+		model.addAttribute("shoppingCart", shoppingCart);
 		model.addAttribute("product", marketPlaceProduct);
 		model.addAttribute("logoPath", downloadLogo);
 		

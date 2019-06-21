@@ -54,6 +54,16 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		
 		return iList;
 	}
+	
+	public boolean checkIfItemExists(String scId, String productId) {
+		String hql = "SELECT COUNT(*) FROM ShoppingCartItems WHERE reference = :scId AND product_id = :productId";
+		Session session = session();
+		Long count = (Long) session.createQuery(hql).setString("scId", scId).setString("productId", productId).uniqueResult();
+		
+		session.disconnect();
+		
+		return (count > 0);
+	}
 
 	@Override
 	public void changeShoppingCartQty(Long id, Integer qty) {

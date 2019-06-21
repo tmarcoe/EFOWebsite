@@ -90,4 +90,26 @@
 		dots[myIndex - 1].className += " w3-red-color";
 		setTimeout(carousel, 2000); // Change image every 2 seconds
 	}
+	
+	function addToCart() {
+		var scId = $("#shpCrtId").val();
+		var pId = $("#prd").val();
+
+		$.getJSON(
+				"/rest/addshoppingcartitem?cartID=" + scId + "&prdId=" + pId
+						+ "&qty=1",
+				function(data) {
+					if (data.result === "ERROR") {
+						$("#scError").show();
+					}else{
+						$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
+						$("#shoppingCart").show();
+					}
+				}).fail(
+				function(jqXHR, textStatus, errorThrown) {
+					alert("error " + textStatus + "\n" + "incoming Text "
+							+ jqXHR.responseText);
+				});
+	}
+
 </script>

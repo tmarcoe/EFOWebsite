@@ -23,6 +23,11 @@ table.tableview th
 	background: var(--heading-row);
 }
 
+.tableheading caption{
+	font-size: 24px;
+	font-weight: bold;
+}
+
 .fieldTable {
 	margin-left:auto; 
     margin-right:auto;

@@ -30,6 +30,10 @@ public class ShoppingCartItemsService implements IShoppingCartItems {
 	public List<ShoppingCartItems> retrieveRawList(String reference) {
 		return shoppingCartItemDao.retrieveRawList(reference);
 	}
+	
+	public boolean checkIfItemExists(String scId, String productId) {
+		return shoppingCartItemDao.checkIfItemExists(scId, productId);
+	}
 
 	@Override
 	public void changeShoppingCartQty(Long id, Integer qty) {
@@ -42,6 +46,8 @@ public class ShoppingCartItemsService implements IShoppingCartItems {
 		shoppingCartItemDao.update(item);
 
 	}
+	
+	
 
 	@Override
 	public void delete(Long id) {
