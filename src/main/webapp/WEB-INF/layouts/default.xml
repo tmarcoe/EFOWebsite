@@ -435,6 +435,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/ftlide.jsp"></put-attribute>
 	</definition>
 
+	<definition name="displayefoprd" extends="distribute.base">
+		<put-attribute name="title" value="Ftl Download"></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/displayefoprd.jsp"></put-attribute>
+	</definition>
+
 	<!-- User Profile Controller -->		
 	<definition name="createuserprofile" extends="distribute.base">
 		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>

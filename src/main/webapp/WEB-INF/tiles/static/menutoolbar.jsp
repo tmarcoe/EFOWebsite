@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 
+
 <div class="nav-bar">
+	<span style="position: absolute; top: 0; right: 100px; color: white; font-size: 24px;"><img alt="cart"
+		src="<c:url value="/images/shopping-cart-icon.png" />"><span id="scCount"></span></span>
 	<div class="container">
 		<ul class="nav">
 			<li><button class="dropbtn" onclick="window.location.href = '/index/'">Home</button></li>
@@ -40,29 +43,27 @@
 			<li><div class="dropdown">
 					<button class="dropbtn">Products</button>
 					<div class="dropdown-content">
-						<a href="/index/efo">Electronic Financial Officer</a> 
-						<a href="/index/ftl">Flexible Transaction Language</a> 
-						<a href="/index/ftlide">FTL IDE</a>
+						<a href="/index/efo">Electronic Financial Officer</a> <a href="/index/ftl">Flexible Transaction Language</a> <a
+							href="/index/ftlide">FTL IDE</a>
 					</div>
 				</div></li>
 			<li><button class="dropbtn" onclick="window.location.href = '/index/documentation'">Documentation</button></li>
 			<sec:isAuthenticated>
 				<li><div class="dropdown">
-						<button class="dropbtn" title="We want you to compete with us" >EFO Marketplace</button>
+						<button class="dropbtn" title="We want you to compete with us">EFO Marketplace</button>
 						<div class="dropdown-content">
 							<sec:isAuthenticated>
-								<a href="/user/marketplaceregister">Add A Product</a> 
+								<a href="/user/marketplaceregister">Add A Product</a>
 							</sec:isAuthenticated>
 							<a href="/index/viewmarketplace">Shop</a>
 						</div>
 					</div></li>
 			</sec:isAuthenticated>
 			<sec:hasRole role="ADMIN">
-					<li><div class="dropdown">
-						<button class="dropbtn" >Product Managment Tool</button>
+				<li><div class="dropdown">
+						<button class="dropbtn">Product Managment Tool</button>
 						<div class="dropdown-content">
-							<a href="/admin/newproduct">New Product</a> 
-							<a href="/admin/manageproducts">Manage Products</a>
+							<a href="/admin/newproduct">New Product</a> <a href="/admin/manageproducts">Manage Products</a>
 						</div>
 					</div></li>
 			</sec:hasRole>
@@ -71,3 +72,11 @@
 		</ul>
 	</div>
 </div>
+<script>
+$(document).ready(function(){
+	
+	});
+function putValue(count) {
+	$("#scCount").text("2");
+}
+</script>

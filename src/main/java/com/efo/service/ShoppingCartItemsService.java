@@ -40,15 +40,21 @@ public class ShoppingCartItemsService implements IShoppingCartItems {
 		shoppingCartItemDao.changeShoppingCartQty(id, qty);
 
 	}
+	
+	public void deleteShoppingCartItem(String scId, String prdId) {
+		shoppingCartItemDao.deleteShoppingCartItem(scId, prdId);
+	}
 
+	public Long countScItems(String scId) {
+		return shoppingCartItemDao.countScItems(scId);
+	}
+	
 	@Override
 	public void update(ShoppingCartItems item) {
 		shoppingCartItemDao.update(item);
 
 	}
 	
-	
-
 	@Override
 	public void delete(Long id) {
 		shoppingCartItemDao.delete(id);

@@ -74,7 +74,25 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		tx.commit();
 		session.disconnect();
 	}
+	
+	public void deleteShoppingCartItem(String scId, String prdId) {
+		String hql = "DELETE FROM ShoppingCartItems WHERE reference = :scId AND product_id = :prdId";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setString("scId", scId).setString("prdId", prdId).executeUpdate();
+		tx.commit();
+		session.disconnect();
+	}
 
+	public Long countScItems(String scId) {
+		String hql = "SELECT COUNT(*) FROM ShoppingCartItems WHERE reference = :scId";
+		Session session = session();
+		Long count = (Long) session.createSQLQuery(hql).setString("scId", scId).uniqueResult();
+		session.disconnect();
+		
+		return count;
+	}
+	
 	@Override
 	public void update(ShoppingCartItems item) {
 		Session session = session();

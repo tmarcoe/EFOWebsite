@@ -40,16 +40,9 @@
  		<td><b>$0.00</b></td>
  		<sec:isAuthenticated>
  		 <tr>
- 		
-			<td colspan="2"><button class="snipcart-add-item fancy-button" 
-				data-item-id="EFO3" 
-				data-item-name="FTLIDE"
-				data-item-price="0.00" 
-				data-item-max-quantity="1"
-				data-item-url="/index/ftlide"
-				data-item-description="FTL IDE">
-				<b>Add To Cart</b>
-			</button></td>
+			<td colspan="2">
+				<button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO3'"><b>Order Product</b></button>
+			</td>
 		</tr>
 		</sec:isAuthenticated>
 	</tr>

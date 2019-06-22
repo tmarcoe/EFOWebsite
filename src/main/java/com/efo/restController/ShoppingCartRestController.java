@@ -12,10 +12,12 @@ import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.Products;
 import com.efo.entity.ShoppingCart;
 import com.efo.entity.ShoppingCartItems;
+import com.efo.entity.User;
 import com.efo.service.MarketPlaceProductsService;
 import com.efo.service.ProductsService;
 import com.efo.service.ShoppingCartItemsService;
 import com.efo.service.ShoppingCartService;
+import com.efo.service.UserService;
 
 @RestController
 @RequestMapping("/rest/")
@@ -34,6 +36,9 @@ public class ShoppingCartRestController {
 	private MarketPlaceProductsService marketPlaceProductsService;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private ProductsService productsService;
 	
 	@RequestMapping("addshoppingcartitem")
@@ -50,7 +55,7 @@ public class ShoppingCartRestController {
 			item.setProduct_name(product.getProduct_name());
 			item.setProduct_id(prdId);
 			if (shoppingCartItemsService.checkIfItemExists(cartId, prdId)) {
-				return addItemToJSON("ERROR", "You already have this in your shopping cart");
+				return resultToJSON("ERROR", "You already have this in your shopping cart");
 			}
 			item.setQty(qty);
 			item.setProduct_price(product.getProduct_price());
@@ -65,7 +70,7 @@ public class ShoppingCartRestController {
 			item.setProduct_name(product.getProduct_name());
 			item.setProduct_id(prdId);
 			if (shoppingCartItemsService.checkIfItemExists(cartId, prdId)) {
-				return addItemToJSON("ERROR", "You already have this in your shopping cart");
+				return resultToJSON("ERROR", "You already have this in your shopping cart");
 			}
 			item.setQty(qty);
 			item.setProduct_price(product.getProduct_price());
@@ -76,14 +81,40 @@ public class ShoppingCartRestController {
 			cart.getShoppingCartItems().add(item);
 		}
 		if (item.getQty() > 1) {
-			return addItemToJSON("ERROR", "You are only allowed 1 of this item");
+			return resultToJSON("ERROR", "You are only allowed 1 of this item");
 		}else{
 			shoppingCartService.merge(cart);
-			return addItemToJSON("SUCCESS", "Item Successfully added");
+			return resultToJSON("SUCCESS", "Item Successfully added");
 		}
 	}
 	
-	private String addItemToJSON(String result, String msg) throws JSONException {
+	@RequestMapping("deleteshoppingcartitem")
+	public String deleteShoppingCartItem(@RequestParam(value = "cartID") String cartId, 
+									     @RequestParam(value = "prdId") String prdId ) throws JSONException {
+		
+		shoppingCartItemsService.deleteShoppingCartItem(cartId, prdId);
+		
+		return resultToJSON("SUCCESS", "Item Successfully removed");
+	}
+	
+	@RequestMapping("shoppingcartcount")
+	public String shoppingCartCount(@RequestParam(value = "username") String username ) throws JSONException {
+		JSONObject json = new JSONObject();
+		Long count = 0L;
+		
+		User user = userService.retrieve(username);
+		if (user != null) {
+			ShoppingCart cart =	shoppingCartService.retrieveByUserId(user.getUser_id());
+			count = shoppingCartItemsService.countScItems(cart.getReference());
+		}
+		
+		return json.put("count", count).toString();
+		
+	}
+	
+	
+	
+	private String resultToJSON(String result, String msg) throws JSONException {
 		JSONObject json = new JSONObject();
 		
 		json.put("result", result);

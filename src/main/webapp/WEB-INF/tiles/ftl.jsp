@@ -41,19 +41,9 @@
 			<td><b>Price</b></td>
 			<td>....................................................................................................................................</td>
 			<td><b>$0.00</b></td>
-			<sec:isAuthenticated>
-			<tr>
-				<td colspan="2"><button class="snipcart-add-item fancy-button" 
-						data-item-id="EFO2"
-						data-item-name="FTL" 
-						data-item-price="0.00" 
-						data-item-max-quantity="1"
-						data-item-url="/index/ftl" 
-						data-item-description="Flexible Transaction Language">
-						<b>Add To Cart</b>
-					</button></td>
-			</tr>
-			</sec:isAuthenticated>
+		
+		<tr>
+			<td colspan="2"><button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO2'"><b>Order Product</b></button></td>
 		</tr>
 	</table>
 </div>

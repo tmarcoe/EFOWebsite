@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js"
-	data-api-key="MDc1NzE4OTYtODU2Mi00NWJiLTg0YzctNzZiMGE5ODUyY2JkNjM1ODgwMTIzNDIwNTMxODQz" id="snipcart"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <link rel="stylesheet" href="/css/w3.css">
 <link rel="stylesheet" href="/css/products.css">
 <link rel="stylesheet" href="/css/fancy-input.css">
-<link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" rel="stylesheet" type="text/css" />
-<style>
-.mySlides {
-	display: none;
-}
-</style>
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
+<fmt:formatNumber var="prdId" pattern="0000000000" value="${product.product_reference}" />
+<fmt:formatNumber var="price" type="currency" currencySymbol="" value="${product.product_price}" />
 
 <h2 class="w3-center">EFO</h2>
 <h4 class="w3-center">EFO is a browser based, double entry accounting system.</h4>
@@ -51,18 +50,7 @@
 			<td><strike>$500.00</strike></td>
 		</tr>
 		<tr>
-			<sec:isAuthenticated>
-				<td colspan="2"><button class="snipcart-add-item fancy-button" 
-						data-item-id="16bd9f53-6261-4f28-902a-5573ccffff8b" 
-						data-item-name="EFO"
-						data-item-price="100.00" 
-						data-item-max-quantity="1"
-						data-item-shippable="false"
-						data-item-url="http://121520c9.ngrok.io/index/efo"
-						data-item-description="Electronic Financial Officer">
-						<b>Add To Cart</b>
-					</button></td>
-			</sec:isAuthenticated>
+			<td colspan="2"><button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO1'"><b>Order Product</b></button></td>
 			<td><b>$100.00</b></td>
 		</tr>
 	</table>
@@ -91,25 +79,4 @@
 		setTimeout(carousel, 2000); // Change image every 2 seconds
 	}
 	
-	function addToCart() {
-		var scId = $("#shpCrtId").val();
-		var pId = $("#prd").val();
-
-		$.getJSON(
-				"/rest/addshoppingcartitem?cartID=" + scId + "&prdId=" + pId
-						+ "&qty=1",
-				function(data) {
-					if (data.result === "ERROR") {
-						$("#scError").show();
-					}else{
-						$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
-						$("#shoppingCart").show();
-					}
-				}).fail(
-				function(jqXHR, textStatus, errorThrown) {
-					alert("error " + textStatus + "\n" + "incoming Text "
-							+ jqXHR.responseText);
-				});
-	}
-
 </script>
