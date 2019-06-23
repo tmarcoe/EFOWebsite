@@ -42,7 +42,6 @@
 		<sql:query var="result" dataSource="${ds}">
 			SELECT * FROM shopping_cart_items WHERE reference = ${shoppingCart.reference};
 		</sql:query>
-
 		<div class="modal-content medium-modal fancy" style="border-style: solid; border-width: 2px; border-color: black;">
 			<table class="tableview tableheading rjthird rjfourth rjfifth rjsixth" style="margin-left: auto; margin-right: auto; width: 100%">
 				<caption>Shopping Cart</caption>
@@ -96,7 +95,7 @@
 				<table>
 					<tr>
 						<td><button class="fancy-button" type="button" onclick="window.location.href='#'"><b>Check Out</b></button></td>
-						<td><button class="fancy-button" type="button" onclick="$('#shoppingCart').hide()"><b>Continue Shopping</b></button></td>
+						<td><button class="fancy-button" type="button" onclick="$('#shoppingCart').hide()"><b>close Cart</b></button></td>
 					</tr>
 			</table>
 
@@ -130,6 +129,7 @@
 					if (data.result === "ERROR") {
 						$("#scError").show();
 					}else{
+						$("#menuBar").load(location.href + " #menuBar>*", "");
 						$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
 						$("#shoppingCart").show();
 					}
@@ -146,9 +146,9 @@
 		$.getJSON(
 				"/rest/deleteshoppingcartitem?cartID=" + scId + "&prdId=" + pId,
 				function(data) {
-						$("#shoppingCart").load(
-								location.href + " #shoppingCart>*", "");
-						$("#shoppingCart").show();
+					$("#menuBar").load(location.href + " #menuBar>*", "");
+					$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
+					$("#shoppingCart").show();
 
 				}).fail(
 				function(jqXHR, textStatus, errorThrown) {

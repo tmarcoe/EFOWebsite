@@ -1,11 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
+<sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/efoweb?useSSL=false" user="root"
+	password="3xc7vbkjlv99" />
 
-<div class="nav-bar">
+<sec:getPrincipal />
+
+<div id="menuBar" class="nav-bar">
+	<c:choose>
+		<c:when test="${principal  != 'anonymousUser'}">
+			<sql:query var="rs" dataSource="${ds}">
+				SELECT user_id FROM user WHERE username='${principal}'
+			</sql:query>
+			<c:forEach var="row" items="${rs.rows}">
+				<c:set var="user_id" value="${row.user_id}" />
+			</c:forEach>
+			<sql:query var="result" dataSource="${ds}">
+				SELECT * FROM shopping_cart s, shopping_cart_items i WHERE s.user_id = ${user_id} AND
+						s.time_ordered IS NOT NULL AND s.time_processed IS NULL AND s.reference = i.reference;
+			</sql:query>
+			<c:set var="count" value="${result.getRowCount()}"/>
+		</c:when>
+		<c:otherwise>
+			<c:set var="count" value="0" />
+		</c:otherwise>
+	</c:choose>
+
 	<span style="position: absolute; top: 0; right: 100px; color: white; font-size: 24px;"><img alt="cart"
-		src="<c:url value="/images/shopping-cart-icon.png" />"><span id="scCount"></span></span>
+		src="<c:url value="/images/shopping-cart-icon.png" />"> <span id="scCount">(${count})</span></span>
 	<div class="container">
 		<ul class="nav">
 			<li><button class="dropbtn" onclick="window.location.href = '/index/'">Home</button></li>
@@ -55,7 +80,7 @@
 							<sec:isAuthenticated>
 								<a href="/user/marketplaceregister">Add A Product</a>
 							</sec:isAuthenticated>
-							<a href="/index/viewmarketplace">Shop</a>
+							<a href="/index/viewmarketplace">Explore the Marketplace</a>
 						</div>
 					</div></li>
 			</sec:isAuthenticated>
@@ -72,11 +97,3 @@
 		</ul>
 	</div>
 </div>
-<script>
-$(document).ready(function(){
-	
-	});
-function putValue(count) {
-	$("#scCount").text("2");
-}
-</script>
