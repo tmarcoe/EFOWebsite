@@ -1,9 +1,14 @@
 package com.efo.controllers;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,11 +21,16 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.braintreegateway.BraintreeGateway;
 import com.efo.dao.InvoiceNumDao;
 import com.efo.entity.Products;
 import com.efo.entity.ShoppingCart;
+import com.efo.entity.ShoppingCartItems;
 import com.efo.entity.User;
+import com.efo.payment.BraintreeGatewayFactory;
+import com.efo.payment.Checkout;
 import com.efo.service.ProductsService;
+import com.efo.service.ShoppingCartItemsService;
 import com.efo.service.ShoppingCartService;
 import com.efo.service.UserService;
 
@@ -37,6 +47,12 @@ public class ProductController {
 	private ShoppingCartService shoppingCartService;
 	
 	@Autowired
+	private ShoppingCartItemsService cartItemsService;
+	
+	@Autowired
+	Checkout checkout;
+	
+	@Autowired
 	private InvoiceNumDao invoiceNumService;
 	
 	@Value("${efo.upload.repository}")
@@ -48,6 +64,9 @@ public class ProductController {
 	@Value("${efo.payment.gateway}")
 	private String gateway;
 	
+	@Value("${efo.config.url}")
+	private String configUrl;
+
 	private SimpleDateFormat dateFormat;
 
 	@InitBinder
@@ -77,7 +96,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/user/displayefoprd")
-	public String displayEfoProduct(@ModelAttribute("prdId") String prdId, Model model, Principal principal) {
+	public String displayEfoProduct(@ModelAttribute("prdId") String prdId, Model model, Principal principal) throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
 		
 		User user = userService.retrieve(principal.getName());
 		ShoppingCart shoppingCart = shoppingCartService.retrieveByUserId(user.getUser_id());
@@ -92,11 +111,41 @@ public class ProductController {
 		}
 		
 		Products products = productsService.retrieve(prdId);
+		BraintreeGateway gateway = BraintreeGatewayFactory.fromConfigFile(new URL(configUrl));
 		
+		model.addAttribute("clientToken", gateway.clientToken().generate());
 		model.addAttribute("shoppingCart", shoppingCart);
 		model.addAttribute("product", products);
 
 		
 		return "displayefoprd";
 	}
+	
+	@RequestMapping("/user/processorder")
+	public String processOrder(
+			@ModelAttribute("shoppingCart") ShoppingCart shoppingCart,
+			@ModelAttribute("payment_method_nonce") String nonce,
+			Model model, Principal principal) throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
+		
+			User user = userService.retrieve(principal.getName());
+		
+			BraintreeGateway gateway = BraintreeGatewayFactory.fromConfigFile(new URL(configUrl));
+			BigDecimal amount = new BigDecimal(totalShoppingCart(shoppingCart));
+			checkout.braintreePayment(user, shoppingCart, gateway, amount, nonce);
+		
+		return "thankyou";
+	}
+	
+	private Double totalShoppingCart(ShoppingCart cart) {
+		Double total = 0.0;
+		List<ShoppingCartItems> items = cartItemsService.retrieveRawList(cart.getReference());
+		
+		for(ShoppingCartItems item : items) {
+			Double price = ((item.getProduct_price() * item.getQty()) - item.getProduct_discount());
+			total += price;
+		}
+		
+		return total;
+	}
+
 }

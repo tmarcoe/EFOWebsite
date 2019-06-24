@@ -1,4 +1,4 @@
-package com.efo.restController;
+package com.efo.payment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaymentGatewayRestController {
+public class PaymentGateway {
 	
 	@Value("${efo.payment.url}")
 	private String paymentUrl;

@@ -7,6 +7,11 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<script type="text/javascript" src="/script/demo.js"></script>
+<script type="text/javascript" src="/script/jquery.lettering-0.6.1.min.js"></script>
+<script type="text/javascript" src="/script/response.js"></script>
+
 <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/efoweb?useSSL=false" user="root"
 	password="3xc7vbkjlv99" />
 
@@ -51,6 +56,13 @@
 				</button>
 		</tr>
 	</table>
+	<div id="payment" class="modal" style="padding-top: 1.5em;">
+		<div class="bt-drop-in-wrapper modal-content medium-modal fancy">
+			<div id="bt-dropin"></div>
+			<sf:button id="sbutton" class="fancy-button" type="submit" hidden="true"><b>Submit</b></sf:button>
+		</div>
+	</div>
+	
 	<div id="shoppingCart" class="modal">
 		<sql:query var="result" dataSource="${ds}">
 			SELECT * FROM shopping_cart_items WHERE reference = ${shoppingCart.reference};
@@ -82,7 +94,7 @@
 						<td><fmt:formatNumber type="currency" currencyCode="USD"
 								value="${(item.product_price * item.qty) - item.product_discount}" /></td>
 						<td><fmt:formatNumber type="currency" currencyCode="USD" value="${item.tax}" /></td>
-						<td><button type="button" onclick="removeItem('${item.product_id}')" >Delete Item</button></td>
+						<td><button type="button" onclick="removeItem('${item.product_id}')">Delete Item</button></td>
 					</tr>
 					<c:set var="totalPrice" value="${totalPrice + ((item.product_price * item.qty) - item.product_discount)}" />
 					<c:set var="totalTax" value="${totalTax +  item.tax}" />
@@ -100,7 +112,7 @@
 						<td>&nbsp;</td>
 						<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${totalTax}" /></b></td>
 						<td>&nbsp;</td>
-						
+
 					</tr>
 					<tr>
 						<td colspan="7">&nbsp;</td>
@@ -109,7 +121,7 @@
 			</table>
 			<table>
 				<tr>
-					<td><button class="fancy-button" type="button" onclick="window.location.href='#'">
+					<td><button class="fancy-button" type="button" onclick="checkOut()">
 							<b>Check Out</b>
 						</button></td>
 					<td><button class="fancy-button" type="button" onclick="$('#shoppingCart').hide()">
@@ -137,14 +149,16 @@
 	<sf:hidden path="result" />
 	<sf:hidden path="trans_result" />
 	<input id="prd" type="hidden" value="${prdId}" />
+	<input id="cToken" type="hidden" value="${clientToken}" />
+
 </sf:form>
+
 <script type="text/javascript">
 	function addToCart() {
 		var scId = $("#shpCrtId").val();
 		var pId = $("#prd").val();
 
-		$.getJSON(
-				"/rest/addshoppingcartitem?cartID=" + scId + "&prdId=" + pId
+		$.getJSON("/rest/addshoppingcartitem?cartID=" + scId + "&prdId=" + pId
 						+ "&qty=1",
 				function(data) {
 					if (data.result === "ERROR") {
@@ -161,21 +175,40 @@
 							+ jqXHR.responseText);
 				});
 	}
-	
+
 	function removeItem(pId) {
 		var scId = $("#shpCrtId").val();
-		
-		$.getJSON(
-				"/rest/deleteshoppingcartitem?cartID=" + scId + "&prdId=" + pId,
-				function(data) {
-					$("#menuBar").load(location.href + " #menuBar>*", "");
-					$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
-					$("#shoppingCart").show();
 
-				}).fail(
-				function(jqXHR, textStatus, errorThrown) {
-					alert("error " + textStatus + "\n" + "incoming Text "
-							+ jqXHR.responseText);
-				});
-}
+		$.getJSON("/rest/deleteshoppingcartitem?cartID=" + scId
+								+ "&prdId=" + pId,
+						function(data) {
+							$("#menuBar").load(location.href + " #menuBar>*",
+									"");
+							$("#shoppingCart").load(
+									location.href + " #shoppingCart>*", "");
+							$("#shoppingCart").show();
+
+						}).fail(
+						function(jqXHR, textStatus, errorThrown) {
+							alert("error " + textStatus + "\n"
+									+ "incoming Text " + jqXHR.responseText);
+						});
+	}
+	function checkOut() {
+		$("#shoppingCart").hide();
+		$("#payment").show();
+
+		var checkout = new Demo({
+			formID : 'shpCartForm'
+		});
+		var input = document.getElementById("cToken");
+		var client_token = input.value;
+
+		braintree.setup(client_token, "dropin", {
+			container : "bt-dropin",
+			onReady : function(event) {
+				document.getElementById("sbutton").hidden = false;
+			}
+		});
+	}
 </script>

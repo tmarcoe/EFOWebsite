@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,11 +27,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.braintreegateway.BraintreeGateway;
 import com.efo.dao.InvoiceNumDao;
 import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.MarketPlaceVendors;
 import com.efo.entity.ShoppingCart;
 import com.efo.entity.User;
+import com.efo.payment.BraintreeGatewayFactory;
 import com.efo.service.MarketPlaceProductsService;
 import com.efo.service.MarketPlaceVendorsService;
 import com.efo.service.ShoppingCartService;
@@ -68,6 +72,9 @@ public class MarketPlaceController {
 	@Value("${efo.payment.gateway}")
 	private String gateway;
 	
+	@Value("${efo.config.url}")
+	private String configUrl;
+
 	private SimpleDateFormat dateFormat;
 
 	@InitBinder
@@ -239,7 +246,7 @@ public class MarketPlaceController {
 	}
 	
 	@RequestMapping("/user/displayprd/{prdNumber}")
-	public String displayPrd(@PathVariable("prdNumber") String prdNumber, Model model, Principal principal) {
+	public String displayPrd(@PathVariable("prdNumber") String prdNumber, Model model, Principal principal) throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
 		
 		User user = userService.retrieve(principal.getName());
 		ShoppingCart shoppingCart = shoppingCartService.retrieveByUserId(user.getUser_id());
@@ -254,7 +261,9 @@ public class MarketPlaceController {
 		}
 		
 		MarketPlaceProducts marketPlaceProduct = marketPlaceProductsService.retrieve(Long.valueOf(prdNumber));
+		BraintreeGateway gateway = BraintreeGatewayFactory.fromConfigFile(new URL(configUrl));
 		
+		model.addAttribute("clientToken", gateway.clientToken().generate());
 		model.addAttribute("shoppingCart", shoppingCart);
 		model.addAttribute("product", marketPlaceProduct);
 		model.addAttribute("logoPath", downloadLogo);
