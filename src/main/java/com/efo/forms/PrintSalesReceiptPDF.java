@@ -40,7 +40,7 @@ public class PrintSalesReceiptPDF {
 		final String pattern = "yyyyMMddHHmmssSSS";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
-		final float[] widths = {80f, 90f,70f,70f,70f, 70f};
+		final float[] widths = {80f, 90f,70f,70f,70f, 70f, 70f};
 		final String[] labels = {"prodcut ID","Product Name","Qty","Original Price","Discount", "Price", "Tax"};
 		final String labelColor = "F7F9B9";
 		
@@ -68,7 +68,7 @@ public class PrintSalesReceiptPDF {
 		double total_price = 0.0;
 		double total_tax = 0.0;
 		String[] row = new String[7];
-		final String[] justify = {"L", "L", "R", "R", "R", "R"};
+		final String[] justify = {"L", "L", "R", "R", "R", "R", "R"};
 		final String oddRowColor = "D4FFFC";
 		final String evenRowColor = "FFFFFF";
 		int rowNum = 1;
@@ -77,9 +77,9 @@ public class PrintSalesReceiptPDF {
 			row[0] = item.getProduct_id();
 			row[1] = item.getProduct_name();
 			row[2] = String.format("%d", item.getQty());
-			row[2] = String.format("%.2f", item.getProduct_price());
-			row[3] = String.format("%.2f", item.getProduct_discount());
-			row[4] = String.format("%.2f", (item.getProduct_price() - item.getProduct_discount()));
+			row[3] = String.format("%.2f", item.getProduct_price());
+			row[4] = String.format("%.2f", item.getProduct_discount());
+			row[5] = String.format("%.2f", (item.getProduct_price() - item.getProduct_discount()));
 			row[6] = String.format("%.2f", item.getProduct_tax());
 			
 			if (rowNum % 2 == 1) {
