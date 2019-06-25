@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="prd" method="post" action="/admin/addproduct" modelAttribute="product">
+<sf:form id="prd" method="post" action="/admin/addproduct" modelAttribute="product"  enctype="multipart/form-data" >
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td colspan="2"><sf:input class="fancy" path="product_name" placeholder="Product Name" size="55"/></td>
@@ -27,6 +27,12 @@
 		<tr>
 			<td><sf:errors class="error" path="product_tax" /></td>
 			<td><sf:errors class="error" path="product_discount" /></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" type="file" path="product_file"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors class="error" path="product_file" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><sf:textarea class="fancy-textarea" path="product_description" placeholder="Description" rows="5" cols="50"/></td>

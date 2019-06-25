@@ -29,6 +29,12 @@
 			<td><sf:errors class="error" path="product_discount" /></td>
 		</tr>
 		<tr>
+			<td><sf:input class="fancy" type="file" path="product_file"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors class="error" path="product_file" /></td>
+		</tr>
+		<tr>
 			<td colspan="2"><sf:textarea class="fancy-textarea" path="product_description" placeholder="Description" rows="5" cols="50"/></td>
 		</tr>
 		<tr>

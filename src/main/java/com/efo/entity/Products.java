@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Products implements Serializable {
@@ -16,6 +19,10 @@ public class Products implements Serializable {
 	private Double product_price;
 	private Double product_tax;
 	private Double product_discount;
+	private String file_name;
+	
+	@Transient
+	private MultipartFile product_file;
 	
 	public String getProduct_id() {
 		return product_id;
@@ -52,6 +59,18 @@ public class Products implements Serializable {
 	}
 	public void setProduct_discount(Double product_discount) {
 		this.product_discount = product_discount;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	public MultipartFile getProduct_file() {
+		return product_file;
+	}
+	public void setProduct_file(MultipartFile product_file) {
+		this.product_file = product_file;
 	}
 	
 }

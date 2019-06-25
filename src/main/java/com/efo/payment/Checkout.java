@@ -3,7 +3,6 @@ package com.efo.payment;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -14,14 +13,13 @@ import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.Transaction.Status;
 import com.braintreegateway.TransactionRequest;
-import com.braintreegateway.ValidationError;
 import com.efo.entity.CommonFields;
 import com.efo.entity.ShoppingCart;
 import com.efo.entity.User;
 
 @Component
 public class Checkout {
-	private static Logger logger = Logger.getLogger(Checkout.class.getName());
+
 
 	private Status[] TRANSACTION_SUCCESS_STATUSES = new Status[]{
 			Transaction.Status.AUTHORIZED, 
@@ -32,7 +30,7 @@ public class Checkout {
 			Transaction.Status.SETTLING,
 			Transaction.Status.SUBMITTED_FOR_SETTLEMENT};
 
-	public boolean braintreePayment(User user, ShoppingCart cart, BraintreeGateway gateway, BigDecimal amount, String nonce) {
+	public Result<Transaction> braintreePayment(User user, ShoppingCart cart, BraintreeGateway gateway, BigDecimal amount, String nonce) {
 		CommonFields common = user.getCommon();
 
 		amount = amount.setScale(2, RoundingMode.CEILING);
@@ -58,19 +56,7 @@ public class Checkout {
 
 		Result<Transaction> result = gateway.transaction().sale(request);
 
-		if (result.isSuccess()) {
-			return true;
-		} else if (result.getTransaction() != null) {
-			logger.error(result.getMessage());
-			return false;
-		} else {
-			String errorString = "";
-			for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-				errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
-			}
-			logger.error(errorString);
-		}
-		return false;
+		return result;
 	}
 
 	private String getFirstName(User user) {

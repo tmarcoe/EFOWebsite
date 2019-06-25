@@ -515,11 +515,14 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
 	</definition>
 
-
-	<!-- Payment Controller -->	
 	<definition name="thankyou" extends="distribute.base">
 		<put-attribute name="title" value="Thank you"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/thankyou.jsp"></put-attribute>
+	</definition>
+
+	<definition name="crediterror" extends="distribute.base">
+		<put-attribute name="title" value="Thank you"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/crediterror.jsp"></put-attribute>
 	</definition>
 
 </tiles-definitions>

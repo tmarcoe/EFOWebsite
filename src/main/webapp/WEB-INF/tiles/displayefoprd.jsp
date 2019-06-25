@@ -79,11 +79,12 @@
 						<td><fmt:formatNumber type="currency" currencyCode="USD" value="${item.product_discount}" /></td>
 						<td><fmt:formatNumber type="currency" currencyCode="USD"
 								value="${(item.product_price * item.qty) - item.product_discount}" /></td>
-						<td><fmt:formatNumber type="currency" currencyCode="USD" value="${item.tax}" /></td>
+						<td><fmt:formatNumber type="currency" currencyCode="USD" value="${item.product_tax}" /></td>
 						<td><button type="button" onclick="removeItem('${item.product_id}')" >Delete Item</button></td>
 					</tr>
 					<c:set var="totalPrice" value="${totalPrice + ((item.product_price * item.qty) - item.product_discount)}" />
-					<c:set var="totalTax" value="${totalTax +  item.tax}" />
+					<c:set var="totalTax" value="${totalTax +  item.product_tax}" />
+					<input id="ttl" type="hidden" value="${totalPrice}" />
 				</c:forEach>
 				<tfoot class="tablefooter" >
 					<tr>
@@ -173,21 +174,26 @@
 	}
 	
 	function checkOut() {
-		$("#shoppingCart").hide();
-		$("#payment").show();
+		var ttl = $("#ttl").val();
+		if (ttl > 0) {
+			$("#shoppingCart").hide();
+			$("#payment").show();
 
-		var checkout = new Demo({
-			formID : 'shpCartForm'
-		});
-		var input = document.getElementById("cToken");
-		var client_token = input.value;
+			var checkout = new Demo({
+				formID : 'shpCartForm'
+			});
+			var input = document.getElementById("cToken");
+			var client_token = input.value;
 
-		braintree.setup(client_token, "dropin", {
-			container : "bt-dropin",
-			onReady : function(event) {
-				document.getElementById("sbutton").hidden = false;
-			}
-		});
+			braintree.setup(client_token, "dropin", {
+				container : "bt-dropin",
+				onReady : function(event) {
+					document.getElementById("sbutton").hidden = false;
+				}
+			});
+		}else{
+			$("#shpCartForm").submit();
+		}
 	}
 	
 </script>

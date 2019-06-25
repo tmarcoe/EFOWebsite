@@ -7,6 +7,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -32,13 +33,29 @@ public class SendEmail {
 	public void sendHtmlMail(String from, String to, String name, String subject, String content) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-		
 
 		helper.setTo(to);
-		message.setContent(content, "text/html; charset=utf-8" );
+		message.setContent(content, "text/html; charset=utf-8");
 
 		helper.setSubject(subject);
 		helper.setFrom(from, name);
+
+		sender.send(message);
+	}
+
+	public void sendHtmlMailWithAttachment(String from, String to, String name, String subject, String content, String filePath)
+			throws MessagingException, UnsupportedEncodingException {
+		MimeMessage message = sender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+
+		helper.setTo(to);
+		message.setContent(content, "text/html; charset=utf-8");
+
+		helper.setSubject(subject);
+		helper.setFrom(from, name);
+
+		FileSystemResource file = new FileSystemResource(filePath);
+		helper.addAttachment(file.getFilename(), file);
 
 		sender.send(message);
 	}

@@ -1,8 +1,14 @@
 package com.efo.controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,70 +24,105 @@ import com.efo.service.ProductsService;
 @RequestMapping("/admin/")
 public class ProductsController {
 	private final String pageLink = "/admin/prpaging";
-	
+
 	PagedListHolder<Products> prList;
-	
+
+	@Value("${efo.upload.repository}")
+	private String uploadrepository;
+
+	@Value("${efo.download.repository}")
+	private String downloadrepository;
+
 	@Autowired
 	ProductsService productsService;
-	
+
 	@RequestMapping("newproduct")
 	public String newProduct(Model model) {
-		
+
 		model.addAttribute("product", new Products());
-		
+
 		return "newproduct";
 	}
-	
+
 	@RequestMapping("addproduct")
-	public String addProduct(@Valid @ModelAttribute("product") Products product, BindingResult result) {
-		
-		if (result.hasErrors()) {
+	public String addProduct(@Valid @ModelAttribute("product") Products product, BindingResult result) throws IOException {
+		File file = null;
+
+		if (result.hasErrors() || product.getProduct_file().isEmpty()) {
+
+			if (product.getProduct_file().isEmpty()) {
+				result.rejectValue("product_file", "NotBlank.product.product_file");
+			}
+
 			return "newproduct";
 		}
-		
+
+		if (product.getProduct_id().toUpperCase().startsWith("EFO") == false) {
+			product.setProduct_id("EFO" + product.getProduct_id());
+		}
+
+		String type = product.getProduct_file().getOriginalFilename();
+		type = type.substring(type.lastIndexOf('.'));
+
+		InputStream is = product.getProduct_file().getInputStream();
+
+		File f1 = new File(uploadrepository);
+
+		file = File.createTempFile("upl", type, f1);
+		product.setFile_name(file.getName());
+		FileOutputStream fos = new FileOutputStream(file);
+
+		int data = 0;
+		while ((data = is.read()) != -1) {
+			fos.write(data);
+		}
+
+		fos.close();
+		is.close();
+
 		productsService.create(product);
-		
+
 		return "redirect:/admin/manageproducts";
 	}
-	
+
 	@RequestMapping("scproductedit")
 	public String scProductEdit(@ModelAttribute("id") String id, Model model) {
-		
+
 		model.addAttribute("product", productsService.retrieve(id));
-		
+
 		return "scproductedit";
 	}
-	
+
 	@RequestMapping("updatescproduct")
 	public String updateSCProduct(@Valid @ModelAttribute("product") Products product, BindingResult result) {
 		if (result.hasErrors()) {
 			return "scproductedit";
 		}
-		
+
 		productsService.update(product);
-		
+
 		return "redirect:/admin/manageproducts";
 	}
-	
+
 	@RequestMapping("scproductdelete")
 	public String scProductDelete(@ModelAttribute("id") String id) {
-		
+
 		productsService.delete(id);
-		
+
 		return "redirect:/admin/manageproducts";
 	}
-	
+
 	@RequestMapping("manageproducts")
 	public String manageProduct(Model model) {
-		
+
 		prList = productsService.retrieveList();
-		
+
 		prList.setPage(0);
 		prList.setPageSize(30);
-		
+
 		model.addAttribute("objectList", prList);
-		model.addAttribute("pagelink", pageLink);		
-		
+		model.addAttribute("pagelink", pageLink);
+
 		return "manageproducts";
 	}
 
