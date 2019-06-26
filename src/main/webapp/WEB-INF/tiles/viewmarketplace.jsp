@@ -21,6 +21,7 @@
 <c:forEach var="item" items="${mpList}">
 	<fmt:formatNumber var="prdId" pattern="0000000000" value="${item.product_reference}"/>
 	<table class="fancy-table tableshadow rjsecond" style="width: 50%;" onclick="window.location.href='/user/displayprd/${prdId}'">
+		<caption>Click on the square to order</caption>
 		<tr>
 			<td><img alt="Logo" src="<c:url value='${logoPath}${item.marketPlaceVendors.logo}'/>" width="70px"></td>
 

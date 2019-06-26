@@ -33,23 +33,25 @@ public class PrintSalesReceiptPDF {
 	PdfUtilities pdfUtilities;
 	
 	
-	public void print(ShoppingCart shoppingCart) throws IOException {
+	public String print(ShoppingCart shoppingCart) throws IOException {
 
 		font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
 		boldFont = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
 		final String pattern = "yyyyMMddHHmmssSSS";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
-		final float[] widths = {80f, 90f,70f,70f,70f, 70f, 70f};
+		final float[] widths = {60f, 220f,20f,50f,50f, 50f, 50f};
 		final String[] labels = {"prodcut ID","Product Name","Qty","Original Price","Discount", "Price", "Tax"};
 		final String labelColor = "F7F9B9";
 		
 		PdfDocument pdfDoc = pdfUtilities.createForm(targetFile + "sr" + date + ".pdf");
 		Document doc = pdfUtilities.createLayout(pdfDoc, "A4");
+		pdfUtilities.addImage(doc, 0, 770, "efologo.png");
+		doc.add(new Paragraph("\n\n"));
+
 		pdfUtilities.centerText(doc, "Sales Receipt", 18, boldFont);
 		pdfUtilities.centerText(doc, "Invoce # " + shoppingCart.getReference(), 12, boldFont);
 
-		pdfUtilities.addImage(doc, 0, 800, "efologo.png");
 		doc.add(new Paragraph("\n\n"));
 		
 		Table table = pdfUtilities.addTable(widths, 0);
@@ -62,15 +64,18 @@ public class PrintSalesReceiptPDF {
 		
 		doc.add(table);
 		doc.close();
+		
+		return "sr" + date + ".pdf";
 	}
 	
 	private Table populateTable(Document doc, Table table, List<ShoppingCartItems> data) {
 		double total_price = 0.0;
 		double total_tax = 0.0;
 		String[] row = new String[7];
-		final String[] justify = {"L", "L", "R", "R", "R", "R", "R"};
+		final String[] justify = {"L", "L", "C", "R", "R", "R", "R"};
 		final String oddRowColor = "D4FFFC";
 		final String evenRowColor = "FFFFFF";
+		final String footerColor = "CED4F6";
 		int rowNum = 1;
 		
 		for (ShoppingCartItems item : data) {
@@ -92,23 +97,23 @@ public class PrintSalesReceiptPDF {
 			total_price += (item.getProduct_price() * item.getQty()) - item.getProduct_discount();
 			total_tax += item.getProduct_tax();
 		}
-		row[0] = " ";
-		row[1] = " ";
-		row[2] = " ";
-		row[3] = " ";
-		row[4] = "Total Price->";
-		row[5] = String.format("%.2f", total_price);
-		row[6] = " ";
-		pdfUtilities.addRow(table, row, evenRowColor, justify, 8, font);
-		
-		row[0] = " ";
+		row[0] = "Total Price---->";
 		row[1] = " ";
 		row[2] = " ";
 		row[3] = " ";
 		row[4] = " ";
-		row[5] = "Total Tax->";
+		row[5] = String.format("%.2f", total_price);
+		row[6] = " ";
+		pdfUtilities.addRow(table, row, footerColor, justify, 8, font);
+		
+		row[0] = "Total Tax------>";
+		row[1] = " ";
+		row[2] = " ";
+		row[3] = " ";
+		row[4] = " ";
+		row[5] = " ";
 		row[6] = String.format("%.2f", total_tax);
-		pdfUtilities.addRow(table, row, evenRowColor, justify, 8, font);
+		pdfUtilities.addRow(table, row, footerColor, justify, 8, font);
 
 		return table;
 	}

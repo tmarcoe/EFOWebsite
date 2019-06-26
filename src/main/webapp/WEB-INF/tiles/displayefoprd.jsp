@@ -22,9 +22,12 @@
 <fmt:formatNumber var="price" type="currency" currencySymbol="" value="${product.product_price}" />
 
 <sf:form id="shpCartForm" method="post" action="/user/processorder" modelAttribute="shoppingCart">
-	<button class="fancy-button" type="button" onclick="$('#shoppingCart').show()" 
-				style="position: absolute; top: 10px; left: 30px"><b>Show Cart</b></button>
+	<button class="fancy-button" type="button" onclick="$('#shoppingCart').show()"
+		style="position: absolute; top: 10px; left: 30px">
+		<b>Show Cart</b>
+	</button>
 	<table class="fancy-table tableshadow rjsecond" style="width: 50%;">
+		<c:set var="prc" value="${product.product_price - product.product_discount}"/>
 		<tr>
 			<td><b>Product Name:</b> ${product.product_name}</td>
 		<tr>
@@ -32,13 +35,13 @@
 		</tr>
 		<tr>
 			<td><b>Price </b></td>
-			<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${product.product_price}" /></b></td>
+			<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${prc}" /></b></td>
 		</tr>
 		<tr>
 			<td><button class="fancy-button" type="button" onclick="addToCart()">
 					<b>Add To Cart</b>
 				</button>
-			<td><button class="fancy-button" type="button" onclick="window.location.href='/index/introduction-a'" >
+			<td><button class="fancy-button" type="button" onclick="window.location.href='/index/introduction-a'">
 					<b>Back</b>
 				</button>
 		</tr>
@@ -46,16 +49,22 @@
 	<div id="payment" class="modal" style="padding-top: 1.5em;">
 		<div class="bt-drop-in-wrapper modal-content medium-modal fancy">
 			<div id="bt-dropin"></div>
-			<sf:button id="sbutton" class="fancy-button" type="submit" hidden="true" ><b>Submit</b></sf:button>
+			<sf:button id="sbutton" class="fancy-button" type="submit" hidden="true">
+				<b>Submit</b>
+			</sf:button>
 		</div>
 	</div>
-	
+
 	<div id="shoppingCart" class="modal">
+		<div id="wait" class="spinner modal" style="margin: 0 auto;">
+			<img alt="wait" src="<c:url value="/images/spinner.gif" />">
+		</div>
 		<sql:query var="result" dataSource="${ds}">
 			SELECT * FROM shopping_cart_items WHERE reference = ${shoppingCart.reference};
 		</sql:query>
 		<div class="modal-content medium-modal fancy" style="border-style: solid; border-width: 2px; border-color: black;">
-			<table class="tableview tableheading rjthird rjfourth rjfifth rjsixth" style="margin-left: auto; margin-right: auto; width: 100%">
+			<table class="tableview tableheading rjthird rjfourth rjfifth rjsixth"
+				style="margin-left: auto; margin-right: auto; width: 100%">
 				<caption>Shopping Cart</caption>
 				<tr>
 					<td colspan="7"><h3>Invoice #: ${shoppingCart.reference}</h3></td>
@@ -80,13 +89,13 @@
 						<td><fmt:formatNumber type="currency" currencyCode="USD"
 								value="${(item.product_price * item.qty) - item.product_discount}" /></td>
 						<td><fmt:formatNumber type="currency" currencyCode="USD" value="${item.product_tax}" /></td>
-						<td><button type="button" onclick="removeItem('${item.product_id}')" >Delete Item</button></td>
+						<td><button type="button" onclick="removeItem('${item.product_id}')">Delete Item</button></td>
 					</tr>
 					<c:set var="totalPrice" value="${totalPrice + ((item.product_price * item.qty) - item.product_discount)}" />
 					<c:set var="totalTax" value="${totalTax +  item.product_tax}" />
 					<input id="ttl" type="hidden" value="${totalPrice}" />
 				</c:forEach>
-				<tfoot class="tablefooter" >
+				<tfoot class="tablefooter">
 					<tr>
 						<td colspan="3">&nbsp;</td>
 						<td><b>Total Price -----></b></td>
@@ -104,20 +113,28 @@
 						<td colspan="7">&nbsp;</td>
 					</tr>
 				</tfoot>
-				</table>
-				<table>
-					<tr>
-						<td><button class="fancy-button" type="button" onclick="checkOut()"><b>Check Out</b></button></td>
-						<td><button class="fancy-button" type="button" onclick="$('#shoppingCart').hide()"><b>close Cart</b></button></td>
-					</tr>
 			</table>
-
+			<table>
+				<tr>
+					<td><button class="fancy-button" type="button" onclick="checkOut()">
+							<b>Check Out</b>
+						</button></td>
+					<td><button class="fancy-button" type="button" onclick="$('#shoppingCart').hide()">
+							<b>close Cart</b>
+						</button></td>
+				</tr>
+			</table>
+			<script>
+				$("#wait").hide()
+			</script>
 		</div>
 	</div>
 	<div id="scError" class="modal">
 		<div class="modal-content small-modal fancy" style="border-style: solid; border-width: 2px; border-color: red;">
 			<h2>You Already have this in your cart</h2>
-			<button class="fancy-button" type="button" onclick="$('#scError').hide()" ><b>OK</b></button>
+			<button class="fancy-button" type="button" onclick="$('#scError').hide()">
+				<b>OK</b>
+			</button>
 		</div>
 	</div>
 	<sf:hidden id="shpCrtId" path="reference" />
@@ -130,10 +147,9 @@
 	<sf:hidden path="trans_result" />
 	<input id="prd" type="hidden" value="${prdId}" />
 	<input id="cToken" type="hidden" value="${clientToken}" />
-	
+
 </sf:form>
 <script type="text/javascript">
-
 	function addToCart() {
 		var scId = $("#shpCrtId").val();
 		var pId = $("#prd").val();
@@ -144,9 +160,11 @@
 				function(data) {
 					if (data.result === "ERROR") {
 						$("#scError").show();
-					}else{
+					} else {
+						$("#wait").show();
 						$("#menuBar").load(location.href + " #menuBar>*", "");
-						$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
+						$("#shoppingCart").load(
+								location.href + " #shoppingCart>*", "");
 						$("#shoppingCart").show();
 					}
 				}).fail(
@@ -155,24 +173,29 @@
 							+ jqXHR.responseText);
 				});
 	}
-	
+
 	function removeItem(pId) {
 		var scId = $("#shpCrtId").val();
-		
-		$.getJSON(
-				"/rest/deleteshoppingcartitem?cartID=" + scId + "&prdId=" + pId,
-				function(data) {
-					$("#menuBar").load(location.href + " #menuBar>*", "");
-					$("#shoppingCart").load(location.href + " #shoppingCart>*", "");
-					$("#shoppingCart").show();
 
-				}).fail(
-				function(jqXHR, textStatus, errorThrown) {
-					alert("error " + textStatus + "\n" + "incoming Text "
-							+ jqXHR.responseText);
-				});
+		$
+				.getJSON(
+						"/rest/deleteshoppingcartitem?cartID=" + scId
+								+ "&prdId=" + pId,
+						function(data) {
+							$("#wait").show();
+							$("#menuBar").load(location.href + " #menuBar>*",
+									"");
+							$("#shoppingCart").load(
+									location.href + " #shoppingCart>*", "");
+							$("#shoppingCart").show();
+
+						}).fail(
+						function(jqXHR, textStatus, errorThrown) {
+							alert("error " + textStatus + "\n"
+									+ "incoming Text " + jqXHR.responseText);
+						});
 	}
-	
+
 	function checkOut() {
 		var ttl = $("#ttl").val();
 		if (ttl > 0) {
@@ -191,9 +214,8 @@
 					document.getElementById("sbutton").hidden = false;
 				}
 			});
-		}else{
+		} else {
 			$("#shpCartForm").submit();
 		}
 	}
-	
 </script>

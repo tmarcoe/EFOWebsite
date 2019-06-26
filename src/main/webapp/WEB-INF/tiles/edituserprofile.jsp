@@ -26,7 +26,7 @@
 	</script>
 </c:if>
 <sf:form id="editpf" method="post" action="/user/updateuserprofile" modelAttribute="user">
-	<table class="fancy-table tableshadow">
+	<table class="fancy-table tableshadow cjfirst">
 		<tr>
 			<td colspan="3"><sf:select class="fancy" path="customer.salutation">
 					<sf:option value="Mr.">Mr.</sf:option>
@@ -45,6 +45,24 @@
 				</sf:select></td>
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2"><h3>Billing Address</h3></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.address1" placeholder="Address Line 1" /></td>
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address Line 2" /></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.city" placeholder="City" /></td>
+			<td><sf:input class="fancy" path="common.region" placeholder="Region or State" /></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="2 character Country Code" /></td>
+		</tr>
+		<tr>
 			<td><sf:button class="fancy-button" type="submit">
 					<b>Update Account</b>
 				</sf:button></td>
@@ -59,12 +77,6 @@
 	<sf:hidden path="enabled" />
 	<sf:hidden path="temp_pw" />
 	<sf:hidden path="common.user_id" />
-	<sf:hidden path="common.address1" value="" />
-	<sf:hidden path="common.address2" value="" />
-	<sf:hidden path="common.city" value="" />
-	<sf:hidden path="common.region" value="" />
-	<sf:hidden path="common.postalCode" value="" />
-	<sf:hidden path="common.country" value="" />
 	<sf:hidden path="customer.user_id" />
 	<sf:hidden path="customer.since" />
 	<sf:hidden id="selectedRoles" path="roleString" />

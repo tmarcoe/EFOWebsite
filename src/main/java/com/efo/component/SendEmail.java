@@ -1,5 +1,7 @@
 package com.efo.component;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.mail.MessagingException;
@@ -16,9 +18,10 @@ import org.springframework.stereotype.Component;
 public class SendEmail {
 
 	@Autowired
-	private JavaMailSender sender;
+	JavaMailSender sender;
 
 	public void sendMail(String from, String to, String name, String subject, String content) throws MessagingException, UnsupportedEncodingException {
+
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -31,12 +34,12 @@ public class SendEmail {
 	}
 
 	public void sendHtmlMail(String from, String to, String name, String subject, String content) throws MessagingException, UnsupportedEncodingException {
+
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-
-		helper.setTo(to);
 		message.setContent(content, "text/html; charset=utf-8");
 
+		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setFrom(from, name);
 
@@ -44,18 +47,21 @@ public class SendEmail {
 	}
 
 	public void sendHtmlMailWithAttachment(String from, String to, String name, String subject, String content, String filePath)
-			throws MessagingException, UnsupportedEncodingException {
+			throws MessagingException, IOException {
+		
 		MimeMessage message = sender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);		
+
+		//message.setContent(content, "text/html; charset=utf-8");
 
 		helper.setTo(to);
-		message.setContent(content, "text/html; charset=utf-8");
-
-		helper.setSubject(subject);
 		helper.setFrom(from, name);
+		helper.setSubject(subject);
+		helper.setText(content);
 
-		FileSystemResource file = new FileSystemResource(filePath);
-		helper.addAttachment(file.getFilename(), file);
+		FileSystemResource file = new FileSystemResource(new File(filePath));
+		
+		helper.addAttachment("salesReceipt.PDF", file);
 
 		sender.send(message);
 	}
@@ -74,6 +80,7 @@ public class SendEmail {
 	}
 
 	public void sendMail(String from, String to, String subject, String content, ClassPathResource file, String type) throws MessagingException {
+
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 

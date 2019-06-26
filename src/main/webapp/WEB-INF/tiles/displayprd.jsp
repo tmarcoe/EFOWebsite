@@ -28,6 +28,7 @@
 		<b>Show Cart</b>
 	</button>
 	<table class="fancy-table tableshadow rjsecond" style="width: 50%;">
+
 		<tr>
 			<td><img alt="Logo" src="<c:url value='${logoPath}${product.marketPlaceVendors.logo}'/>" width="70px"></td>
 
@@ -64,6 +65,9 @@
 	</div>
 	
 	<div id="shoppingCart" class="modal">
+		<div id="wait" class="spinner modal" style="margin:0 auto;" >
+			<img alt="wait" src="<c:url value="/images/spinner.gif" />">
+		</div>
 		<sql:query var="result" dataSource="${ds}">
 			SELECT * FROM shopping_cart_items WHERE reference = ${shoppingCart.reference};
 		</sql:query>
@@ -130,7 +134,7 @@
 						</button></td>
 				</tr>
 			</table>
-
+			<script>$("#wait").hide()</script>
 		</div>
 	</div>
 	<div id="scError" class="modal">
@@ -156,6 +160,7 @@
 
 <script type="text/javascript">
 	function addToCart() {
+		
 		var scId = $("#shpCrtId").val();
 		var pId = $("#prd").val();
 
@@ -165,6 +170,7 @@
 					if (data.result === "ERROR") {
 						$("#scError").show();
 					} else {
+						$("#wait").show();
 						$("#menuBar").load(location.href + " #menuBar>*", "");
 						$("#shoppingCart").load(
 								location.href + " #shoppingCart>*", "");
@@ -183,6 +189,7 @@
 		$.getJSON("/rest/deleteshoppingcartitem?cartID=" + scId
 								+ "&prdId=" + pId,
 						function(data) {
+							$("#wait").show();
 							$("#menuBar").load(location.href + " #menuBar>*",
 									"");
 							$("#shoppingCart").load(
