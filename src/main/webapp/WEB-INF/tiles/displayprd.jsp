@@ -65,8 +65,8 @@
 	</div>
 	
 	<div id="shoppingCart" class="modal">
-		<div id="wait" class="spinner modal" style="margin:0 auto;" >
-			<img alt="wait" src="<c:url value="/images/spinner.gif" />">
+		<div id="wait" class="modal" style="margin:0 auto;" >
+			<img class="spinner" alt="wait" src="<c:url value="/images/spinner.gif" />" width="100px">
 		</div>
 		<sql:query var="result" dataSource="${ds}">
 			SELECT * FROM shopping_cart_items WHERE reference = ${shoppingCart.reference};
