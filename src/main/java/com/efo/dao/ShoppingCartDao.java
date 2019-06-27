@@ -42,6 +42,18 @@ public class ShoppingCartDao implements IShoppngCart {
 		
 		return cart;
 	}
+	
+	public Long getShoppingCartCount(String username) {
+		String hql = "SELECT SUM(i.qty) FROM ShoppingCart s, ShoppingCartItems i, User u "
+				   + "WHERE u.username = :username AND u.user_id = s.user_id AND "
+				   + "s.time_ordered IS NOT NULL AND s.time_processed IS NULL AND "
+				   + "s.reference = i.reference";
+		Session session = session();
+		Long result = (Long) session.createQuery(hql).setString("username", username).uniqueResult();
+		session.close();
+		
+		return result;
+	}
 
 	@Override
 	public ShoppingCart retrieveByUserId(Long user_id) {

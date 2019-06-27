@@ -12,12 +12,10 @@ import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.Products;
 import com.efo.entity.ShoppingCart;
 import com.efo.entity.ShoppingCartItems;
-import com.efo.entity.User;
 import com.efo.service.MarketPlaceProductsService;
 import com.efo.service.ProductsService;
 import com.efo.service.ShoppingCartItemsService;
 import com.efo.service.ShoppingCartService;
-import com.efo.service.UserService;
 
 @RestController
 @RequestMapping("/rest/")
@@ -34,9 +32,6 @@ public class ShoppingCartRestController {
 	
 	@Autowired
 	private MarketPlaceProductsService marketPlaceProductsService;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private ProductsService productsService;
@@ -100,15 +95,14 @@ public class ShoppingCartRestController {
 	@RequestMapping("shoppingcartcount")
 	public String shoppingCartCount(@RequestParam(value = "username") String username ) throws JSONException {
 		JSONObject json = new JSONObject();
-		Long count = 0L;
 		
-		User user = userService.retrieve(username);
-		if (user != null) {
-			ShoppingCart cart =	shoppingCartService.retrieveByUserId(user.getUser_id());
-			count = shoppingCartItemsService.countScItems(cart.getReference());
-		}
+		Long count = shoppingCartService.getShoppingCartCount(username);
 		
-		return json.put("count", count).toString();
+		if (count == null) count = 0L;
+		
+		json.put("count", count);
+		
+		return json.toString();
 		
 	}
 	

@@ -41,6 +41,10 @@ public class ShoppingCartService implements IShoppngCart {
 		shoppingCartDao.merge(shoppingCart);
 
 	}
+	
+	public Long getShoppingCartCount(String username) {
+		return shoppingCartDao.getShoppingCartCount(username);
+	}
 
 	@Override
 	public void delete(String reference) {

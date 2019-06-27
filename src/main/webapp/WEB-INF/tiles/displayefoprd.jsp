@@ -6,6 +6,9 @@
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
+
+<sec:getPrincipal />
 
 <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 <script type="text/javascript" src="/script/demo.js"></script>
@@ -147,7 +150,8 @@
 	<sf:hidden path="trans_result" />
 	<input id="prd" type="hidden" value="${prdId}" />
 	<input id="cToken" type="hidden" value="${clientToken}" />
-
+	<input id="pr" type="hidden" value="${principal}" />
+	
 </sf:form>
 <script type="text/javascript">
 	function addToCart() {
@@ -162,7 +166,8 @@
 						$("#scError").show();
 					} else {
 						$("#wait").show();
-						$("#menuBar").load(location.href + " #menuBar>*", "");
+						var uName = $("#pr").val();
+						countItems(uName);
 						$("#shoppingCart").load(
 								location.href + " #shoppingCart>*", "");
 						$("#shoppingCart").show();
@@ -183,8 +188,8 @@
 								+ "&prdId=" + pId,
 						function(data) {
 							$("#wait").show();
-							$("#menuBar").load(location.href + " #menuBar>*",
-									"");
+							var uName = $("#pr").val();
+							countItems(uName);
 							$("#shoppingCart").load(
 									location.href + " #shoppingCart>*", "");
 							$("#shoppingCart").show();

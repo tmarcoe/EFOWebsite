@@ -4,25 +4,30 @@
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
-<sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/efoweb?useSSL=false" user="root"
-	password="3xc7vbkjlv99" />
-
 <sec:getPrincipal />
+<script type="text/javascript">
+function countItems(uName) {
+	if (uName == "anonymousUser") {
+		$("#scCount").text("(0)");
+	}else{
+		
+		var cnt = 0;
+		$.getJSON("/rest/shoppingcartcount?username=" + uName,
+				function(data) {
+						$("#scCount").text("(" + data.count + ")");
+				}).fail(
+					function(jqXHR, textStatus, errorThrown) {
+						alert("error " + textStatus + "\n" + "incoming Text "
+						+ jqXHR.responseText);
+				});
+	}
+}
 
+</script>
 <div id="menuBar" class="nav-bar">
+	<script type="text/javascript">countItems('${principal}')</script>
 	<c:choose>
 		<c:when test="${principal  != 'anonymousUser'}">
-			<sql:query var="rs" dataSource="${ds}">
-				SELECT user_id FROM user WHERE username='${principal}'
-			</sql:query>
-			<c:forEach var="row" items="${rs.rows}">
-				<c:set var="user_id" value="${row.user_id}" />
-			</c:forEach>
-			<sql:query var="result" dataSource="${ds}">
-				SELECT * FROM shopping_cart s, shopping_cart_items i WHERE s.user_id = ${user_id} AND
-						s.time_ordered IS NOT NULL AND s.time_processed IS NULL AND s.reference = i.reference;
-			</sql:query>
-			<c:set var="count" value="${result.getRowCount()}"/>
 		</c:when>
 		<c:otherwise>
 			<c:set var="count" value="0" />
