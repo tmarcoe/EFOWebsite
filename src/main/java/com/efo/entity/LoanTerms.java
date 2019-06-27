@@ -36,11 +36,11 @@ public class LoanTerms implements Serializable {
 	@Column(length = 16)
 	private String schedule;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private Loans loans;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "loanTerms", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "loanTerms", cascade = CascadeType.ALL)
 	private Set<LoanPayments> loanPayments = new HashSet<LoanPayments>(0);
 	
 	public Long getReference() {

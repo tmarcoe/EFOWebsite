@@ -23,7 +23,7 @@ public class ForumDao implements IForum {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -32,14 +32,14 @@ public class ForumDao implements IForum {
 		Transaction tx = session.beginTransaction();
 		session.save(forum);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Forum retrieve(Long reference) {
 		Session session = session();
 		Forum forum = (Forum) session.createCriteria(Forum.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return forum;
 	}
@@ -49,7 +49,7 @@ public class ForumDao implements IForum {
 	public List<Forum> retrieveRawList() {
 		Session session = session();
 		List<Forum> forumList = session.createCriteria(Forum.class).addOrder(Order.desc("post_created")).list();
-		session.disconnect();
+		session.close();
 		
 		return forumList;
 	}
@@ -60,7 +60,7 @@ public class ForumDao implements IForum {
 		Transaction tx = session.beginTransaction();
 		session.merge(forum);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ForumDao implements IForum {
 		Transaction tx = session.beginTransaction();
 		session.delete(forum);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public void deletePost(Long reference) {
@@ -80,7 +80,7 @@ public class ForumDao implements IForum {
 		session.createQuery(replies).setLong("reference", reference).executeUpdate();
 		session.createQuery(post).setLong("reference", reference).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

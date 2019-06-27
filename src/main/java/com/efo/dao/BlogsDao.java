@@ -22,7 +22,7 @@ public class BlogsDao implements IBlogs {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class BlogsDao implements IBlogs {
 		Transaction tx = session.beginTransaction();
 		session.save(blogs);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Blogs retreive(Long id) {
 		Session session = session();
 		Blogs blogs = (Blogs) session.createCriteria(Blogs.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return blogs;
 	}
@@ -48,7 +48,7 @@ public class BlogsDao implements IBlogs {
 	public List<Blogs> retreiveRawList() {
 		Session session = session();
 		List<Blogs> blogList = session.createCriteria(Blogs.class).addOrder(Order.desc("timestamp")).setMaxResults(10).list();
-		session.disconnect();
+		session.close();
 		
 		return blogList;
 	}
@@ -59,7 +59,7 @@ public class BlogsDao implements IBlogs {
 		Transaction tx = session.beginTransaction();
 		session.update(blogs);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class BlogsDao implements IBlogs {
 		Transaction tx = session.beginTransaction();
 		session.delete(blogs);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public void delete(Long id) {
@@ -77,7 +77,7 @@ public class BlogsDao implements IBlogs {
 		String hql = "DELETE FROM Blogs WHERE id= :id";
 		session.createQuery(hql).setLong("id", id).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

@@ -27,7 +27,7 @@ public class CommonFields implements Serializable {
 	private String postalCode;
 	private String country;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 	

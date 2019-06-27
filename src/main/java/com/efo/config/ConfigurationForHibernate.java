@@ -1,7 +1,6 @@
 package com.efo.config;
 
 import javax.persistence.EntityManagerFactory;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +21,5 @@ public class ConfigurationForHibernate {
 	    SessionFactory session = entityManagerFactory.unwrap(SessionFactory.class);
 	    return session;
 	}
-
-
+	
 }

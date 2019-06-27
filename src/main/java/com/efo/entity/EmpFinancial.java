@@ -52,7 +52,7 @@ public class EmpFinancial implements Serializable {
 	@Column(length = 1)
 	private String employee_type;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private Employee employee;
 

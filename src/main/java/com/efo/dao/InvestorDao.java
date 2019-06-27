@@ -23,7 +23,7 @@ public class InvestorDao implements IInvestor {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
  	@Override
@@ -32,14 +32,14 @@ public class InvestorDao implements IInvestor {
  		Transaction tx = session.beginTransaction();
  		session.save(investor);
  		tx.commit();
- 		session.disconnect();
+ 		session.close();
 	}
 
 	@Override
 	public Investor retrieve(Long user_id) {
  		Session session = session();
  		Investor investor = (Investor) session.createCriteria(Investor.class).add(Restrictions.idEq(user_id)).uniqueResult();
- 		session.disconnect();
+ 		session.close();
  		
 		return investor;
 	}
@@ -49,7 +49,7 @@ public class InvestorDao implements IInvestor {
 	public List<Investor> retrieveRawList() {
  		Session session = session();
  		List<Investor> investList = session.createCriteria(Investor.class).list();
- 		session.disconnect();
+ 		session.close();
  		
 		return investList;
 	}
@@ -60,7 +60,7 @@ public class InvestorDao implements IInvestor {
 	
 		Session session = session();
 		List<User> chooseList = session.createQuery(sql).list();
-		session.disconnect();
+		session.close();
 	
 	return chooseList;
 
@@ -72,7 +72,7 @@ public class InvestorDao implements IInvestor {
 		name = "%" + name + "%";
 		Session session = session();
 		List<Investor> investor = session.createQuery(sql).setString("name", name).list();
-		session.disconnect();
+		session.close();
 		
 		return investor;
 	}
@@ -83,7 +83,7 @@ public class InvestorDao implements IInvestor {
  		Transaction tx = session.beginTransaction();
  		session.update(investor);
  		tx.commit();
- 		session.disconnect();
+ 		session.close();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class InvestorDao implements IInvestor {
  		Transaction tx = session.beginTransaction();
  		session.delete(investor);
  		tx.commit();
- 		session.disconnect();
+ 		session.close();
 	}
 
 }

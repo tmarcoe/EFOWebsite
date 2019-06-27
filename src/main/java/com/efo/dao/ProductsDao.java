@@ -22,7 +22,7 @@ public class ProductsDao implements IProducts {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 
 	@Override
@@ -31,14 +31,14 @@ public class ProductsDao implements IProducts {
 		Transaction tx = session.beginTransaction();
 		session.save(products);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Products retrieve(String product_id) {
 		Session session = session();
 		Products products = (Products) session.createCriteria(Products.class).add(Restrictions.idEq(product_id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return products;
 	}
@@ -48,7 +48,7 @@ public class ProductsDao implements IProducts {
 	public List<Products> retrieveRawList() {
 		Session session = session();
 		List<Products> pList = session.createCriteria(Products.class).list();
-		session.disconnect();
+		session.close();
 		
 		return pList;
 	}
@@ -59,7 +59,7 @@ public class ProductsDao implements IProducts {
 		Transaction tx = session.beginTransaction();
 		session.update(products);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ProductsDao implements IProducts {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setString("product_id", product_id).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 }

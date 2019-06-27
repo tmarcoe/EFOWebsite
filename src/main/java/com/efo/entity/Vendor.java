@@ -28,7 +28,7 @@ public class Vendor implements Serializable {
 	private String category;
 	private String keywords;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 	

@@ -23,7 +23,7 @@ public class CustomerDao implements ICustomer {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -32,14 +32,14 @@ public class CustomerDao implements ICustomer {
 		Transaction tx = session.beginTransaction();
 		session.save(customer);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Customer retrieve(Long user_id) {
 		Session session = session();
 		Customer customer = (Customer) session.createCriteria(Customer.class).add(Restrictions.idEq(user_id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return customer;
 	}
@@ -50,7 +50,7 @@ public class CustomerDao implements ICustomer {
 		Transaction tx = session.beginTransaction();
 		session.merge(customer);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class CustomerDao implements ICustomer {
 		Transaction tx = session.beginTransaction();
 		session.delete(customer);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -69,7 +69,7 @@ public class CustomerDao implements ICustomer {
 	
 		Session session = session();
 		List<User> chooseList = session.createQuery(sql).list();
-		session.disconnect();
+		session.close();
 	
 	return chooseList;
 
@@ -80,7 +80,7 @@ public class CustomerDao implements ICustomer {
 		name = "%" + name + "%";
 		Session session = session();
 		List<Customer> customer = session.createQuery(sql).setString("name", name).list();
-		session.disconnect();
+		session.close();
 		
 		return customer;
 	}
@@ -92,7 +92,7 @@ public class CustomerDao implements ICustomer {
 					"FROM customer";
 		Session session = session();
 		Object[] counts = (Object[]) session.createSQLQuery(hql).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return counts;
 	}

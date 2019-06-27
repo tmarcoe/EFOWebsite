@@ -25,7 +25,7 @@ public class ShoppingCart implements Serializable {
 	private String result;
 	private String trans_result;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "shoppingCart", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	private Set<ShoppingCartItems> shoppingCartItems = new HashSet<ShoppingCartItems>(0);
 
 	public String getReference() {

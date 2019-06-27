@@ -23,7 +23,7 @@ public class TransactionsDao implements ITransactions {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -32,14 +32,14 @@ public class TransactionsDao implements ITransactions {
 		Transaction tx = session.beginTransaction();
 		session.save(transactions);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Transactions retrieve(Long reference) {
 		Session session = session();
 		Transactions transactions = (Transactions) session.createCriteria(Transactions.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return transactions;
 	}
@@ -50,7 +50,7 @@ public class TransactionsDao implements ITransactions {
 		String hql = "FROM Transactions WHERE DATE(timestamp) BETWEEN DATE(:begin) AND DATE(:end)";
 		Session session = session();
 		List<Transactions> transList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
-		session.disconnect();
+		session.close();
 		
 		return transList;
 	}
@@ -61,7 +61,7 @@ public class TransactionsDao implements ITransactions {
 		Transaction tx = session.beginTransaction();
 		session.update(transactions);
 		tx.commit();
-		session.disconnect();
+		session.close();
 
 	}
 
@@ -71,7 +71,7 @@ public class TransactionsDao implements ITransactions {
 		Transaction tx = session.beginTransaction();
 		session.delete(transactions);
 		tx.commit();
-		session.disconnect();
+		session.close();
 
 	}
 	
@@ -79,7 +79,7 @@ public class TransactionsDao implements ITransactions {
 		String hql = "SELECT COUNT(*) FROM Transactions WHERE payment_name = :name AND name = :profileName";
 		Session session = session();
 		Long count = (Long) session.createQuery(hql).setString("name", name).setString("profileName", profileName).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return (count > 0);
 	}

@@ -26,7 +26,7 @@ public class MarketPlaceVendors implements Serializable {
 	private Double total_sales;
 	private Double commission_paid;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "marketPlaceVendors", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "marketPlaceVendors", cascade = CascadeType.ALL)
 	private Set<MarketPlaceProducts> marketPlaceProducts = new HashSet<MarketPlaceProducts>(0);
 	
 	public Long getReference() {

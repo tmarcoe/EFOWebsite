@@ -22,7 +22,7 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 		Transaction tx = session.beginTransaction();
 		session.save(revenuePayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public RevenuePayments retrieve(Long id) {
 		Session session = session();
 		RevenuePayments revenuePayments = (RevenuePayments) session.createCriteria(RevenuePayments.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return revenuePayments;
 	}
@@ -48,7 +48,7 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 	public List<RevenuePayments> retrieveRawList(Long reference) {
 		Session session = session();
 		List<RevenuePayments> revList = session.createCriteria(RevenuePayments.class).add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return revList;
 	}
@@ -59,7 +59,7 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 		
 		Double result = (Double) session.createSQLQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
 		if (result == null) result = 0.0;
-		session.disconnect();
+		session.close();
 		
 		return result;
 	}
@@ -70,7 +70,7 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 		Transaction tx = session.beginTransaction();
 		session.merge(revenuePayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class RevenuePaymentsDao implements IRevenuePayments {
 		Transaction tx = session.beginTransaction();
 		session.delete(revenuePayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

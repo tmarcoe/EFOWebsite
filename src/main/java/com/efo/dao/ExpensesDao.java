@@ -22,7 +22,7 @@ public class ExpensesDao implements IExpenses {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ExpensesDao implements IExpenses {
 		Transaction tx = session.beginTransaction();
 		session.save(expenses);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Expenses retrieve(Long reference) {
 		Session session = session();
 		Expenses expenses = (Expenses) session.createCriteria(Expenses.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return expenses;
 	}
@@ -48,7 +48,7 @@ public class ExpensesDao implements IExpenses {
 	public List<Expenses> retrieveRawList() {
 		Session session = session();
 		List<Expenses> expList = session.createCriteria(Expenses.class).list();
-		session.disconnect();
+		session.close();
 		
 		return expList;
 	}
@@ -59,7 +59,7 @@ public class ExpensesDao implements IExpenses {
 		Transaction tx = session.beginTransaction();
 		session.merge(expenses);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class ExpensesDao implements IExpenses {
 		Transaction tx = session.beginTransaction();
 		session.delete(expenses);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public Double sumMonthlyExpenses(int month, int year) {

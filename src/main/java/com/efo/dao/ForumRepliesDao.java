@@ -22,7 +22,7 @@ public class ForumRepliesDao implements IForumReplies {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ForumRepliesDao implements IForumReplies {
 		Transaction tx = session.beginTransaction();
 		session.save(forumReplies);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public ForumReplies retrieve(Long id) {
 		Session session = session();
 		ForumReplies fr = (ForumReplies) session.createCriteria(ForumReplies.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return fr;
 	}
@@ -48,7 +48,7 @@ public class ForumRepliesDao implements IForumReplies {
 	public List<ForumReplies> retrieveRawList(Long reference) {
 		Session session = session();
 		List<ForumReplies> repliesList = session.createCriteria(ForumReplies.class).add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return repliesList;
 	}
@@ -59,7 +59,7 @@ public class ForumRepliesDao implements IForumReplies {
 		Transaction tx = session.beginTransaction();
 		session.update(forumReplies);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class ForumRepliesDao implements IForumReplies {
 		Transaction tx = session.beginTransaction();
 		session.delete(forumReplies);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	public void delete(Long id) {
@@ -77,7 +77,7 @@ public class ForumRepliesDao implements IForumReplies {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setLong("id", id).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

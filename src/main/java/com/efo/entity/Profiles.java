@@ -32,7 +32,7 @@ public class Profiles implements Serializable {
 	@Column(length = 1024)
 	private String descr;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "profiles", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "profiles", cascade = CascadeType.ALL)
 	private Set<Transactions> transactions = new HashSet<Transactions>(0);
 	
 	public String getName() {

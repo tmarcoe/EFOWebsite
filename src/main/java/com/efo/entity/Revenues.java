@@ -30,7 +30,7 @@ public class Revenues implements Serializable {
 	@Column(length = 1024)
 	private String descr;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "revenues", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "revenues", cascade = CascadeType.ALL)
 	private RevenueTerms revenueTerms;
 	
 	public Long getReference() {

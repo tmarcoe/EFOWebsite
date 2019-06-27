@@ -26,7 +26,7 @@ public class Expenses implements Serializable {
 	@Column(length = 1024)
 	private String descr;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "expenses", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "expenses", cascade = CascadeType.ALL)
 	private ExpenseTerms expenseTerms;
 	
 	public Long getReference() {

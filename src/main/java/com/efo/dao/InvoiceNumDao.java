@@ -22,7 +22,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class InvoiceNumDao implements IInvoiceNum {
 		Transaction tx = session.beginTransaction();
 		session.save(invoice_num);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public InvoiceNum retrieve(String invoice_num) {
 		Session session = session();
 		InvoiceNum inv = (InvoiceNum) session.createCriteria(InvoiceNum.class).add(Restrictions.idEq(invoice_num)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return inv;
 	}
@@ -49,7 +49,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 		Transaction tx = session.beginTransaction();
 		session.update(invoice_num);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 		Transaction tx = session.beginTransaction();
 		session.delete(invoice_num);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public String getNextKey() {
@@ -84,7 +84,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 		
 		tx.commit();
 		
-		session.disconnect();
+		session.close();
 		
 		return key;
 	}

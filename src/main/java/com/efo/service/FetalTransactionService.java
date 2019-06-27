@@ -55,7 +55,7 @@ public class FetalTransactionService extends FetalTransaction {
 			if (tx != null) {
 				tx.rollback();
 				session.clear();
-				session.disconnect();
+				session.close();
 			}
 		}
 		
@@ -87,7 +87,7 @@ public class FetalTransactionService extends FetalTransaction {
 			if (tx != null) {
 				tx.rollback();
 				session.clear();
-				session.disconnect();
+				session.close();
 			}
 		}
 		

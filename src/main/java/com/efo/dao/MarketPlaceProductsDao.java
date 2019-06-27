@@ -22,7 +22,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		Transaction tx = session.beginTransaction();
 		session.save(marketPlaceProducts);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		Session session = session();
 		MarketPlaceProducts mProducts = (MarketPlaceProducts) session.createCriteria(MarketPlaceProducts.class)
 				.add(Restrictions.idEq(product_reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return mProducts;
 	}
@@ -50,7 +50,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		Session session = session();
 		List<MarketPlaceProducts> mList = session.createCriteria(MarketPlaceProducts.class).list();
 		
-		session.disconnect();
+		session.close();
 		return mList;
 	}
 	
@@ -62,7 +62,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		String hql = "FROM MarketPlaceProducts WHERE UPPER(CONCAT(product_name, ' ', keywords)) LIKE :search";
 		List<MarketPlaceProducts> mList = session.createQuery(hql).setString("search", search.toUpperCase()).list();
 		
-		session.disconnect();
+		session.close();
 		
 		return mList;
 	}
@@ -73,7 +73,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		Transaction tx = session.beginTransaction();
 		session.merge(marketPlaceProducts);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		session.createQuery(hql).setLong("product_reference", product_reference).executeUpdate();
 		
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

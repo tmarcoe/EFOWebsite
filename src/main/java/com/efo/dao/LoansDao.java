@@ -22,7 +22,7 @@ public class LoansDao implements ILoans {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 
 	@Override
@@ -31,14 +31,14 @@ public class LoansDao implements ILoans {
 		Transaction tx = session.beginTransaction();
 		session.save(loans);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Loans retrieve(Long reference) {
 		Session session = session();
 		Loans loan = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return loan;
 	}
@@ -48,7 +48,7 @@ public class LoansDao implements ILoans {
 	public List<Loans> retrieveRawList() {
 		Session session = session();
 		List<Loans> loanList = session.createCriteria(Loans.class).list();
-		session.disconnect();
+		session.close();
 		
 		return loanList;
 	}
@@ -59,7 +59,7 @@ public class LoansDao implements ILoans {
 		Transaction tx = session.beginTransaction();
 		session.merge(loans);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class LoansDao implements ILoans {
 		Transaction tx = session.beginTransaction();
 		session.delete(loans);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

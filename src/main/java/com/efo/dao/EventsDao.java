@@ -24,7 +24,7 @@ public class EventsDao implements IEvents {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -34,14 +34,14 @@ public class EventsDao implements IEvents {
 		session.save(events);
 		tx.commit();
 		
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Events retrieve(Long id) {
 		Session session = session();
 		Events events = (Events) session.createCriteria(Events.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return events;
 	}
@@ -51,7 +51,7 @@ public class EventsDao implements IEvents {
 	public List<Events> retrieveRawList(Long reference) {
 		Session session = session();
 		List<Events> evenList = session.createCriteria(Events.class).add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return evenList;
 	}
@@ -63,7 +63,7 @@ public class EventsDao implements IEvents {
 		session.update(events);
 		tx.commit();
 		
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class EventsDao implements IEvents {
 		session.merge(events);
 		tx.commit();
 		
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class EventsDao implements IEvents {
 		session.delete(events);
 		tx.commit();
 		
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class EventsDao implements IEvents {
 		session.createQuery(hql).setLong("id", id).executeUpdate();
 		tx.commit();
 		
-		session.disconnect();
+		session.close();
 	}
 	
 	public Long getEventCount(Date date) {
@@ -109,7 +109,7 @@ public class EventsDao implements IEvents {
 	public List<Events> getEvents(Date date) {
 		Session session = session();
 		List<Events> eventList = session.createCriteria(Events.class).add(Restrictions.eq("date", date)).addOrder(Order.asc("date")).list();
-		session.disconnect();
+		session.close();
 		
 		return eventList;
 	}

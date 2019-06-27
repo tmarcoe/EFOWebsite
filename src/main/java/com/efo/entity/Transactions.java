@@ -45,7 +45,7 @@ public class Transactions implements Serializable {
 	@Column(length = 1024)
 	private String descr;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="NAME", referencedColumnName ="NAME", nullable = false, insertable=false, updatable=false )
 	private Profiles profiles;
 

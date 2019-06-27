@@ -38,10 +38,10 @@ public class MarketPlaceProducts implements Serializable {
 	private String version;
 	private Date introduced_on;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "marketPlaceProducts", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "marketPlaceProducts", cascade = CascadeType.ALL)
 	private Set<MarketPlaceSales> marketPlaceSales = new HashSet<MarketPlaceSales>(0);
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private MarketPlaceVendors marketPlaceVendors;
 	

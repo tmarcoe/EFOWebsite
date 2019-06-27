@@ -28,7 +28,7 @@ public class Forum implements Serializable {
 	private Long author;
 	private String name;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "forum", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "forum", cascade = CascadeType.ALL)
 	private Set<ForumReplies> forumReplies = new HashSet<ForumReplies>(0);
 	
 	public Forum() {

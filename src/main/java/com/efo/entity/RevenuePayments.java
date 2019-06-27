@@ -27,7 +27,7 @@ public class RevenuePayments implements Serializable {
 	private Double penalties;
 	private Long event;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private RevenueTerms revenueTerms;
 	

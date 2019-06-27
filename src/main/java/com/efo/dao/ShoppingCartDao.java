@@ -19,10 +19,10 @@ import com.efo.interfaces.IShoppngCart;
 public class ShoppingCartDao implements IShoppngCart {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ShoppingCartDao implements IShoppngCart {
 		Transaction tx = session.beginTransaction();
 		session.save(shoppingCart);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public ShoppingCart retrieve(String reference) {
 		Session session = session();
 		ShoppingCart cart = (ShoppingCart) session.createCriteria(ShoppingCart.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return cart;
 	}
@@ -51,7 +51,7 @@ public class ShoppingCartDao implements IShoppngCart {
 							.add(Restrictions.isNull("time_processed"))
 							.add(Restrictions.isNotNull("time_ordered"))
 							.setMaxResults(1).uniqueResult();
-		session.disconnect();
+		session.close();
 		if (cart == null) {
 			cart = new ShoppingCart();
 		}
@@ -64,7 +64,7 @@ public class ShoppingCartDao implements IShoppngCart {
 	public List<ShoppingCart> retrieveRawList() {
 		Session session = session();
 		List<ShoppingCart> cList = session.createCriteria(ShoppingCart.class).list();
-		session.disconnect();
+		session.close();
 		
 		return cList;
 	}
@@ -75,7 +75,7 @@ public class ShoppingCartDao implements IShoppngCart {
 		Transaction tx = session.beginTransaction();
 		session.merge(shoppingCart);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class ShoppingCartDao implements IShoppngCart {
 		session.createQuery(itemsHql).setString("reference", reference).executeUpdate();
 		session.createQuery(cartHql).setString("reference", reference).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

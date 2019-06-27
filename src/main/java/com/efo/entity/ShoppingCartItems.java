@@ -26,7 +26,7 @@ public class ShoppingCartItems implements Serializable {
 	private Double product_tax;
 	private Double product_discount;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private ShoppingCart shoppingCart;
 

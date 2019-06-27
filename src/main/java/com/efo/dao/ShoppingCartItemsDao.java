@@ -22,7 +22,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Transaction tx = session.beginTransaction();
 		session.save(item);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Session session = session();
 		ShoppingCartItems items = (ShoppingCartItems) session.createCriteria(ShoppingCartItems.class)
 								  .add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return items;
 	}
@@ -50,7 +50,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Session session = session();
 		List<ShoppingCartItems> iList = session.createCriteria(ShoppingCartItems.class)
 											   .add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return iList;
 	}
@@ -60,7 +60,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Session session = session();
 		Long count = (Long) session.createQuery(hql).setString("scId", scId).setString("productId", productId).uniqueResult();
 		
-		session.disconnect();
+		session.close();
 		
 		return (count > 0);
 	}
@@ -72,7 +72,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setInteger("qty", qty).setLong("id", id).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public void deleteShoppingCartItem(String scId, String prdId) {
@@ -81,14 +81,14 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setString("scId", scId).setString("prdId", prdId).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	public Long countScItems(String scId) {
 		String hql = "SELECT COUNT(*) FROM ShoppingCartItems WHERE reference = :scId";
 		Session session = session();
 		Long count = (Long) session.createSQLQuery(hql).setString("scId", scId).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return count;
 	}
@@ -99,7 +99,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Transaction tx = session.beginTransaction();
 		session.update(item);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class ShoppingCartItemsDao implements IShoppingCartItems {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setLong("id", id).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

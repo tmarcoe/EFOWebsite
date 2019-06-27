@@ -53,10 +53,10 @@ public class Employee implements Serializable {
 	private Date start_date;
 	private Date end_date;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	private EmpFinancial emp_financial;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 	

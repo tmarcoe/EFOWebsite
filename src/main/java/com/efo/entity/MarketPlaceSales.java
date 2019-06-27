@@ -27,7 +27,7 @@ public class MarketPlaceSales implements Serializable {
 	private Double discount;
 	private Date date_sold;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="PRODUCT_REFERENCE", referencedColumnName ="PRODUCT_REFERENCE", nullable = false, insertable=false, updatable=false )
 	private MarketPlaceProducts marketPlaceProducts;
 

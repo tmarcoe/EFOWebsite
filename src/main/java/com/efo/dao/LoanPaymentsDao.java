@@ -22,7 +22,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 		Transaction tx = session.beginTransaction();
 		session.save(loanPayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 		Session session = session();
 		LoanPayments loanPayments = (LoanPayments) session.createCriteria(LoanPayments.class)
 														  .add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return loanPayments;
 	}
@@ -50,7 +50,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 		@SuppressWarnings("unchecked")
 		List<LoanPayments> payList = session.createCriteria(LoanPayments.class)
 											.add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return payList;
 	}
@@ -61,7 +61,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 		Transaction tx = session.beginTransaction();
 		session.update(loanPayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class LoanPaymentsDao implements ILoanPayments {
 		Transaction tx = session.beginTransaction();
 		session.delete(loanPayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public Double sumMontlyPayments(int month, int year) {

@@ -37,11 +37,11 @@ public class RevenueTerms implements Serializable {
 	private String schedule;
 	private boolean compound;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private Revenues revenues;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "revenueTerms", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "revenueTerms", cascade = CascadeType.ALL)
 	private Set<RevenuePayments> revenuePayments = new HashSet<RevenuePayments>(0);
 	
 	

@@ -26,7 +26,7 @@ public class Customer implements Serializable{
 	private String maleFemale;
 	private Date since;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 

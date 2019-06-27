@@ -22,7 +22,7 @@ public class MarketPlaceSalesDao implements IMarketPlaceSales {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class MarketPlaceSalesDao implements IMarketPlaceSales {
 		Transaction tx = session.beginTransaction();
 		session.save(marketPlaceSales);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public MarketPlaceSales retrieve(Long id) {
 		Session session = session();
 		MarketPlaceSales mSales = (MarketPlaceSales) session.createCriteria(MarketPlaceSales.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return mSales;
 	}
@@ -49,7 +49,7 @@ public class MarketPlaceSalesDao implements IMarketPlaceSales {
 		Session session = session();
 		List<MarketPlaceSales> mList = session.createCriteria(MarketPlaceSales.class)
 				.add(Restrictions.eq("product_reference", product_reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return mList;
 	}
@@ -60,7 +60,7 @@ public class MarketPlaceSalesDao implements IMarketPlaceSales {
 		Transaction tx = session.beginTransaction();
 		session.update(marketPlaceSales);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class MarketPlaceSalesDao implements IMarketPlaceSales {
 		Transaction tx = session.beginTransaction();
 		session.delete(marketPlaceSales);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

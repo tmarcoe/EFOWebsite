@@ -22,7 +22,7 @@ public class ProfilesDao implements IProfiles {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ProfilesDao implements IProfiles {
 		Transaction tx = session.beginTransaction();
 		session.save(profiles);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Profiles retrieve(String name) {
 		Session session = session();
 		Profiles profiles = (Profiles) session.createCriteria(Profiles.class).add(Restrictions.idEq(name)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return profiles;
 	}
@@ -48,7 +48,7 @@ public class ProfilesDao implements IProfiles {
 	public List<Profiles> retrieveRawList() {
 		Session session = session();
 		List<Profiles> profList = session.createCriteria(Profiles.class).list();
-		session.disconnect();
+		session.close();
 		
 		return profList;
 	}
@@ -68,7 +68,7 @@ public class ProfilesDao implements IProfiles {
 		Transaction tx = session.beginTransaction();
 		session.merge(profiles);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ProfilesDao implements IProfiles {
 		Transaction tx = session.beginTransaction();
 		session.delete(profiles);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

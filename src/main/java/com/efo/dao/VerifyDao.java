@@ -20,7 +20,7 @@ public class VerifyDao implements IVerify {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -29,14 +29,14 @@ public class VerifyDao implements IVerify {
 		Transaction tx = session.beginTransaction();
 		session.save(verify);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Verify retrieve(String id) {
 		Session session = session();
 		Verify verify = (Verify) session.createCriteria(Verify.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return verify;
 	}
@@ -48,7 +48,7 @@ public class VerifyDao implements IVerify {
 		String hql = "DELETE FROM Verify WHERE id = :id";
 		session.createQuery(hql).setString("id", verify.getId()).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

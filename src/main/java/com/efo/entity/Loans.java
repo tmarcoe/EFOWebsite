@@ -26,7 +26,7 @@ public class Loans implements Serializable {
 	@Column(length = 1024)
 	private String descr;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "loans", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "loans", cascade = CascadeType.ALL)
 	private LoanTerms loanTerms;
 	
 	public Long getReference() {

@@ -22,7 +22,7 @@ public class ExpensePaymentsDao implements IExpensePayments {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ExpensePaymentsDao implements IExpensePayments {
 		Transaction tx = session.beginTransaction();
 		session.save(expensePayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public ExpensePayments retrieve(Long id) {
 		Session session = session();
 		ExpensePayments expensePayments = (ExpensePayments) session.createCriteria(ExpensePayments.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return expensePayments;
 	}
@@ -48,7 +48,7 @@ public class ExpensePaymentsDao implements IExpensePayments {
 	public List<ExpensePayments> retrieveRawList(Long reference) {
 		Session session = session();
 		List<ExpensePayments> expList = session.createCriteria(ExpensePayments.class).add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return expList;
 	}
@@ -59,7 +59,7 @@ public class ExpensePaymentsDao implements IExpensePayments {
 		Transaction tx = session.beginTransaction();
 		session.merge(expensePayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class ExpensePaymentsDao implements IExpensePayments {
 		Transaction tx = session.beginTransaction();
 		session.delete(expensePayments);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public Double sumMontlyPayments(int month, int year) {

@@ -22,7 +22,7 @@ public class ExpenseTermsDao implements IExpenseTerms {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ExpenseTermsDao implements IExpenseTerms {
 		Transaction tx = session.beginTransaction();
 		
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public ExpenseTerms retrieve(Long reference) {
 		Session session = session();
 		ExpenseTerms revenueTerms = (ExpenseTerms) session.createCriteria(ExpenseTerms.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return revenueTerms;
 	}
@@ -48,7 +48,7 @@ public class ExpenseTermsDao implements IExpenseTerms {
 	public List<ExpenseTerms> retrieveRawList() {
 		Session session = session();
 		List<ExpenseTerms> expenseList = session.createCriteria(ExpenseTerms.class).list();
-		session.disconnect();
+		session.close();
 		
 		return expenseList;
 	}
@@ -59,7 +59,7 @@ public class ExpenseTermsDao implements IExpenseTerms {
 		Transaction tx = session.beginTransaction();
 		
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class ExpenseTermsDao implements IExpenseTerms {
 		Transaction tx = session.beginTransaction();
 		
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

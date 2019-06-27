@@ -28,7 +28,7 @@ public class Investor implements Serializable {
 	private boolean preferred;
 	private Date since;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 

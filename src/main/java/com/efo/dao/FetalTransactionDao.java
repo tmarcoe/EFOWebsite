@@ -39,7 +39,7 @@ public class FetalTransactionDao {
 	}
 	
 	Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 
 	public Session beginTrans() {
@@ -53,7 +53,7 @@ public class FetalTransactionDao {
 		
 		trans.commit();
 		trans = null;
-		session.disconnect();
+		session.close();
 		session = null;
 	}
 
@@ -108,7 +108,7 @@ public class FetalTransactionDao {
 
 		Object obj = session.createQuery(sql).setMaxResults(1).uniqueResult();
 		
-		session.disconnect();
+		session.close();
 		
 		return obj;
 	}
@@ -134,7 +134,7 @@ public class FetalTransactionDao {
 		}else{
 			l = session.createQuery(sqlWithArgs).setMaxResults(limit).list();
 		}
-		session.disconnect();
+		session.close();
 		
 		return l;
 	}

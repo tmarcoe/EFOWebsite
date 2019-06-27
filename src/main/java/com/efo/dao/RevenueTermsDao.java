@@ -22,7 +22,7 @@ public class RevenueTermsDao implements IRevenueTerms {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class RevenueTermsDao implements IRevenueTerms {
 		Transaction tx = session.beginTransaction();
 		session.save(revenueTerms);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public RevenueTerms retrieve(Long reference) {
 		Session session = session();
 		RevenueTerms revenueTerms = (RevenueTerms) session.createCriteria(RevenueTerms.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return revenueTerms;
 	}
@@ -48,7 +48,7 @@ public class RevenueTermsDao implements IRevenueTerms {
 	public List<RevenueTerms> retrieveRawList() {
 		Session session = session();
 		List<RevenueTerms> revList = session.createCriteria(RevenueTerms.class).list();
-		session.disconnect();
+		session.close();
 		
 		return revList;
 	}
@@ -59,7 +59,7 @@ public class RevenueTermsDao implements IRevenueTerms {
 		Transaction tx = session.beginTransaction();
 		session.merge(revenueTerms);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class RevenueTermsDao implements IRevenueTerms {
 		Transaction tx = session.beginTransaction();
 		session.delete(revenueTerms);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

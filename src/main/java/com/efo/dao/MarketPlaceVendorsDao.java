@@ -22,7 +22,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 	SessionFactory sessionFactory;
 
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 		Transaction tx = session.beginTransaction();
 		session.save(marketPlaceVendors);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 		MarketPlaceVendors marketPlaceVendors = (MarketPlaceVendors) session.createCriteria(MarketPlaceVendors.class)
 				.add(Restrictions.idEq(reference))
 				.uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return marketPlaceVendors;
 	}
@@ -50,7 +50,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 	public List<MarketPlaceVendors> retrieveRawList() {
 		Session session = session();
 		List<MarketPlaceVendors> mList = session.createCriteria(MarketPlaceVendors.class).list();
-		session.disconnect();
+		session.close();
 		
 		return mList;
 	}
@@ -61,7 +61,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 		MarketPlaceVendors vendors = (MarketPlaceVendors) session.createCriteria(MarketPlaceVendors.class)
 																 .add(Restrictions.eq("user_id", userId))
 																 .setMaxResults(1).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return vendors;
 	}
@@ -72,7 +72,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 		Transaction tx = session.beginTransaction();
 		session.merge(marketPlaceVendors);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class MarketPlaceVendorsDao implements IMarketPlaceVendors {
 		String hql = "DELETE FROM MarketPlaceVendors WHERE reference = :reference";
 		session.createQuery(hql).setLong("reference", reference).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }
