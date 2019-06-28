@@ -36,6 +36,10 @@ public class ShoppingCartService implements IShoppngCart {
 		return shoppingCartDao.retrieveRawList();
 	}
 
+	public void closeCart(String reference) {
+		shoppingCartDao.closeCart(reference);
+	}
+	
 	@Override
 	public void merge(ShoppingCart shoppingCart) {
 		shoppingCartDao.merge(shoppingCart);

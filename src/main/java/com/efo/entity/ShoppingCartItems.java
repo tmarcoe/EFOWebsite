@@ -25,6 +25,7 @@ public class ShoppingCartItems implements Serializable {
 	private Double product_price;
 	private Double product_tax;
 	private Double product_discount;
+	private String file_name;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
@@ -92,6 +93,14 @@ public class ShoppingCartItems implements Serializable {
 
 	public void setProduct_discount(Double product_discount) {
 		this.product_discount = product_discount;
+	}
+
+	public String getFile_name() {
+		return file_name;
+	}
+
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
 	}
 
 	public ShoppingCart getShoppingCart() {

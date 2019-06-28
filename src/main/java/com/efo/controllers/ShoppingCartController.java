@@ -47,13 +47,13 @@ import com.efo.service.UserService;
 public class ShoppingCartController {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 
 	@Autowired
 	private ShoppingCartItemsService cartItemsService;
-	
+
 	@Autowired
 	private InvoiceNumDao invoiceNumService;
 
@@ -62,13 +62,13 @@ public class ShoppingCartController {
 
 	@Autowired
 	private Checkout checkout;
-	
+
 	@Autowired
 	private SendEmail sendEmail;
-	
+
 	@Autowired
 	PrintSalesReceiptPDF salesReceipt;
-	
+
 	@Autowired
 	SalesReceiptEmailForm salesReceiptEmail;
 
@@ -83,13 +83,13 @@ public class ShoppingCartController {
 
 	@Value("${efo.config.url}")
 	private String configUrl;
-	
+
 	@Value("${efo.documentsPath}")
 	private String documentsPath;
-	
+
 	@Value("${efo.resourcesPath}")
 	private String resourcesPath;
-	
+
 	@Value("${efo.admin.email}")
 	private String csrEmail;
 
@@ -103,7 +103,7 @@ public class ShoppingCartController {
 		binder.registerCustomEditor(HashSet.class, new CustomCollectionEditor(HashSet.class, true));
 		binder.registerCustomEditor(ArrayList.class, new CustomCollectionEditor(ArrayList.class, true));
 	}
-	
+
 	@RequestMapping("/user/displayefoprd")
 	public String displayEfoProduct(@ModelAttribute("prdId") String prdId, Model model, Principal principal)
 			throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
@@ -133,35 +133,34 @@ public class ShoppingCartController {
 	@RequestMapping("/index/thankyou")
 	public String thankyou(@ModelAttribute("shoppingCart") ShoppingCart shoppingCart, Model model) throws IOException, MessagingException {
 		final String msg = "Thank you for your recent purchase with EFO. You will find your sales receipt attached to this email.";
-		
+
 		List<ShoppingCartItems> items = cartItemsService.retrieveRawList(shoppingCart.getReference());
 		shoppingCart.setShoppingCartItems(new HashSet<ShoppingCartItems>(items));
-		
-		shoppingCart.setTime_processed(new Date());
-		shoppingCartService.merge(shoppingCart);
-		
+
+		shoppingCartService.closeCart(shoppingCart.getReference());
+
 		String pdfFile = salesReceipt.print(shoppingCart);
 		User user = userService.retrieve(shoppingCart.getUser_id());
-		sendEmail.sendHtmlMailWithAttachment(csrEmail, user.getUsername(), getFirstName(user) + " " + getLastName(user), 
-				"Sales Receipt",msg , resourcesPath + pdfFile);
-		
+		sendEmail.sendHtmlMailWithAttachment(csrEmail, user.getUsername(), getFirstName(user) + " " + getLastName(user), "Sales Receipt", msg,
+				resourcesPath + pdfFile);
+
 		model.addAttribute("shoppingCart", shoppingCart);
-		
+		model.addAttribute("repository", downloadrepository);
+
 		return "thankyou";
 	}
-	
+
 	@RequestMapping("/index/crediterror")
 	public String creditError(@ModelAttribute("message") String message, Model model) {
-		
+
 		model.addAttribute("message", message);
-		
+
 		return "crediterror";
 	}
 
 	@RequestMapping("/user/processorder")
-	public String processOrder(@ModelAttribute("shoppingCart") ShoppingCart shoppingCart, 
-							  @ModelAttribute("payment_method_nonce") String nonce, 
-							  Model model, RedirectAttributes rm) throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
+	public String processOrder(@ModelAttribute("shoppingCart") ShoppingCart shoppingCart, @ModelAttribute("payment_method_nonce") String nonce, Model model,
+			RedirectAttributes rm) throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
 
 		User user = userService.retrieve(shoppingCart.getUser_id());
 
@@ -181,13 +180,35 @@ public class ShoppingCartController {
 
 				return "redirect:/index/crediterror";
 			}
-		}else{
+		} else {
 
 			rm.addFlashAttribute("shoppingCart", shoppingCart);
 
 			return "redirect:/index/thankyou";
 		}
 
+	}
+
+	@RequestMapping("/user/shoppingcart")
+	public String shoppingCart(Model model, Principal principal) throws SecurityException, IllegalArgumentException, MalformedURLException, IOException {
+		User user = userService.retrieve(principal.getName());
+		ShoppingCart shoppingCart = shoppingCartService.retrieveByUserId(user.getUser_id());
+
+		if (shoppingCart.getTime_ordered() == null) {
+			// This is a new Shopping Cart
+			shoppingCart.setReference(invoiceNumService.getNextKey());
+			shoppingCart.setUser_id(user.getUser_id());
+			shoppingCart.setTime_ordered(new Date());
+			shoppingCart.setPayment_gateway(gateway);
+			shoppingCartService.create(shoppingCart);
+		}
+		
+		BraintreeGateway gateway = BraintreeGatewayFactory.fromConfigFile(new URL(configUrl));
+
+		model.addAttribute("clientToken", gateway.clientToken().generate());
+		model.addAttribute("shoppingCart", shoppingCart);
+
+		return "shoppingcart";
 	}
 
 	private Double totalShoppingCart(ShoppingCart cart) {
@@ -233,6 +254,5 @@ public class ShoppingCartController {
 
 		return lastName;
 	}
-
 
 }

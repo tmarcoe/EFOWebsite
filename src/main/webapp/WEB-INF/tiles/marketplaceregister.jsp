@@ -73,19 +73,19 @@
 			<h3>back to the buyer.</h3>
 			<ol>
 				<li><b>No illegal or malicious software is allowed</b><br> No software with the intent to do harm will be
-					tolerated.<br> The seller also agrees to support his/her product to the best<br> of their ability.</li>
-				<li><b>The seller shall make no false claim</b><br> If the seller makes a software claim, he/she will be
+					tolerated.<br> The seller also agrees to support his/her product to the best<br> of their ability.<br></li>
+				<li><b>The seller shall make no false claim</b><br> If the seller makes a claim about the software, he/she will be
 					willing to<br> make sure the software can back up that claim. If not,<br> the seller is obligated to make
-					any necessary modifications</li>
+					any necessary modifications.<br></li>
 				<li><b>The seller shall make no claim of superiority</b><br> The software simply fulfills a function. It
-					is not better or worse<br> any other software in the EFO Marketplace. Descriptions are limited<br>
+					is not better or worse<br> than any other software in the EFO Marketplace. Descriptions are limited<br>
 					functional only. They are not making any claims that they are better,<br> nor shall they slander 
-					any other seller.</li>
-				<li><b>EFO reserves the right to remove any software that doesn't meet it's standard</b><br> We maintain a
-					high standard in our company. You might not be an employee<br> but you still are representing our company by
-					posting your software.<br> Make sure that all software you post is thoroughly tested. There will always<br>
+					any other seller.<br></li>
+				<li><b>EFO reserves the right to remove any software that doesn't meet EFO's standards</b><br> We maintain a
+					high standard in our company. You might not be an employee<br> but you are still representing our company by
+					posting your software.<br> Make sure that all software your post is thoroughly tested. There will always<br>
 					be some use case that you didn't think of. Just make sure it's kept to a minimum<br> and if or when the software
-					breaks, be willing to fix it.</li>
+					breaks, be willing to fix it.<br></li>
 			</ol>
 			<table>
 				<tr>

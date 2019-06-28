@@ -26,16 +26,17 @@ function countItems(uName) {
 </script>
 <div id="menuBar" class="nav-bar">
 	<script type="text/javascript">countItems('${principal}')</script>
-	<c:choose>
-		<c:when test="${principal  != 'anonymousUser'}">
-		</c:when>
-		<c:otherwise>
-			<c:set var="count" value="0" />
-		</c:otherwise>
-	</c:choose>
-
-	<span style="position: absolute; top: 0; right: 100px; color: white; font-size: 24px;"><img alt="cart"
-		src="<c:url value="/images/shopping-cart-icon.png" />"> <span id="scCount">(${count})</span></span>
+	
+	<sec:isAuthenticated>
+		<c:set var="scLink" value="/user/shoppingcart"/>
+	</sec:isAuthenticated>
+		
+	<sec:isNotAuthenticated>
+		<c:set var="scLink" value="#" />
+	</sec:isNotAuthenticated>
+	
+	<span style="position: absolute; top: 0; right: 100px; color: white; font-size: 24px;"> 
+		<img alt="cart" src="<c:url value="/images/shopping-cart-icon.png" />"><a id="scCount" href="${scLink}" style="text-decoration: none; color: white;">(0)</a></span>
 	<div class="container">
 		<ul class="nav">
 			<li><button class="dropbtn" onclick="window.location.href = '/index/'">Home</button></li>

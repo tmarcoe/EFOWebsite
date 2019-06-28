@@ -5,9 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
-<sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost/donzalma_peachys?useSSL=false"
-	user="root" password="3xc7vbkjlv99" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

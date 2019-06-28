@@ -399,7 +399,7 @@
 	</definition>
 	
 	<definition name="replytopost" extends="distribute.base">
-		<put-attribute name="title" value="Forum Posts"></put-attribute>
+		<put-attribute name="title" value="Reply to Posts"></put-attribute>
 		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/replytopost.jsp"></put-attribute>
 	</definition>
@@ -418,25 +418,25 @@
 	
 	<!-- Product Controller -->
 	<definition name="efo" extends="distribute.base">
-		<put-attribute name="title" value="Efo Download"></put-attribute>
+		<put-attribute name="title" value="Efo Product"></put-attribute>
 		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/efo.jsp"></put-attribute>
 	</definition>
 		
 	<definition name="ftl" extends="distribute.base">
-		<put-attribute name="title" value="Ftl Download"></put-attribute>
+		<put-attribute name="title" value="Ftl Product"></put-attribute>
 		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/ftl.jsp"></put-attribute>
 	</definition>
 		
 	<definition name="ftlide" extends="distribute.base">
-		<put-attribute name="title" value="Ftl Download"></put-attribute>
+		<put-attribute name="title" value="Ftl IDE Product"></put-attribute>
 		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/ftlide.jsp"></put-attribute>
 	</definition>
 
 	<definition name="displayefoprd" extends="distribute.base">
-		<put-attribute name="title" value="Ftl Download"></put-attribute>
+		<put-attribute name="title" value="Show Product"></put-attribute>
 		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/menutoolbar.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/displayefoprd.jsp"></put-attribute>
 	</definition>
@@ -472,29 +472,29 @@
 	</definition>
 		
 	<definition name="changepassword" extends="distribute.base">
-		<put-attribute name="title" value="Forgot My Password"></put-attribute>
+		<put-attribute name="title" value="Change My Password"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/changepassword.jsp"></put-attribute>
 		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
 	</definition>
 	
 	<!-- MarketPlace Controller -->
 	<definition name="marketplaceregister" extends="distribute.base">
-		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="title" value="Add Product"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/marketplaceregister.jsp"></put-attribute>
 	</definition>
 		
 	<definition name="viewmarketplace" extends="distribute.base">
-		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="title" value="View EFO MarketPlace"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/viewmarketplace.jsp"></put-attribute>
 	</definition>
 		
 	<definition name="editmpproduct" extends="distribute.base">
-		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="title" value="Edit Product"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/editmpproduct.jsp"></put-attribute>
 	</definition>
 		
 	<definition name="displayprd" extends="distribute.base">
-		<put-attribute name="title" value="MarketPlace Registry"></put-attribute>
+		<put-attribute name="title" value="Order Product"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/displayprd.jsp"></put-attribute>
 	</definition>
 	
@@ -505,24 +505,30 @@
 	</definition>
 		
 	<definition name="manageproducts" extends="distribute.base">
-		<put-attribute name="title" value="New Product"></put-attribute>
+		<put-attribute name="title" value="Manage Products"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/manageproducts.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 		
 	<definition name="scproductedit" extends="distribute.base">
-		<put-attribute name="title" value="New Product"></put-attribute>
+		<put-attribute name="title" value="Shopping Cart Product"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
 	</definition>
-
+	
+	<!-- Shopping Cart Controller -->
 	<definition name="thankyou" extends="distribute.base">
 		<put-attribute name="title" value="Thank you"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/thankyou.jsp"></put-attribute>
 	</definition>
 
 	<definition name="crediterror" extends="distribute.base">
-		<put-attribute name="title" value="Thank you"></put-attribute>
+		<put-attribute name="title" value="Credit Error"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/crediterror.jsp"></put-attribute>
+	</definition>
+
+	<definition name="shoppingcart" extends="distribute.base">
+		<put-attribute name="title" value="Shopping Cart"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/shoppingcart.jsp"></put-attribute>
 	</definition>
 
 </tiles-definitions>

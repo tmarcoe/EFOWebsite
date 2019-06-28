@@ -9,7 +9,7 @@
 <table class="tableview tableshadow tableheading rjthird rjfourth rjfifth rjsixth" style="margin-left: auto; margin-right: auto; width: 50%">
 	<caption>Shopping Cart</caption>
 	<tr>
-		<td colspan="6"><h3>Invoice #: ${shoppingCart.reference}</h3></td>
+		<td colspan="7"><h3>Invoice #: ${shoppingCart.reference}</h3></td>
 	</tr>
 	<tr>
 		<th>Product Name</th>
@@ -18,6 +18,7 @@
 		<th>Discount</th>
 		<th>Price</th>
 		<th>Tax</th>
+		<th>File Name (Click to download)</th>
 	</tr>
 	<c:set var="totalPrice" value="0" />
 	<c:set var="totalTax" value="0" />
@@ -30,6 +31,7 @@
 			<td><fmt:formatNumber type="currency" currencyCode="USD"
 					value="${(item.product_price * item.qty) - item.product_discount}" /></td>
 			<td><fmt:formatNumber type="currency" currencyCode="USD" value="${item.product_tax}" /></td>
+			<td><a href="${repository}${item.file_name}" download>${item.file_name}</a></td>
 		</tr>
 		<c:set var="totalPrice" value="${totalPrice + ((item.product_price * item.qty) - item.product_discount)}" />
 		<c:set var="totalTax" value="${totalTax +  item.product_tax}" />
@@ -40,18 +42,20 @@
 			<td><b>Total Price -----></b></td>
 			<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${totalPrice}" /></b></td>
 			<td>&nbsp;</td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td colspan="3">&nbsp;</td>
 			<td><b>Total Tax --------></b></td>
 			<td>&nbsp;</td>
 			<td><b><fmt:formatNumber type="currency" currencyCode="USD" value="${totalTax}" /></b></td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="6">&nbsp;</td>
+			<td colspan="7">&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="6"><button class="fancy-button" type="button" onclick="window.location.href='/index/introduction-a'"><b>OK</b></button></td>
+			<td colspan="7"><button class="fancy-button" type="button" onclick="window.location.href='/index/introduction-a'"><b>OK</b></button></td>
 			
 		</tr>
 	</tfoot>

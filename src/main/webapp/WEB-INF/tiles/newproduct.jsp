@@ -13,7 +13,7 @@
 			<td colspan="2"><sf:input class="fancy" path="product_name" placeholder="Product Name" size="55"/></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="product_id" placeholder="Unique Product ID"/> </td>
+			<td><b>EFO</b><sf:input class="fancy" path="product_id" placeholder="Unique Product ID"/> </td>
 			<td><sf:input class="fancy" type="number" step=".01" path="product_price" placeholder="Price" /></td>
 		</tr>
 		<tr>

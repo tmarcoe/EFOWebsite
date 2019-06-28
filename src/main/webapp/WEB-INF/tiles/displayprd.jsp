@@ -3,7 +3,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
@@ -74,7 +73,7 @@
 		<sql:query var="result" dataSource="${ds}">
 			SELECT * FROM shopping_cart_items WHERE reference = ${shoppingCart.reference};
 		</sql:query>
-		<div class="modal-content medium-modal fancy" style="border-style: solid; border-width: 2px; border-color: black;">
+		<div class="modal-content medium-large-modal fancy" style="border-style: solid; border-width: 2px; border-color: black;">
 			<table class="tableview tableheading rjthird rjfourth rjfifth rjsixth"
 				style="margin-left: auto; margin-right: auto; width: 100%">
 				<caption>Shopping Cart</caption>

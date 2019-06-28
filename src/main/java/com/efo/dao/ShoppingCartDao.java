@@ -80,6 +80,15 @@ public class ShoppingCartDao implements IShoppngCart {
 		
 		return cList;
 	}
+	
+	public void closeCart(String reference) {
+		String hql = "UPDATE ShoppingCart SET time_processed = CURDATE() WHERE reference = :reference";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setString("reference", reference).executeUpdate();
+		tx.commit();
+		session.close();
+	}
 
 	@Override
 	public void merge(ShoppingCart shoppingCart) {

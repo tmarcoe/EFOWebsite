@@ -8,8 +8,13 @@
     margin-right:auto;
     margin-top: 2em;
 	border-collapse: collapse;
-	font-size: 12px;
+	font-size: 14px;
 }
+
+.tableview td {
+	padding-right: 1em;
+}
+
 table.tableview tr:nth-child(odd)
 {
 	background: var(--odd-rows);
@@ -57,7 +62,7 @@ tfoot.tablefooter td
 {
 	background: var(--footer-background);
 	color: #000000;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 900;
 	text-align: right;
 }
