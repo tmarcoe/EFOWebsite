@@ -1,6 +1,5 @@
 package com.efo.controllers;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.component.ProfileUtils;
 import com.efo.entity.Profiles;
 import com.efo.entity.Transactions;
 import com.efo.service.FetalTransactionService;
@@ -87,7 +87,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -127,7 +127,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -161,7 +161,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -195,7 +195,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -229,7 +229,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -263,7 +263,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -315,7 +315,7 @@ public class TransactionsController {
 		Profiles profile = profilesService.retrieve(profileName);
 		
 		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = getObject(profile.getVariables());
+			variables = ProfileUtils.getObject(profile.getVariables());
 		}
 		
 		fetalTransactionService.execTransaction(profile, transaction, variables);	
@@ -364,55 +364,6 @@ public class TransactionsController {
 		return retInt;
 	}
 
-	private Object[] getObject(String varString) throws ParseException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String variables = "";
-		final String daoPath = "com.efo.entity.";
-		
-		if ("".compareTo(varString) == 0) return null;
-		
-		if (varString.toLowerCase().contains("%tax%")) {
-			variables = varString.replace("%tax%", taxRate);
-		}else{
-			variables = varString;
-		}
-		
-		String[] vars = variables.split(";");
-		Object[] result = new Object[vars.length];
-		
-		for (int i=0; i < vars.length; i++) {
-			String[] parms = vars[i].split(",");
-			switch(parms[1].toLowerCase()) {
-				case "decimal":
-					result[i] = (Double) Double.valueOf(parms[2]);
-					break;
-				case "number":
-					result[i] = (Long) Long.valueOf(parms[2]);
-					break;
-				case "string":
-					result[i] = (String) parms[2];
-					break;
-				case "date":
-					result[i] = (Date) dateFormat.parse(parms[2]);
-					break;
-				case "boolean":
-					if ("true".compareTo(parms[2]) == 0) {
-						result[i] = (Boolean) true;
-					}else{
-						result[i] = (Boolean) false;
-					}
-					break;
-				case "object":
-					result[i] = Class.forName(parms[2]).newInstance();
-					break;
-				case "dao":
-					result[i] = Class.forName(daoPath + parms[2]).newInstance(); 
-					break;
-				default:
-					result[i] = null;
-					break;
-			}
-		}
-		return result;
-	}
+
 }
 

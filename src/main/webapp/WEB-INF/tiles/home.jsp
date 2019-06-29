@@ -265,9 +265,7 @@
 		var mnth = $(monthInput).val();
 		var day = $(dayInput).val();
 
-		$
-				.getJSON(
-						"/rest/getevents?year=" + yr + "&month=" + mnth
+		$.getJSON("/rest/getevents?year=" + yr + "&month=" + mnth
 								+ "&day=" + day, function(data) {
 							if (data.length > 0) {
 								eventPopup(data);

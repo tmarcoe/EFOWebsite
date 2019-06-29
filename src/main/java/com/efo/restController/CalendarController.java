@@ -1,7 +1,9 @@
 package com.efo.restController;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTimeComparator;
 import org.joda.time.LocalDate;
@@ -27,6 +29,7 @@ public class CalendarController {
 	@RequestMapping("getcalendar")
 	public String getCalendar(@RequestParam(value = "month") int month,
 							  @RequestParam(value = "year") int year) throws JSONException {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		LocalDate calDate = new LocalDate();
 		LocalDate today = new LocalDate();
 		calDate = calDate.withYear(year).withMonthOfYear(month).withDayOfMonth(1);
@@ -35,7 +38,9 @@ public class CalendarController {
 			calDate = calDate.minusDays(dow);
 		}
 		List<EventCalendar> calArray = new ArrayList<EventCalendar>();
-		
+	
+		Map<String, Long> countMap = eventsService.getEventCount(calDate.toDate(), calDate.plusDays(42).toDate());
+			int count =0;
 		for(int i=0;i < 42; i++) {
 			EventCalendar event = new EventCalendar();
 			event.setYear(calDate.getYear());
@@ -46,7 +51,13 @@ public class CalendarController {
 			}else{
 				event.setToday(false);
 			}
-			int count = new Long(eventsService.getEventCount(calDate.toDate())).intValue();
+			Long longValue = countMap.get(df.format(calDate.toDate()));
+			
+			if (longValue != null) {
+				count = new Long(longValue).intValue();
+			}else{
+				count = 0;
+			}
 			event.setNum_events(count);
 			
 			calArray.add(event);

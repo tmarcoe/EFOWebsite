@@ -1,6 +1,10 @@
 package com.efo.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -73,15 +77,22 @@ public class LoanPaymentsDao implements ILoanPayments {
 		session.close();
 	}
 	
-	public Double sumMontlyPayments(int month, int year) {
+	@SuppressWarnings("unchecked")
+	public Map<String, Double> sumMontlyPayments(Date begin, Date end) {
+		String headingPattern = "yyyy-MM";
+		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
+
+		Map<String, Double> loanMap = new HashMap<String, Double>();
 		Session session = session();
-		String hql = "SELECT SUM(payment_made) FROM LoanPayments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
-		
-		Double sum = (Double) session.createQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
-		
-		if (sum == null) sum = 0.0;
-		
-		return sum;
+		String hql = "SELECT payment_date, SUM(payment_made) FROM LoanPayments "
+				   + "WHERE payment_date BETWEEN :begin AND :end";
+
+		List<Object[]> items = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		for(Object[] item : items) {
+			loanMap.put(df.format((Date) item[0]), (Double) item[1]); 
+		}
+
+		return loanMap;
 	}
 
 }

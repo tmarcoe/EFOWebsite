@@ -1,18 +1,19 @@
 package com.efo.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.efo.entity.Events;
 import com.efo.interfaces.IEvents;
 
@@ -97,18 +98,27 @@ public class EventsDao implements IEvents {
 		session.close();
 	}
 	
-	public Long getEventCount(Date date) {
-		String hql = "SELECT COUNT(*) FROM Events WHERE date = :date";
+	@SuppressWarnings("unchecked")
+	public Map<String, Long> getEventCount(Date begin, Date end) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Map<String, Long> countMap = new HashMap<String, Long>();
+		String hql = "SELECT date, COUNT(*) FROM Events WHERE DATE(date) BETWEEN DATE(:begin) AND DATE(:end) GROUP BY DATE(date)";
 		Session session = session();
-		Long count = (Long) session.createQuery(hql).setDate("date", date).uniqueResult();
+		List<Object[]> items = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		for (Object[] item : items) {
+			String dateStr = df.format((Date) item[0]);
+			countMap.put(dateStr, (Long) item[1]);
+		}
+		session.close();
 		
-		return count;
+		return countMap;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Events> getEvents(Date date) {
+		String hql ="FROM Events WHERE DATE(date) = DATE(:date) ORDER BY date";
 		Session session = session();
-		List<Events> eventList = session.createCriteria(Events.class).add(Restrictions.eq("date", date)).addOrder(Order.asc("date")).list();
+		List<Events> eventList = session.createQuery(hql).setDate("date", date).list();
 		session.close();
 		
 		return eventList;

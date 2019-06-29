@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-
-import javax.mail.MessagingException;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,19 +27,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
+import com.efo.component.ProfileUtils;
 import com.efo.component.SendEmail;
 import com.efo.dao.InvoiceNumDao;
-import com.efo.emailForms.SalesReceiptEmailForm;
 import com.efo.entity.Products;
+import com.efo.entity.Profiles;
 import com.efo.entity.ShoppingCart;
 import com.efo.entity.ShoppingCartItems;
+import com.efo.entity.Transactions;
 import com.efo.entity.User;
 import com.efo.forms.PrintSalesReceiptPDF;
 import com.efo.payment.BraintreeGatewayFactory;
 import com.efo.payment.Checkout;
+import com.efo.service.FetalTransactionService;
 import com.efo.service.ProductsService;
+import com.efo.service.ProfilesService;
 import com.efo.service.ShoppingCartItemsService;
 import com.efo.service.ShoppingCartService;
+import com.efo.service.TransactionsService;
 import com.efo.service.UserService;
 
 @Controller
@@ -67,10 +71,19 @@ public class ShoppingCartController {
 	private SendEmail sendEmail;
 
 	@Autowired
-	PrintSalesReceiptPDF salesReceipt;
-
+	private PrintSalesReceiptPDF salesReceipt;
+	
 	@Autowired
-	SalesReceiptEmailForm salesReceiptEmail;
+	private TransactionsService transactionsService;
+	
+	@Autowired
+	private FetalTransactionService fetalTransactionService;
+	
+	@Autowired
+	private ProfilesService profilesService;
+	
+	@Value("${efo.federal.taxRate}")
+	private String taxRate;
 
 	@Value("${efo.upload.repository}")
 	private String uploadrepository;
@@ -131,16 +144,39 @@ public class ShoppingCartController {
 	}
 
 	@RequestMapping("/index/thankyou")
-	public String thankyou(@ModelAttribute("shoppingCart") ShoppingCart shoppingCart, Model model) throws IOException, MessagingException {
+	public String thankyou(@ModelAttribute("shoppingCart") ShoppingCart shoppingCart, Model model) throws Exception {
 		final String msg = "Thank you for your recent purchase with EFO. You will find your sales receipt attached to this email.";
-
+		Transactions transaction = new Transactions();
+		Object[] variables = null;
+		
+		User user = userService.retrieve(shoppingCart.getUser_id());
 		List<ShoppingCartItems> items = cartItemsService.retrieveRawList(shoppingCart.getReference());
 		shoppingCart.setShoppingCartItems(new HashSet<ShoppingCartItems>(items));
+		
+		transaction.setTimestamp(new Date());
+		transaction.setAmount(totalPrice(shoppingCart));
+		transaction.setTax(totalTax(shoppingCart));
+		transaction.setPayment_name(getFirstName(user) + " " + getLastName(user));
+		transaction.setUser_id(user.getUser_id());
+		transaction.setStart(transaction.getTimestamp());
+		transaction.setName("Retail Sales (Cash)");
+		transaction.setDescr("Internet purchase of software");
+
+
+		String profileName = transaction.getName();
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		if ("".compareTo(profile.getVariables()) != 0) {
+			variables = ProfileUtils.getObject(ProfileUtils.prepareVariableString("%tax%", taxRate, profile.getVariables()));
+		}
+		
+		fetalTransactionService.execTransaction(profile, transaction, variables);	
+		
+		transactionsService.create(transaction);
 
 		shoppingCartService.closeCart(shoppingCart.getReference());
 
 		String pdfFile = salesReceipt.print(shoppingCart);
-		User user = userService.retrieve(shoppingCart.getUser_id());
 		sendEmail.sendHtmlMailWithAttachment(csrEmail, user.getUsername(), getFirstName(user) + " " + getLastName(user), "Sales Receipt", msg,
 				resourcesPath + pdfFile);
 
@@ -254,5 +290,29 @@ public class ShoppingCartController {
 
 		return lastName;
 	}
+	
+	private Double totalPrice(ShoppingCart shoppingCart) {
+		Double total = 0.0;
+		
+		Set<ShoppingCartItems> items = shoppingCart.getShoppingCartItems();
+		
+		for(ShoppingCartItems item : items) {
+			total += (item.getProduct_price() * item.getQty()) - item.getProduct_discount();
+		}
+		
+		return total;
+	}
+	private Double totalTax(ShoppingCart shoppingCart) {
+		Double total = 0.0;
+
+		Set<ShoppingCartItems> items = shoppingCart.getShoppingCartItems();
+		
+		for(ShoppingCartItems item : items) {
+			total += item.getProduct_tax();
+		}
+		
+		return total;
+	}
+
 
 }

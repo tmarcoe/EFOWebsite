@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -13,10 +14,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.efo.service.ExpensePaymentsService;
 import com.efo.service.ExpensesService;
 import com.efo.service.LoanPaymentsService;
-import com.efo.service.RevenuePaymentsService;
 import com.efo.service.RevenuesService;
 
 @Component
@@ -24,15 +23,9 @@ public class RevenueReport {
 	
 	@Autowired
 	private RevenuesService revenuesService;
-	
-	@Autowired
-	private RevenuePaymentsService revenuePaymentsService;
-	
+		
 	@Autowired
 	private ExpensesService expensesService;
-	
-	@Autowired
-	private ExpensePaymentsService expensePaymentsService;
 	
 	@Autowired
 	private LoanPaymentsService loanPaymentsService;
@@ -47,18 +40,38 @@ public class RevenueReport {
 		List<Double> revenues = new ArrayList<Double>();
 		List<Double> expenses = new ArrayList<Double>();
 		List<Double> profits = new ArrayList<Double>();
+		Double cash = 0.0;
+		Double credit = 0.0;
+		Double rev = 0.0;
+		Double exp = 0.0;
+		Double loanPayments = 0.0;
 
 		int m = jBegin.getMonthOfYear();
 		int y = jBegin.getYear();
+		Map<String, Object[]> revMap = revenuesService.sumCashRevenue(begin, end);
+		Map<String, Object[]> expMap = expensesService.sumMonthlyExpenses(begin, end);
+		Map<String, Double> loanMap = loanPaymentsService.sumMontlyPayments(begin, end);
 		for (int i = 0; i < diff; i++) {
-			Double cash = revenuesService.sumCashRevenue(m, y);
-			Double credit = revenuePaymentsService.sumCreditPayments(m, y);
-			Double rev = cash + credit;
+			String key = String.format("%d-%02d", y,m);
+			Object obj[] = revMap.get(key);
+			if (obj != null ) {
+				cash = (Double) obj[0];
+				credit = (Double) obj[1];
+				rev = cash + credit;
+			}else{
+				rev = 0.0;
+			}
 			revenues.add(rev);
-			cash = expensesService.sumMonthlyExpenses(m, y);
-			credit = expensePaymentsService.sumMontlyPayments(m, y);
-			Double loanPayments = loanPaymentsService.sumMontlyPayments(m, y);
-			Double exp = cash + credit + loanPayments;
+			obj = expMap.get(key);
+			if ( obj != null) {
+				cash = (Double) obj[0];
+				credit = (Double) obj[1];
+			}else{
+				exp = 0.0;
+			}
+			loanPayments = loanMap.get(key);
+			if (loanPayments == null) loanPayments = 0.0;
+			exp = cash + credit + loanPayments;
 			expenses.add(exp);
 			profits.add(rev - exp);
 			m++;

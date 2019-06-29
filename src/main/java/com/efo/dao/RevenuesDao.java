@@ -1,6 +1,10 @@
 package com.efo.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -8,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,15 +59,29 @@ public class RevenuesDao implements IRevenues {
 	}
 	
 
-	public Double sumCashRevenue(int month, int year) {
-		String hql = "SELECT SUM(r.amount) FROM revenues r WHERE MONTH(received) = :month AND YEAR(received) = :year";
+	@SuppressWarnings("unchecked")
+	public Map<String, Object[]> sumCashRevenue(Date begin, Date end) {
+		LocalDate jBegin = new LocalDate(begin);
+		LocalDate jEnd = new LocalDate(end);
+		String headingPattern = "yyyy-MM";
+		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
+		Map<String, Object[]> revMap = new HashMap<String, Object[]>();
+		String cash = "SELECT received, SUM(r.amount) FROM Revenue WHERE ";
 		Session session = session();
-		
-		Double result = (Double) session.createSQLQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
-		if (result == null) result = 0.0;
+		while (jBegin.isBefore(jEnd)) {
+			List<Object[]> revenues = session.createQuery(cash).setDate("begin", begin).setDate("end", end).list();
+			Object[] obj = new Object[2];
+			for (Object[] item : revenues) {
+				obj[0] = item[1];
+				obj[1] = item[2];
+
+				revMap.put(df.format((Date) item[0]), obj);
+			}
+		}
+
 		session.close();
 		
-		return result;
+		return revMap;
 	}
 
 	@Override

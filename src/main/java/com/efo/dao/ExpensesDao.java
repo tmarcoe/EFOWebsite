@@ -1,6 +1,10 @@
 package com.efo.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -71,14 +75,29 @@ public class ExpensesDao implements IExpenses {
 		session.close();
 	}
 	
-	public Double sumMonthlyExpenses(int month, int year) {
+	@SuppressWarnings("unchecked")
+	public Map<String, Object[]> sumMonthlyExpenses(Date begin, Date end) {
+		String headingPattern = "yyyy-MM";
+		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
+
+		Map<String, Object[]> expMap = new HashMap<String, Object[]>();
 		Session session = session();
-		String hql = "SELECT SUM(amount) FROM Expenses WHERE MONTH(paid) = :month AND YEAR(paid) = :year";
+		String hql = "SELECT e.paid, SUM(e.amount), SUM(p.payment_made) FROM Expenses e, Expense_Payments p "
+				   + "WHERE e.paid BETWEEN :begin AND :end AND MONTH(e.paid) = MONTH(p.payment_date) "
+				   + "AND YEAR(e.paid) = YEAR(p.payment_date)";
 		
-		Double sum = (Double) session.createQuery(hql).setInteger("month", month).setInteger("year", year).uniqueResult();
-		if (sum == null) sum = 0.0;
+		List<Object[]> exp = session.createSQLQuery(hql).setDate("begin", end).setDate("end", end).list();
+		Object[] obj = new Object[2];
 		
-		return sum;
+		for (Object[] item : exp) {
+			obj[0] = item[1];
+			obj[1] = item[2];
+			
+			expMap.put(df.format((Date) item[0]), obj);
+		}
+		session.close();
+		
+		return expMap;
 	}
 
 }

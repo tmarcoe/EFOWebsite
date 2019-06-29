@@ -1,6 +1,8 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,8 @@ public class RevenuesService implements IRevenues {
 		return revenuesDao.retrieveRawList();
 	}
 	
-	public Double sumCashRevenue(int month, int year) {
-		return revenuesDao.sumCashRevenue(month, year);
+	public Map<String, Object[]> sumCashRevenue(Date begin, Date end) {
+		return revenuesDao.sumCashRevenue(begin, end);
 	}
 
 	@Override

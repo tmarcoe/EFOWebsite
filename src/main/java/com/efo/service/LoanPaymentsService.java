@@ -1,6 +1,8 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,7 @@ public class LoanPaymentsService implements ILoanPayments {
 	public void delete(LoanPayments loanPayments) {
 		loanPaymentsDao.delete(loanPayments);
 	}
-	public Double sumMontlyPayments(int month, int year) {
-		return loanPaymentsDao.sumMontlyPayments(month, year);
+	public Map<String, Double> sumMontlyPayments(Date begin, Date end) {
+		return loanPaymentsDao.sumMontlyPayments(begin, end);
 	}
 }
