@@ -72,16 +72,16 @@ public class ShoppingCartController {
 
 	@Autowired
 	private PrintSalesReceiptPDF salesReceipt;
-	
+
 	@Autowired
 	private TransactionsService transactionsService;
-	
+
 	@Autowired
 	private FetalTransactionService fetalTransactionService;
-	
+
 	@Autowired
 	private ProfilesService profilesService;
-	
+
 	@Value("${efo.federal.taxRate}")
 	private String taxRate;
 
@@ -146,34 +146,39 @@ public class ShoppingCartController {
 	@RequestMapping("/index/thankyou")
 	public String thankyou(@ModelAttribute("shoppingCart") ShoppingCart shoppingCart, Model model) throws Exception {
 		final String msg = "Thank you for your recent purchase with EFO. You will find your sales receipt attached to this email.";
-		Transactions transaction = new Transactions();
+		if (shoppingCart.getUser_id() == null){
+			return "redirect:/index/introduction-a";
+		}
 		Object[] variables = null;
-		
+
 		User user = userService.retrieve(shoppingCart.getUser_id());
 		List<ShoppingCartItems> items = cartItemsService.retrieveRawList(shoppingCart.getReference());
 		shoppingCart.setShoppingCartItems(new HashSet<ShoppingCartItems>(items));
-		
-		transaction.setTimestamp(new Date());
-		transaction.setAmount(totalPrice(shoppingCart));
-		transaction.setTax(totalTax(shoppingCart));
-		transaction.setPayment_name(getFirstName(user) + " " + getLastName(user));
-		transaction.setUser_id(user.getUser_id());
-		transaction.setStart(transaction.getTimestamp());
-		transaction.setName("Retail Sales (Cash)");
-		transaction.setDescr("Internet purchase of software");
 
+		Double price = totalPrice(shoppingCart);
+		if (price > 0.0) {
+			Transactions transaction = new Transactions();
 
-		String profileName = transaction.getName();
-		Profiles profile = profilesService.retrieve(profileName);
-		
-		if ("".compareTo(profile.getVariables()) != 0) {
-			variables = ProfileUtils.getObject(ProfileUtils.prepareVariableString("%tax%", taxRate, profile.getVariables()));
+			transaction.setTimestamp(new Date());
+			transaction.setAmount(price);
+			transaction.setTax(totalTax(shoppingCart));
+			transaction.setPayment_name(getFirstName(user) + " " + getLastName(user));
+			transaction.setUser_id(user.getUser_id());
+			transaction.setStart(transaction.getTimestamp());
+			transaction.setName("Retail Sales (Cash)");
+			transaction.setDescr("Internet purchase of software");
+
+			String profileName = transaction.getName();
+			Profiles profile = profilesService.retrieve(profileName);
+
+			if ("".compareTo(profile.getVariables()) != 0) {
+				variables = ProfileUtils.getObject(ProfileUtils.prepareVariableString("%tax%", taxRate, profile.getVariables()));
+			}
+
+			fetalTransactionService.execTransaction(profile, transaction, variables);
+
+			transactionsService.create(transaction);
 		}
-		
-		fetalTransactionService.execTransaction(profile, transaction, variables);	
-		
-		transactionsService.create(transaction);
-
 		shoppingCartService.closeCart(shoppingCart.getReference());
 
 		String pdfFile = salesReceipt.print(shoppingCart);
@@ -238,7 +243,7 @@ public class ShoppingCartController {
 			shoppingCart.setPayment_gateway(gateway);
 			shoppingCartService.create(shoppingCart);
 		}
-		
+
 		BraintreeGateway gateway = BraintreeGatewayFactory.fromConfigFile(new URL(configUrl));
 
 		model.addAttribute("clientToken", gateway.clientToken().generate());
@@ -261,58 +266,57 @@ public class ShoppingCartController {
 
 	private String getFirstName(User user) {
 		String firstName = "";
-
-		if (user.getCustomer() != null) {
-			firstName = user.getCustomer().getFirstname();
-		} else if (user.getEmployee() != null) {
-			firstName = user.getEmployee().getFirstname();
-		} else if (user.getInvestor() != null) {
-			firstName = user.getInvestor().getFirstname();
-		} else if (user.getVendor() != null) {
-			firstName = user.getVendor().getFirstname();
+		if (user != null) {
+			if (user.getCustomer() != null) {
+				firstName = user.getCustomer().getFirstname();
+			} else if (user.getEmployee() != null) {
+				firstName = user.getEmployee().getFirstname();
+			} else if (user.getInvestor() != null) {
+				firstName = user.getInvestor().getFirstname();
+			} else if (user.getVendor() != null) {
+				firstName = user.getVendor().getFirstname();
+			}
 		}
-
 		return firstName;
 	}
 
 	private String getLastName(User user) {
 		String lastName = "";
-
-		if (user.getCustomer() != null) {
-			lastName = user.getCustomer().getLastname();
-		} else if (user.getEmployee() != null) {
-			lastName = user.getEmployee().getLastname();
-		} else if (user.getInvestor() != null) {
-			lastName = user.getInvestor().getLastname();
-		} else if (user.getVendor() != null) {
-			lastName = user.getVendor().getLastname();
+		if (user != null) {
+			if (user.getCustomer() != null) {
+				lastName = user.getCustomer().getLastname();
+			} else if (user.getEmployee() != null) {
+				lastName = user.getEmployee().getLastname();
+			} else if (user.getInvestor() != null) {
+				lastName = user.getInvestor().getLastname();
+			} else if (user.getVendor() != null) {
+				lastName = user.getVendor().getLastname();
+			}
 		}
-
 		return lastName;
 	}
-	
+
 	private Double totalPrice(ShoppingCart shoppingCart) {
 		Double total = 0.0;
-		
+
 		Set<ShoppingCartItems> items = shoppingCart.getShoppingCartItems();
-		
-		for(ShoppingCartItems item : items) {
+
+		for (ShoppingCartItems item : items) {
 			total += (item.getProduct_price() * item.getQty()) - item.getProduct_discount();
 		}
-		
+
 		return total;
 	}
 	private Double totalTax(ShoppingCart shoppingCart) {
 		Double total = 0.0;
 
 		Set<ShoppingCartItems> items = shoppingCart.getShoppingCartItems();
-		
-		for(ShoppingCartItems item : items) {
+
+		for (ShoppingCartItems item : items) {
 			total += item.getProduct_tax();
 		}
-		
+
 		return total;
 	}
-
 
 }

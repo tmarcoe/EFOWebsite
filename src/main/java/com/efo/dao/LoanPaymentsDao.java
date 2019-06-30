@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -77,19 +78,24 @@ public class LoanPaymentsDao implements ILoanPayments {
 		session.close();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Map<String, Double> sumMontlyPayments(Date begin, Date end) {
+		LocalDate jBegin = new LocalDate(begin);
+		LocalDate jEnd = new LocalDate(end);
+		Double loan = 0.0;
 		String headingPattern = "yyyy-MM";
 		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
-
 		Map<String, Double> loanMap = new HashMap<String, Double>();
 		Session session = session();
-		String hql = "SELECT payment_date, SUM(payment_made) FROM LoanPayments "
-				   + "WHERE payment_date BETWEEN :begin AND :end";
+		
+		String hql = "SELECT SUM(payment_made) FROM LoanPayments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
+		
+		while (jBegin.isBefore(jEnd) || jBegin.isEqual(jEnd)) {
 
-		List<Object[]> items = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
-		for(Object[] item : items) {
-			loanMap.put(df.format((Date) item[0]), (Double) item[1]); 
+			loan = (Double) session.createQuery(hql).setInteger("month", jBegin.getMonthOfYear()).setInteger("year", jBegin.getYear()).uniqueResult();
+			if (loan == null) loan = 0.0;
+		
+			loanMap.put(df.format(jBegin.toDate()), loan); 
+			jBegin = jBegin.plusMonths(1);
 		}
 
 		return loanMap;

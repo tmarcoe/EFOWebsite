@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -75,25 +76,29 @@ public class ExpensesDao implements IExpenses {
 		session.close();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Map<String, Object[]> sumMonthlyExpenses(Date begin, Date end) {
+	public Map<String, String> sumMonthlyExpenses(Date begin, Date end) {
+		LocalDate jBegin = new LocalDate(begin);
+		LocalDate jEnd = new LocalDate(end);
+		Double exp = 0.0;
 		String headingPattern = "yyyy-MM";
 		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
 
-		Map<String, Object[]> expMap = new HashMap<String, Object[]>();
+		Map<String, String> expMap = new HashMap<String, String>();
 		Session session = session();
-		String hql = "SELECT e.paid, SUM(e.amount), SUM(p.payment_made) FROM Expenses e, Expense_Payments p "
-				   + "WHERE e.paid BETWEEN :begin AND :end AND MONTH(e.paid) = MONTH(p.payment_date) "
-				   + "AND YEAR(e.paid) = YEAR(p.payment_date)";
+		String cash = "SELECT SUM(amount) FROM Expenses WHERE MONTH(paid) = :month AND YEAR(paid) = :year";
+		String credit = "SELECT SUM(payment_made) FROM ExpensePayments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
 		
-		List<Object[]> exp = session.createSQLQuery(hql).setDate("begin", end).setDate("end", end).list();
-		Object[] obj = new Object[2];
-		
-		for (Object[] item : exp) {
-			obj[0] = item[1];
-			obj[1] = item[2];
-			
-			expMap.put(df.format((Date) item[0]), obj);
+		Double[] item = new Double[2];
+		while (jBegin.isBefore(jEnd) || jBegin.isEqual(jEnd)) {
+			exp = (Double) session.createQuery(cash).setInteger("month", jBegin.getMonthOfYear()).setInteger("year", jBegin.getYear()).uniqueResult();
+			if (exp == null) exp = 0.0;
+			item[0] = exp;
+			exp = (Double) session.createQuery(credit).setInteger("month", jBegin.getMonthOfYear()).setInteger("year", jBegin.getYear()).uniqueResult();
+			if (exp == null) exp = 0.0;
+			item[1] = exp;
+				
+			expMap.put(df.format(jBegin.toDate()), String.format("%.2f,%.2f", item[0], item[1]));
+			jBegin = jBegin.plusMonths(1);
 		}
 		session.close();
 		

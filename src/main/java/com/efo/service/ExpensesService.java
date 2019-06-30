@@ -44,7 +44,7 @@ public class ExpensesService implements IExpenses {
 		expensesDao.delete(expenses);
 
 	}
-	public Map<String, Object[]> sumMonthlyExpenses(Date begin, Date end) {
+	public Map<String, String> sumMonthlyExpenses(Date begin, Date end) {
 		return expensesDao.sumMonthlyExpenses(begin, end);
 	}
 }

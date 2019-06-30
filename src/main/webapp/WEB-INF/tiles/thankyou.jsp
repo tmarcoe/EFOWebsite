@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 
-<table class="tableview tableshadow tableheading rjthird rjfourth rjfifth rjsixth" style="margin-left: auto; margin-right: auto; width: 50%">
+<table class="tableview tableshadow tableheading rjthird rjfourth rjfifth rjsixth rjseventh" style="margin-left: auto; margin-right: auto; width: 50%">
 	<caption>Shopping Cart</caption>
 	<tr>
 		<td colspan="7"><h3>Invoice #: ${shoppingCart.reference}</h3></td>

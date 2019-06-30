@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,7 +48,7 @@ public class ProfilesDao implements IProfiles {
 	@Override
 	public List<Profiles> retrieveRawList() {
 		Session session = session();
-		List<Profiles> profList = session.createCriteria(Profiles.class).list();
+		List<Profiles> profList = session.createCriteria(Profiles.class).addOrder(Order.asc("name")).list();
 		session.close();
 		
 		return profList;

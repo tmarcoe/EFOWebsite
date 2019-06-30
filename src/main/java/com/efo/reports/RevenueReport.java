@@ -48,32 +48,30 @@ public class RevenueReport {
 
 		int m = jBegin.getMonthOfYear();
 		int y = jBegin.getYear();
-		Map<String, Object[]> revMap = revenuesService.sumCashRevenue(begin, end);
-		Map<String, Object[]> expMap = expensesService.sumMonthlyExpenses(begin, end);
+		Map<String, String> revMap = revenuesService.sumCashRevenue(begin, end);
+		Map<String, String> expMap = expensesService.sumMonthlyExpenses(begin, end);
 		Map<String, Double> loanMap = loanPaymentsService.sumMontlyPayments(begin, end);
+		
 		for (int i = 0; i < diff; i++) {
 			String key = String.format("%d-%02d", y,m);
-			Object obj[] = revMap.get(key);
-			if (obj != null ) {
-				cash = (Double) obj[0];
-				credit = (Double) obj[1];
-				rev = cash + credit;
-			}else{
-				rev = 0.0;
-			}
+			String value = revMap.get(key);
+			String[] item = value.split(",");
+			
+			cash = Double.valueOf(item[0]);
+			credit = Double.valueOf(item[1]);
+			rev = cash + credit;
 			revenues.add(rev);
-			obj = expMap.get(key);
-			if ( obj != null) {
-				cash = (Double) obj[0];
-				credit = (Double) obj[1];
-			}else{
-				exp = 0.0;
-			}
+			
+			value = expMap.get(key);
+			item = value.split(",");
+			cash = Double.valueOf(item[0]);
+			credit = Double.valueOf(item[1]);
 			loanPayments = loanMap.get(key);
-			if (loanPayments == null) loanPayments = 0.0;
 			exp = cash + credit + loanPayments;
+			
 			expenses.add(exp);
 			profits.add(rev - exp);
+
 			m++;
 			if (m > 12) {
 				m = 1;

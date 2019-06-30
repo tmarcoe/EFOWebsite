@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -59,26 +58,33 @@ public class RevenuesDao implements IRevenues {
 	}
 	
 
-	@SuppressWarnings("unchecked")
-	public Map<String, Object[]> sumCashRevenue(Date begin, Date end) {
+	public Map<String, String> sumCashRevenue(Date begin, Date end) {
 		LocalDate jBegin = new LocalDate(begin);
 		LocalDate jEnd = new LocalDate(end);
+		Double rev = 0.0;
 		String headingPattern = "yyyy-MM";
 		SimpleDateFormat df = new SimpleDateFormat(headingPattern);
-		Map<String, Object[]> revMap = new HashMap<String, Object[]>();
-		String cash = "SELECT received, SUM(r.amount) FROM Revenue WHERE ";
+		Map<String, String> revMap = new HashMap<String, String>();
+		String cash = "SELECT SUM(amount) FROM Revenues WHERE MONTH(received) = :month AND YEAR(received) = :year";
+		String credit = "SELECT SUM(payment_made) FROM RevenuePayments WHERE MONTH(payment_date) = :month AND YEAR(payment_date) = :year";
+
 		Session session = session();
-		while (jBegin.isBefore(jEnd)) {
-			List<Object[]> revenues = session.createQuery(cash).setDate("begin", begin).setDate("end", end).list();
-			Object[] obj = new Object[2];
-			for (Object[] item : revenues) {
-				obj[0] = item[1];
-				obj[1] = item[2];
 
-				revMap.put(df.format((Date) item[0]), obj);
-			}
+		Double[] item = new Double[2];
+		while (jBegin.isBefore(jEnd) || jBegin.isEqual(jEnd)) {
+			rev =  (Double) session.createSQLQuery(cash).setInteger("month", jBegin.getMonthOfYear())
+											      .setInteger("year", jBegin.getYear()).uniqueResult();
+			if (rev ==  null) rev = 0.0;
+			item[0] = rev;
+			rev =  (Double) session.createQuery(credit).setInteger("month", jBegin.getMonthOfYear())
+				      .setInteger("year", jBegin.getYear()).uniqueResult();
+			
+			if (rev ==  null) rev = 0.0;
+			item[1] = rev;
+			String key = df.format(jBegin.toDate());
+			revMap.put(key, String.format("%.2f,%.2f", item[0], item[1]));
+			jBegin = jBegin.plusMonths(1);
 		}
-
 		session.close();
 		
 		return revMap;

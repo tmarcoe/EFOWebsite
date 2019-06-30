@@ -50,7 +50,7 @@ function countItems(uName) {
 				<li><button class="dropbtn" onclick="window.location.href = '/index/createuserprofile'">Sign Up</button></li>
 			</sec:isNotAuthenticated>
 			<sec:hasRole role="ADMIN">
-				<li><button class="dropbtn" onclick="window.location.href = '/settings'">Settings</button></li>
+				<li><button class="dropbtn" onclick="window.location.href = '/settings'">To EFO</button></li>
 			</sec:hasRole>
 			<li><div class="dropdown">
 					<button class="dropbtn">Blogs</button>
@@ -74,8 +74,9 @@ function countItems(uName) {
 			<li><div class="dropdown">
 					<button class="dropbtn">Products</button>
 					<div class="dropdown-content">
-						<a href="/index/efo">Electronic Financial Officer</a> <a href="/index/ftl">Flexible Transaction Language</a> <a
-							href="/index/ftlide">FTL IDE</a>
+						<a href="/index/efo">Electronic Financial Officer</a> 
+						<a href="/index/ftl">Flexible Transaction Language</a> 
+						<a href="/index/ftlide">FTL IDE</a>
 					</div>
 				</div></li>
 			<li><button class="dropbtn" onclick="window.location.href = '/index/documentation'">Documentation</button></li>
@@ -92,9 +93,10 @@ function countItems(uName) {
 			</sec:isAuthenticated>
 			<sec:hasRole role="ADMIN">
 				<li><div class="dropdown">
-						<button class="dropbtn">Product Managment Tool</button>
+						<button class="dropbtn">EFO Product Managment</button>
 						<div class="dropdown-content">
-							<a href="/admin/newproduct">New Product</a> <a href="/admin/manageproducts">Manage Products</a>
+							<a href="/admin/newproduct">New Product</a> 
+							<a href="/admin/manageproducts">Manage Products</a>
 						</div>
 					</div></li>
 			</sec:hasRole>

@@ -32,7 +32,7 @@ public class RevenuesService implements IRevenues {
 		return revenuesDao.retrieveRawList();
 	}
 	
-	public Map<String, Object[]> sumCashRevenue(Date begin, Date end) {
+	public Map<String, String> sumCashRevenue(Date begin, Date end) {
 		return revenuesDao.sumCashRevenue(begin, end);
 	}
 
