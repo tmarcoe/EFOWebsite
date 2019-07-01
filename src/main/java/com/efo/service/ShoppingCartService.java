@@ -40,6 +40,10 @@ public class ShoppingCartService implements IShoppngCart {
 		shoppingCartDao.closeCart(reference);
 	}
 	
+	public boolean checkHistory(String prdId, Long user_id) {
+		return shoppingCartDao.checkHistory(prdId, user_id);
+	}
+	
 	@Override
 	public void merge(ShoppingCart shoppingCart) {
 		shoppingCartDao.merge(shoppingCart);

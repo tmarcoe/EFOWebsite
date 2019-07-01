@@ -89,6 +89,17 @@ public class ShoppingCartDao implements IShoppngCart {
 		tx.commit();
 		session.close();
 	}
+	
+	public boolean checkHistory(String prdId, Long user_id) {
+		String hql = "SELECT COUNT(*) FROM ShoppingCart s, ShoppingCartItems i WHERE s.user_id = :user_id "
+				   + "AND i.product_id = :prdId AND s.time_processed IS NOT NULL AND s.reference = i.reference";
+		Session session = session();
+		Long count = (Long) session.createQuery(hql).setString("prdId", prdId).setLong("user_id", user_id).uniqueResult();
+		
+		session.close();
+		
+		return (count > 0L);
+	}
 
 	@Override
 	public void merge(ShoppingCart shoppingCart) {

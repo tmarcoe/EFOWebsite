@@ -77,6 +77,11 @@ public class ShoppingCartRestController {
 				item.setProduct_tax(product.getProduct_tax());
 			}
 		}
+		if (shoppingCartService.checkHistory(prdId, cart.getUser_id()) ) {
+			item.setProduct_price(0.0);
+			item.setProduct_discount(0.0);
+			item.setProduct_tax(0.0);
+		}
 		if (item.getQty() > 1) {
 			return resultToJSON("ERROR", "You are only allowed 1 of this item");
 		} else {
