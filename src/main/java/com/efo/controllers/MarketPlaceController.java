@@ -274,6 +274,12 @@ public class MarketPlaceController {
 	@RequestMapping("/user/deletempproduct")
 	public String deleteMarketPlaceProduct(@ModelAttribute("product_reference") Long product_reference) {
 		
+		MarketPlaceProducts product = marketPlaceProductsService.retrieve(product_reference);
+		
+		File file = new File(uploadrepository + product.getFile_name());
+		
+		file.delete();
+		
 		marketPlaceProductsService.delete(product_reference);
 		
 		return "redirect:/index/viewmarketplace";

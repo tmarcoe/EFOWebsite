@@ -106,6 +106,7 @@ public class ProductsController {
 
 	@RequestMapping("scproductdelete")
 	public String scProductDelete(@ModelAttribute("id") String id) {
+		
 
 		productsService.delete(id);
 
