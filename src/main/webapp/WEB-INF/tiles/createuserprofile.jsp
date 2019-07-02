@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 <sf:form id="overhead" method="post" action="/index/adduserprofile" modelAttribute="user" enctype="multipart/form-data">
-	<table class="fancy-table tableshadow" >
+	<table class="fancy-table tableshadow cjfirst" >
 		<tr>
 			<td colspan="3"><sf:select class="fancy" path="customer.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
@@ -17,7 +17,7 @@
 				<sf:option value="Dr.">Dr.</sf:option>
 				</sf:select>
 				<sf:input class="fancy" path="customer.firstname" placeholder="First Name"/>
-			<sf:input class="fancy" path="customer.lastname" placeholder="Last Name"/></td>
+				<sf:input class="fancy" path="customer.lastname" placeholder="Last Name"/></td>
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="username" placeholder="Email"/></td>
@@ -25,6 +25,24 @@
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2"><h3>Billing Address</h3></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.address1" placeholder="Address Line 1" /></td>
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address Line 2" /></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.city" placeholder="City" /></td>
+			<td><sf:input class="fancy" path="common.region" placeholder="Region or State" /></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="3 character Country Code" /></td>
 		</tr>
 		<tr>
 			<td><b>Password</b><br>

@@ -34,8 +34,9 @@
 					<sf:option value="Ms.">Ms.</sf:option>
 					<sf:option value="Miss.">Miss.</sf:option>
 					<sf:option value="Dr.">Dr.</sf:option>
-				</sf:select> <sf:input class="fancy" path="customer.firstname" placeholder="First Name" /> <sf:input class="fancy"
-					path="customer.lastname" placeholder="Last Name" /></td>
+				</sf:select> 
+				<sf:input class="fancy" path="customer.firstname" placeholder="First Name" /> 
+				<sf:input class="fancy" path="customer.lastname" placeholder="Last Name" /></td>
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="username" placeholder="Email" /></td>
@@ -60,7 +61,7 @@
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
-			<td><sf:input class="fancy" path="common.country" placeholder="2 character Country Code" /></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="3 character Country Code" /></td>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit">

@@ -18,6 +18,7 @@
 		<b>Search</b>
 	</button>
 </div>
+<div class="scrollArea" >
 <c:forEach var="item" items="${mpList}">
 	<fmt:formatNumber var="prdId" pattern="0000000000" value="${item.product_reference}"/>
 	<table class="fancy-table tableshadow rjsecond" style="width: 50%;" onclick="window.location.href='/user/displayprd/${prdId}'">
@@ -60,6 +61,7 @@
 	</table>
 	<br>
 </c:forEach>
+</div>
 <script>
 	function search() {
 		window.location.href = "/index/marketplacesearch?search="

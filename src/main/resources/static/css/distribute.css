@@ -662,6 +662,14 @@ div.scrollPanel {
 	overflow: auto;
 }
 
+div.scrollArea {
+	position: fixed;
+	top: 100px;
+	width:100%;
+	height: 80%;
+	overflow: auto;
+}
+
 .searchArea {
 	position: absolute;
 	top: 1em;
