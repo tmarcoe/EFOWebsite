@@ -30,6 +30,9 @@ import com.braintreegateway.Transaction;
 import com.efo.component.ProfileUtils;
 import com.efo.component.SendEmail;
 import com.efo.dao.InvoiceNumDao;
+import com.efo.entity.MarketPlaceProducts;
+import com.efo.entity.MarketPlaceSales;
+import com.efo.entity.MarketPlaceVendors;
 import com.efo.entity.Products;
 import com.efo.entity.Profiles;
 import com.efo.entity.ShoppingCart;
@@ -40,6 +43,8 @@ import com.efo.forms.PrintSalesReceiptPDF;
 import com.efo.payment.BraintreeGatewayFactory;
 import com.efo.payment.Checkout;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.MarketPlaceProductsService;
+import com.efo.service.MarketPlaceVendorsService;
 import com.efo.service.ProductsService;
 import com.efo.service.ProfilesService;
 import com.efo.service.ShoppingCartItemsService;
@@ -57,6 +62,12 @@ public class ShoppingCartController {
 
 	@Autowired
 	private ShoppingCartItemsService cartItemsService;
+	
+	@Autowired
+	private MarketPlaceProductsService marketPlaceProductsService;
+	
+	@Autowired
+	private MarketPlaceVendorsService marketPlaceVendorsService;
 
 	@Autowired
 	private InvoiceNumDao invoiceNumService;
@@ -105,6 +116,9 @@ public class ShoppingCartController {
 
 	@Value("${efo.admin.email}")
 	private String csrEmail;
+	
+	@Value("${efo.commission.rate}")
+	private String commissionRate;
 
 	private SimpleDateFormat dateFormat;
 
@@ -155,6 +169,8 @@ public class ShoppingCartController {
 		List<ShoppingCartItems> items = cartItemsService.retrieveRawList(shoppingCart.getReference());
 		shoppingCart.setShoppingCartItems(new HashSet<ShoppingCartItems>(items));
 
+		createCommissionRecords(shoppingCart);
+		
 		Double price = totalPrice(shoppingCart);
 		if (price > 0.0) {
 			Transactions transaction = new Transactions();
@@ -317,6 +333,40 @@ public class ShoppingCartController {
 		}
 
 		return total;
+	}
+	
+	private void createCommissionRecords(ShoppingCart cart) {
+		Set<ShoppingCartItems> items = cart.getShoppingCartItems();
+		Double commission = Double.valueOf(commissionRate);
+		
+		for(ShoppingCartItems item : items) {
+			if (item.getProduct_id().startsWith("EFO")) continue;
+			Long product_reference = Long.valueOf(item.getProduct_id());
+			
+			MarketPlaceProducts product = marketPlaceProductsService.retrieve(product_reference);
+			MarketPlaceVendors vendor = product.getMarketPlaceVendors();
+
+			MarketPlaceSales sales = new MarketPlaceSales();
+			Double price = item.getProduct_price() - item.getProduct_discount();
+			sales.setBuyer(cart.getUser_id());
+			sales.setProduct_reference(product_reference);
+			sales.setSold_for(item.getProduct_price());
+			sales.setCommission(price * commission);
+			sales.setDiscount(item.getProduct_discount());
+			sales.setProduct_name(product.getProduct_name());
+			sales.setTax(product.getProduct_tax());
+			sales.setDate_sold(new Date());
+			vendor.setSales_total(vendor.getSales_total() + sales.getSold_for());
+			vendor.setCommission_total(vendor.getCommission_total() + sales.getCommission());
+			vendor.setSales_owed(vendor.getSales_owed() + sales.getSold_for());
+			vendor.setCommission_owed(vendor.getCommission_owed() + sales.getCommission());
+			product.getMarketPlaceSales().add(sales);
+			sales.setMarketPlaceProducts(product);
+			marketPlaceVendorsService.merge(vendor);
+		}
+		
+		
+		
 	}
 
 }

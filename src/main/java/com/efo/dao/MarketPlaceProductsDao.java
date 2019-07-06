@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.efo.entity.MarketPlaceProducts;
+import com.efo.entity.MarketPlaceVendors;
 import com.efo.interfaces.IMarketPlaceProducts;
 
 @Transactional
@@ -65,6 +66,16 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 		session.close();
 		
 		return mList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MarketPlaceProducts> getSalesCommissionReport(MarketPlaceVendors vendor) {
+		String hql = "";
+		Session session = session();
+		List<MarketPlaceProducts> pList =session.createQuery(hql).list();
+		session.close();
+		
+		return pList;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public class MarketPlaceSales implements Serializable {
 	private Long product_reference;
 	private String product_name;
 	private Double sold_for;
+	private Double commission;
 	private Double tax;
 	private Double discount;
 	private Date date_sold;
@@ -69,6 +70,14 @@ public class MarketPlaceSales implements Serializable {
 
 	public void setSold_for(Double sold_for) {
 		this.sold_for = sold_for;
+	}
+
+	public Double getCommission() {
+		return commission;
+	}
+
+	public void setCommission(Double commission) {
+		this.commission = commission;
 	}
 
 	public Double getTax() {

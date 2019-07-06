@@ -100,8 +100,10 @@ public class MarketPlaceController {
 			if (marketPlaceVendors == null ) {
 				marketPlaceVendors = new MarketPlaceVendors();
 				marketPlaceVendors.setUser_id(user.getUser_id());
-				marketPlaceVendors.setTotal_sales(0.0);
-				marketPlaceVendors.setCommission_paid(0.0);
+				marketPlaceVendors.setSales_total(0.0);
+				marketPlaceVendors.setCommission_total(0.0);
+				marketPlaceVendors.setSales_owed(0.0);
+				marketPlaceVendors.setCommission_owed(0.0);
 				assignName(marketPlaceVendors, user);
 				marketPlaceVendorsService.create(marketPlaceVendors);
 				marketPlaceProducts.setFirstTime(true);

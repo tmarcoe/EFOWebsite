@@ -23,8 +23,10 @@ public class MarketPlaceVendors implements Serializable {
 	private String company_name;
 	private String logo;
 	private String name;
-	private Double total_sales;
-	private Double commission_paid;
+	private Double sales_total;
+	private Double commission_total;
+	private Double sales_owed;
+	private Double commission_owed;
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "marketPlaceVendors", cascade = CascadeType.ALL)
 	private Set<MarketPlaceProducts> marketPlaceProducts = new HashSet<MarketPlaceProducts>(0);
@@ -69,20 +71,36 @@ public class MarketPlaceVendors implements Serializable {
 		this.name = name;
 	}
 
-	public Double getTotal_sales() {
-		return total_sales;
+	public Double getSales_total() {
+		return sales_total;
 	}
 
-	public void setTotal_sales(Double total_sales) {
-		this.total_sales = total_sales;
+	public void setSales_total(Double sales_total) {
+		this.sales_total = sales_total;
 	}
 
-	public Double getCommission_paid() {
-		return commission_paid;
+	public Double getCommission_total() {
+		return commission_total;
 	}
 
-	public void setCommission_paid(Double commission_paid) {
-		this.commission_paid = commission_paid;
+	public void setCommission_total(Double commission_total) {
+		this.commission_total = commission_total;
+	}
+
+	public Double getSales_owed() {
+		return sales_owed;
+	}
+
+	public void setSales_owed(Double sales_owed) {
+		this.sales_owed = sales_owed;
+	}
+
+	public Double getCommission_owed() {
+		return commission_owed;
+	}
+
+	public void setCommission_owed(Double commission_owed) {
+		this.commission_owed = commission_owed;
 	}
 
 	public Set<MarketPlaceProducts> getMarketPlaceProducts() {
