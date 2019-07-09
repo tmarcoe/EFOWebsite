@@ -356,10 +356,10 @@ public class ShoppingCartController {
 			sales.setProduct_name(product.getProduct_name());
 			sales.setTax(product.getProduct_tax());
 			sales.setDate_sold(new Date());
+			product.setTotal_sales(product.getTotal_sales() + sales.getSold_for());
+			product.setTotal_commission(product.getTotal_commission() + sales.getCommission());
 			vendor.setSales_total(vendor.getSales_total() + sales.getSold_for());
 			vendor.setCommission_total(vendor.getCommission_total() + sales.getCommission());
-			vendor.setSales_owed(vendor.getSales_owed() + sales.getSold_for());
-			vendor.setCommission_owed(vendor.getCommission_owed() + sales.getCommission());
 			product.getMarketPlaceSales().add(sales);
 			sales.setMarketPlaceProducts(product);
 			marketPlaceVendorsService.merge(vendor);

@@ -498,6 +498,11 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/displayprd.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="managempvendors" extends="distribute.base">
+		<put-attribute name="title" value="Manage Vendors"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/managempvendors.jsp"></put-attribute>
+	</definition>
+	
 	<!-- Products Controller -->
 	<definition name="newproduct" extends="distribute.base">
 		<put-attribute name="title" value="New Product"></put-attribute>

@@ -87,6 +87,9 @@ function countItems(uName) {
 							<sec:isAuthenticated>
 								<a href="/user/marketplaceregister">Add A Product</a>
 							</sec:isAuthenticated>
+							<sec:hasRole role="ADMIN">
+								<a href="/admin/managempvendors">Vendor Reports</a>
+							</sec:hasRole>
 							<a href="/index/viewmarketplace">Explore the Marketplace</a>
 						</div>
 					</div></li>

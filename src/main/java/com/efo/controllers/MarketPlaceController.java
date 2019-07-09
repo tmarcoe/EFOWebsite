@@ -33,6 +33,7 @@ import com.efo.entity.MarketPlaceProducts;
 import com.efo.entity.MarketPlaceVendors;
 import com.efo.entity.ShoppingCart;
 import com.efo.entity.User;
+import com.efo.forms.PrintMarketPlaceSalesPDF;
 import com.efo.payment.BraintreeGatewayFactory;
 import com.efo.service.MarketPlaceProductsService;
 import com.efo.service.MarketPlaceVendorsService;
@@ -56,6 +57,9 @@ public class MarketPlaceController {
 	
 	@Autowired
 	private InvoiceNumDao invoiceNumService;
+	
+	@Autowired
+	PrintMarketPlaceSalesPDF mpSalesReport;
 	
 	@Value("${efo.upload.logo}")
 	private String uploadLogo;
@@ -84,6 +88,22 @@ public class MarketPlaceController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 		binder.registerCustomEditor(HashSet.class, new CustomCollectionEditor(HashSet.class, true));
 	}
+	
+	@RequestMapping("/admin/managempvendors")
+	public String manageMarketPlaceVendors(Model model) {
+		
+		model.addAttribute("vendorList", marketPlaceVendorsService.retrieveRawList());
+		
+		return "managempvendors";
+	}
+	
+	@RequestMapping("/admin/individualreport")
+	public String individualReport(@ModelAttribute("id") Long id, Model model) throws IOException {
+		
+		mpSalesReport.print(marketPlaceVendorsService.retrieve(id));
+		
+		return "redirect:/admin/managempvendors";
+	}
 
 	@RequestMapping("/user/marketplaceregister")
 	public String MarketPlaceRegister(Model model, Principal principal) {
@@ -102,8 +122,6 @@ public class MarketPlaceController {
 				marketPlaceVendors.setUser_id(user.getUser_id());
 				marketPlaceVendors.setSales_total(0.0);
 				marketPlaceVendors.setCommission_total(0.0);
-				marketPlaceVendors.setSales_owed(0.0);
-				marketPlaceVendors.setCommission_owed(0.0);
 				assignName(marketPlaceVendors, user);
 				marketPlaceVendorsService.create(marketPlaceVendors);
 				marketPlaceProducts.setFirstTime(true);

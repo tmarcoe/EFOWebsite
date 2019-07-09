@@ -33,6 +33,8 @@ public class MarketPlaceProducts implements Serializable {
 	private String keywords;
 	private Double product_price;
 	private Double product_tax;
+	private Double total_sales;
+	private Double total_commission;
 	private String file_name;
 	@NotBlank
 	private String version;
@@ -111,6 +113,22 @@ public class MarketPlaceProducts implements Serializable {
 
 	public void setProduct_tax(Double product_tax) {
 		this.product_tax = product_tax;
+	}
+
+	public Double getTotal_sales() {
+		return total_sales;
+	}
+
+	public void setTotal_sales(Double total_sales) {
+		this.total_sales = total_sales;
+	}
+
+	public Double getTotal_commission() {
+		return total_commission;
+	}
+
+	public void setTotal_commission(Double total_commission) {
+		this.total_commission = total_commission;
 	}
 
 	public String getFile_name() {
