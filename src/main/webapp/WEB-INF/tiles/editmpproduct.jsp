@@ -45,6 +45,8 @@
 	</table>
 	<sf:hidden path="product_reference" />
 	<sf:hidden path="reference" />
-	<sf:hidden path="product_tax" />
+	<sf:hidden path="product_tax" value="0"/>
+	<sf:hidden path="total_sales" value="0"/>
+	<sf:hidden path="total_commission" value="0"/>
 	<sf:hidden path="introduced_on" />
 </sf:form>

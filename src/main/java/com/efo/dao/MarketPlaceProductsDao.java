@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -49,7 +50,7 @@ public class MarketPlaceProductsDao implements IMarketPlaceProducts {
 	@Override
 	public List<MarketPlaceProducts> retrieveRawList() {
 		Session session = session();
-		List<MarketPlaceProducts> mList = session.createCriteria(MarketPlaceProducts.class).list();
+		List<MarketPlaceProducts> mList = session.createCriteria(MarketPlaceProducts.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		
 		session.close();
 		return mList;

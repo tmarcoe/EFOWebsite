@@ -39,7 +39,7 @@ function countItems(uName) {
 		<img alt="cart" src="<c:url value="/images/shopping-cart-icon.png" />"><a id="scCount" href="${scLink}" style="text-decoration: none; color: white;">(0)</a></span>
 	<div class="container">
 		<ul class="nav">
-			<li><button class="dropbtn" onclick="window.location.href = '/index/'">Home</button></li>
+			<li><button class="dropbtn" onclick="window.location.href = '/index/introduction-a'">Home</button></li>
 			<sec:isAuthenticated>
 				<li><button class="dropbtn" onclick="window.location.href = '/logout'">Logout</button></li>
 				<li><button class="dropbtn" onclick="window.location.href = '/user/edituserprofile'">Edit Profile</button></li>

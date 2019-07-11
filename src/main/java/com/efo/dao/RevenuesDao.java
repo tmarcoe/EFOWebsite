@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -51,7 +52,7 @@ public class RevenuesDao implements IRevenues {
 	@Override
 	public List<Revenues> retrieveRawList() {
 		Session session = session();
-		List<Revenues> revList = session.createCriteria(Revenues.class).list();
+		List<Revenues> revList = session.createCriteria(Revenues.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		session.close();
 		
 		return revList;

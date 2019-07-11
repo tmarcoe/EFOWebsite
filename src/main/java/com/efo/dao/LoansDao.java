@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -47,7 +48,7 @@ public class LoansDao implements ILoans {
 	@Override
 	public List<Loans> retrieveRawList() {
 		Session session = session();
-		List<Loans> loanList = session.createCriteria(Loans.class).list();
+		List<Loans> loanList = session.createCriteria(Loans.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		session.close();
 		
 		return loanList;

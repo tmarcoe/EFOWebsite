@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -48,7 +49,7 @@ public class ProfilesDao implements IProfiles {
 	@Override
 	public List<Profiles> retrieveRawList() {
 		Session session = session();
-		List<Profiles> profList = session.createCriteria(Profiles.class).addOrder(Order.asc("name")).list();
+		List<Profiles> profList = session.createCriteria(Profiles.class).addOrder(Order.asc("name")).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		session.close();
 		
 		return profList;

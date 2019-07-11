@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -52,7 +53,7 @@ public class ExpensesDao implements IExpenses {
 	@Override
 	public List<Expenses> retrieveRawList() {
 		Session session = session();
-		List<Expenses> expList = session.createCriteria(Expenses.class).list();
+		List<Expenses> expList = session.createCriteria(Expenses.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		session.close();
 		
 		return expList;
