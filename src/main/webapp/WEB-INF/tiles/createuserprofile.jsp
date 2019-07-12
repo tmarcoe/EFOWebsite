@@ -10,6 +10,7 @@
 	<table class="fancy-table tableshadow cjfirst" >
 		<tr>
 			<td colspan="3"><sf:select class="fancy" path="customer.salutation">
+				<sf:option value="">---Select---</sf:option>
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
@@ -20,11 +21,24 @@
 				<sf:input class="fancy" path="customer.lastname" placeholder="Last Name"/></td>
 		</tr>
 		<tr>
+			<td colspan="3">
+				<sf:errors class="error" path="customer.salutation" />
+				<sf:errors class="error" path="customer.firstname" />
+				<sf:errors class="error" path="customer.lastname" />
+			</td>
+		</tr>
+		<tr>
 			<td><sf:input class="fancy" path="username" placeholder="Email"/></td>
 			<td><sf:select class="fancy" path="customer.maleFemale">
+					<sf:option value="">---Select---</sf:option>
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
+		</tr>
+		<tr>
+			<td><sf:errors class="error" path="username" /></td>
+			<td><sf:errors class="error" path="customer.maleFemale" /></td>
+			
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -37,12 +51,27 @@
 			<td><sf:input class="fancy" path="common.address2" placeholder="Address Line 2" /></td>
 		</tr>
 		<tr>
+			<td><sf:errors class="error" path="common.address1" /></td>
+			<td><sf:errors class="error" path="common.address2" /></td>
+			
+		</tr>
+		<tr>
 			<td><sf:input class="fancy" path="common.city" placeholder="City" /></td>
 			<td><sf:input class="fancy" path="common.region" placeholder="Region or State" /></td>
 		</tr>
 		<tr>
+			<td><sf:errors class="error" path="common.city" /></td>
+			<td><sf:errors class="error" path="common.region" /></td>
+			
+		</tr>
+		<tr>
 			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
 			<td><sf:input class="fancy" path="common.country" placeholder="3 character Country Code" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors class="error" path="common.postalCode" /></td>
+			<td><sf:errors class="error" path="common.country" /></td>
+			
 		</tr>
 		<tr>
 			<td><b>Password</b><br>
@@ -65,6 +94,7 @@
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()" ><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
+	<sf:hidden path="customer.since"/>
 </sf:form>
 <script>
 </script>

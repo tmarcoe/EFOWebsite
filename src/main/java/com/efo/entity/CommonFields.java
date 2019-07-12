@@ -11,6 +11,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class CommonFields implements Serializable {
@@ -20,11 +21,14 @@ public class CommonFields implements Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	private Long user_id;
+	@NotBlank
 	private String address1;
 	private String address2;
+	@NotBlank
 	private String city;
 	private String region;
 	private String postalCode;
+	@NotBlank
 	private String country;
 	
 	@OneToOne(fetch = FetchType.EAGER)

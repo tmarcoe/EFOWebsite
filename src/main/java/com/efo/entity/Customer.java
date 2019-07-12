@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Customer implements Serializable{
@@ -20,9 +21,13 @@ public class Customer implements Serializable{
 	@Id
 	@GeneratedValue(generator = "generator")
 	private Long user_id;
+	@NotBlank
 	private String salutation;
+	@NotBlank
 	private String firstname;
+	@NotBlank
 	private String lastname;
+	@NotBlank
 	private String maleFemale;
 	private Date since;
 	

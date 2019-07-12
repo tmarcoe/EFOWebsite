@@ -13,6 +13,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
@@ -20,6 +21,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,19 +56,19 @@ public class UserProfileController {
 
 	@Autowired
 	private VerifyEmailForm verifyEmailForm;
-	
+
 	@Autowired
 	PasswordResetEmailForm passwordResetEmailForm;
 
 	@Autowired
 	private SendEmail sendEmail;
-	
+
 	@Autowired
 	private UserEncryption userEncryption;
 
 	@Autowired
 	private VerifyService verifyService;
-	
+
 	@Autowired
 	BCryptPasswordEncoder encoder;
 
@@ -92,8 +94,30 @@ public class UserProfileController {
 	}
 
 	@RequestMapping("/index/adduserprofile")
-	public String addUserProfile(@ModelAttribute("user") User user) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
-			IllegalBlockSizeException, BadPaddingException, MessagingException {
+	public String addUserProfile(@Valid @ModelAttribute("user") User user, BindingResult result) throws IOException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, MessagingException {
+		
+		if (result.hasErrors() || 
+				userService.exists(user.getUsername()) ||
+				"".compareTo(user.getCustomer().getSalutation()) == 0 ||
+				"".compareTo(user.getCustomer().getFirstname()) == 0 ||
+				"".compareTo(user.getCustomer().getLastname()) == 0 || 
+				"".compareTo(user.getCustomer().getMaleFemale()) == 0 ||
+				"".compareTo(user.getCommon().getAddress1()) == 0 ||
+				"".compareTo(user.getCommon().getCity()) == 0 ||
+				"".compareTo(user.getCommon().getCountry()) == 0) {
+			
+			if (userService.exists(user.getUsername())) result.rejectValue("username", "DuplicateKey.user.username");
+			if ("".compareTo(user.getCustomer().getSalutation()) == 0 ) result.rejectValue("customer.salutation", "NotBlank.customer.salutation");
+			if ("".compareTo(user.getCustomer().getFirstname()) == 0 ) result.rejectValue("customer.firstname", "NotBlank.customer.firstname");
+			if ("".compareTo(user.getCustomer().getLastname()) == 0 ) result.rejectValue("customer.lastname", "NotBlank.customer.lastname");
+			if ("".compareTo(user.getCustomer().getMaleFemale()) == 0 ) result.rejectValue("customer.maleFemale", "NotBlank.customer.maleFemale");
+			if ("".compareTo(user.getCommon().getAddress1()) == 0 ) result.rejectValue("common.address1", "NotBlank.common.address1");
+			if ("".compareTo(user.getCommon().getCity()) == 0 ) result.rejectValue("common.city", "NotBlank.common.city");
+			if ("".compareTo(user.getCommon().getCountry()) == 0 ) result.rejectValue("common.country", "NotBlank.common.country");
+			
+			return "createuserprofile";
+		}
 
 		user.setRoles(new HashSet<Role>());
 		user.getRoles().add(roleService.retrieve("USER"));
@@ -101,11 +125,11 @@ public class UserProfileController {
 		user.getCustomer().setSince(new Date());
 		user.setCommon(new CommonFields());
 		user.getCommon().setUser(user);
-		
+
 		userService.create(user);
 
 		Verify verify = new Verify();
-		String stId = userEncryption.emailAddressEncryption(user.getCustomer().getFirstname()+user.getCustomer().getLastname());
+		String stId = userEncryption.emailAddressEncryption(user.getCustomer().getFirstname() + user.getCustomer().getLastname());
 		verify.setId(stId);
 		verify.setUser_id(user.getUser_id());
 		verifyService.Create(verify);
@@ -128,14 +152,33 @@ public class UserProfileController {
 	}
 
 	@RequestMapping("/user/updateuserprofile")
-	public String updateUserProfile(@ModelAttribute("user") User user) {
+	public String updateUserProfile(@Valid @ModelAttribute("user") User user, BindingResult result) {
+		
+		if (result.hasErrors() || 
+				"".compareTo(user.getCustomer().getSalutation()) == 0 ||
+				"".compareTo(user.getCustomer().getFirstname()) == 0 ||
+				"".compareTo(user.getCustomer().getLastname()) == 0 || 
+				"".compareTo(user.getCustomer().getMaleFemale()) == 0 ||
+				"".compareTo(user.getCommon().getAddress1()) == 0 ||
+				"".compareTo(user.getCommon().getCity()) == 0 ||
+				"".compareTo(user.getCommon().getCountry()) == 0) {
+			
+			if ("".compareTo(user.getCustomer().getSalutation()) == 0 ) result.rejectValue("customer.salutation", "NotBlank.customer.salutation");
+			if ("".compareTo(user.getCustomer().getFirstname()) == 0 ) result.rejectValue("customer.firstname", "NotBlank.customer.firstname");
+			if ("".compareTo(user.getCustomer().getLastname()) == 0 ) result.rejectValue("customer.lastname", "NotBlank.customer.lastname");
+			if ("".compareTo(user.getCustomer().getMaleFemale()) == 0 ) result.rejectValue("customer.maleFemale", "NotBlank.customer.maleFemale");
+			if ("".compareTo(user.getCommon().getAddress1()) == 0 ) result.rejectValue("common.address1", "NotBlank.common.address1");
+			if ("".compareTo(user.getCommon().getCity()) == 0 ) result.rejectValue("common.city", "NotBlank.common.city");
+			if ("".compareTo(user.getCommon().getCountry()) == 0 ) result.rejectValue("common.country", "NotBlank.common.country");
+			
+			return "edituserprofile";
+		}
 
 		user.setRoles(roleUtilities.stringToRole(user.getRoleString()));
 		user.getCustomer().setUser(user);
 		user.getCommon().setUser(user);
 
 		userService.merge(user);
-
 
 		return "redirect:/index/introduction-a";
 	}
@@ -155,7 +198,7 @@ public class UserProfileController {
 
 		return "verifyemail";
 	}
-	
+
 	@RequestMapping("/index/forgotmypassword")
 	public String forgotMyPassword(@ModelAttribute("username") String username, Model model) throws UnsupportedEncodingException, MessagingException {
 		User user = userService.retrieve(username);
@@ -163,19 +206,19 @@ public class UserProfileController {
 		user.setPassword(encoder.encode(password));
 		userService.updatePassword(user);
 		String content = passwordResetEmailForm.forgotPWEmailForm(password);
-		
+
 		sendEmail.sendHtmlMail("tmtmarcoe80@gmail.com", user.getUsername(), user.getCustomer().getFirstname() + " " + user.getCustomer().getLastname(),
 				"Important information about your account", content);
-		
+
 		return "forgotmypassword";
 	}
-	
+
 	@RequestMapping("/user/changepassword")
 	public String changePassword(Principal principal, Model model) {
 		User user = userService.retrieve(principal.getName());
-		
+
 		model.addAttribute("user", user);
-		
+
 		return "changepassword";
 	}
 }
