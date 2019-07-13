@@ -48,7 +48,18 @@ public class UserController {
 	
 	@RequestMapping("deleteuser")
 	public String deleteUser(@ModelAttribute("user_id") Long user_id) {
+		
+		User user = userService.retrieve(user_id);
 		userService.delete(user_id);
+		if (user.getCustomer() != null) {
+			return "redirect:/personnel/customerlist";
+		}else if (user.getEmployee() != null) {
+			return "redirect:/personnel/employeelist";
+		}else if (user.getInvestor() != null) {
+			return "redirect:/personnel/investorlist";
+		}else if (user.getVendor() != null ) {
+			return "redirect:/personnel/vendorlist";
+		}
 
 		return "redirect:/";
 	}
