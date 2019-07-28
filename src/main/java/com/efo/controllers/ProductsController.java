@@ -46,12 +46,13 @@ public class ProductsController {
 
 	@RequestMapping("addproduct")
 	public String addProduct(@Valid @ModelAttribute("product") Products product, BindingResult result) throws IOException {
+		final Long fSize = 52428800L; // 50MB
 		File file = null;
 
-		if (result.hasErrors() || product.getProduct_file().isEmpty()) {
+		if (result.hasErrors() || product.getProduct_file().getSize() > fSize) {
 
-			if (product.getProduct_file().isEmpty()) {
-				result.rejectValue("product_file", "NotBlank.product.product_file");
+			if (product.getProduct_file().getSize() > fSize) {
+				result.rejectValue("product_file", "FileSize.product.product_file");
 			}
 
 			return "newproduct";
@@ -60,26 +61,29 @@ public class ProductsController {
 		if (product.getProduct_id().toUpperCase().startsWith("EFO") == false) {
 			product.setProduct_id("EFO" + product.getProduct_id());
 		}
+		if (product.getProduct_file().isEmpty() == false) {
 
-		String type = product.getProduct_file().getOriginalFilename();
-		type = type.substring(type.lastIndexOf('.'));
+			String type = product.getProduct_file().getOriginalFilename();
+			type = type.substring(type.lastIndexOf('.'));
 
-		InputStream is = product.getProduct_file().getInputStream();
+			InputStream is = product.getProduct_file().getInputStream();
 
-		File f1 = new File(uploadrepository);
+			File f1 = new File(uploadrepository);
 
-		file = File.createTempFile("upl", type, f1);
-		product.setFile_name(file.getName());
-		FileOutputStream fos = new FileOutputStream(file);
+			file = File.createTempFile("upl", type, f1);
+			product.setFile_name(file.getName());
+			FileOutputStream fos = new FileOutputStream(file);
 
-		int data = 0;
-		while ((data = is.read()) != -1) {
-			fos.write(data);
+			int data = 0;
+			while ((data = is.read()) != -1) {
+				fos.write(data);
+			}
+
+			fos.close();
+			is.close();
+		}else{
+			product.setFile_name(""); // We upload the file and set the file name by hand
 		}
-
-		fos.close();
-		is.close();
-
 		productsService.create(product);
 
 		return "redirect:/admin/manageproducts";
@@ -106,7 +110,6 @@ public class ProductsController {
 
 	@RequestMapping("scproductdelete")
 	public String scProductDelete(@ModelAttribute("id") String id) {
-		
 
 		productsService.delete(id);
 

@@ -6,6 +6,7 @@
 
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
 <sf:form id="prd" method="post" action="/admin/addproduct" modelAttribute="product"  enctype="multipart/form-data" >
 	<table class="fancy-table tableshadow">
@@ -41,9 +42,18 @@
 			<td><sf:errors class="error" path="product_description" /></td>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit" ><b>Add Product</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="submitForm()" ><b>Add Product</b></sf:button></td>
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></sf:button>
 		</tr>
 	</table>
 
+	<div id="wait" class="modal" style="margin: 0 auto;">
+		<img class="spinner" alt="wait" src="<c:url value="/images/spinner.gif" />" width="100px">
+	</div>
 </sf:form>
+<script type="text/javascript">
+function submitForm() {
+	$("#wait").show();
+	$("#prd").submit();
+}
+</script>

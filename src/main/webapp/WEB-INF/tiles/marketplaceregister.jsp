@@ -51,7 +51,7 @@
 			<td><sf:errors class="error" path="keywords"/>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit">
+			<td><sf:button class="fancy-button" type="button" onclick="submitForm()">
 					<b>Register</b>
 				</sf:button></td>
 			<td><sf:button class="fancy-button" type="button"
@@ -67,6 +67,10 @@
 	<sf:hidden path="total_commission" value="0"/>
 	<sf:hidden path="introduced_on" />
 	<sf:hidden id="fTime" path="firstTime" />
+	<div id="wait" class="modal" style="margin: 0 auto;">
+		<img class="spinner" alt="wait" src="<c:url value="/images/spinner.gif" />" width="100px">
+	</div>
+	
 	<div id="mpAgreement" class="modal">
 		<div class="modal-content medium-modal fancy">
 			<h1>Buy continuing, you accept the terms of this agreement.</h1>
@@ -74,9 +78,10 @@
 			<h3>from any sales in the furture. Furthermore, any moneys collected will go</h3>
 			<h3>back to the buyer.</h3>
 			<ol>
+				<li><b>EFO will take 5% of the sale price to cover hosting costs</b><br></li>
 				<li><b>No illegal or malicious software is allowed</b><br> No software with the intent to do harm will be
 					tolerated.<br> The seller also agrees to support his/her product to the best<br> of their ability.<br></li>
-				<li><b>The seller shall make no false claim</b><br> If the seller makes a claim about the software, he/she will be
+				<li><b>The seller shall make no false claims</b><br> If the seller makes a claim about the software, he/she will be
 					willing to<br> make sure the software can back up that claim. If not,<br> the seller is obligated to make
 					any necessary modifications.<br></li>
 				<li><b>The seller shall make no claim of superiority</b><br> The software simply fulfills a function. It
@@ -109,6 +114,10 @@
 		if (f == "true") {
 			$('#mpAgreement').show();
 		}
+	}
+	function submitForm() {
+		$("#wait").show();
+		$("#mpProduct").submit();
 	}
 </script>
 <script>

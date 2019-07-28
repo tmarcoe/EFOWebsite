@@ -15,8 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.efo.entity.ChartOfAccounts;
 import com.efo.entity.GeneralLedger;
 
-
-
 @Transactional
 @Repository
 public class FetalTransactionDao {
@@ -108,8 +106,6 @@ public class FetalTransactionDao {
 
 		Object obj = session.createQuery(sql).setMaxResults(1).uniqueResult();
 		
-		session.close();
-		
 		return obj;
 	}
 
@@ -134,7 +130,6 @@ public class FetalTransactionDao {
 		}else{
 			l = session.createQuery(sqlWithArgs).setMaxResults(limit).list();
 		}
-		session.close();
 		
 		return l;
 	}

@@ -50,7 +50,10 @@
 			<td><strike>$500.00</strike></td>
 		</tr>
 		<tr>
-			<td colspan="2"><button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO1'"><b>Order Product</b></button></td>
+			<td colspan="2"><button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO1W'"><b>Windows</b></button>
+							<button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO1WS'"><b>Windows W/Source</b></button>
+							<button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO1L'"><b>Linux</b></button>
+							<button class="fancy-button" onclick="window.location.href='/user/displayefoprd?prdId=EFO1LS'"><b>Linux W/Source</b></button></td>
 			<td><b>$100.00</b></td>
 		</tr>
 	</table>
