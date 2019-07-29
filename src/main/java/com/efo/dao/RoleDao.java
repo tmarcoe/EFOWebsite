@@ -55,7 +55,10 @@ public class RoleDao implements IRole {
 	@Override
 	public Role retrieve(String role) {
 		Session session = session();
-		return (Role) session.createCriteria(Role.class).add(Restrictions.eq("role", role)).uniqueResult();
+		Role r = (Role) session.createCriteria(Role.class).add(Restrictions.eq("role", role)).uniqueResult();
+		session.close();
+		
+		return r;
 	}
 
 	@Override

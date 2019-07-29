@@ -53,6 +53,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		Criteria crit = session.createCriteria(ChartOfAccounts.class);
 		crit.add(Restrictions.idEq(account));
 		ChartOfAccounts ca = (ChartOfAccounts) crit.uniqueResult();
+		session.close();
 		
 		return ca;
 	}

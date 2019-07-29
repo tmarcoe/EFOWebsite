@@ -97,6 +97,9 @@ public class LoanPaymentsDao implements ILoanPayments {
 			loanMap.put(df.format(jBegin.toDate()), loan); 
 			jBegin = jBegin.plusMonths(1);
 		}
+		
+		session.flush();
+		session.close();
 
 		return loanMap;
 	}

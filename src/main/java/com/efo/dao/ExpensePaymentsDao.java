@@ -80,6 +80,8 @@ public class ExpensePaymentsDao implements IExpensePayments {
 		
 		if (sum == null) sum = 0.0;
 		
+		session.close();
+		
 		return sum;
 	}
 

@@ -61,6 +61,8 @@ public class ProfilesDao implements IProfiles {
 		Session session = session();
 		List<String> names = session.createQuery(hql).setString("type", type).list();
 		
+		session.close();
+		
 		return names;
 	}
 
